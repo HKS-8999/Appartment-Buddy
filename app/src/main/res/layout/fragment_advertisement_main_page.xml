@@ -6,50 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".fragments.AdvertisementMainPage">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="140dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/backgroundColor"
-        android:text="@string/items"
-        android:textAlignment="viewStart"
-        android:textColor="@color/appThemeColor"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="140dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="77dp"
-        android:layout_marginBottom="549dp"
-        android:backgroundTint="@color/backgroundColor"
-        android:text="@string/apartments"
-        android:textAlignment="viewStart"
-        android:textColor="@color/appThemeColor"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
-        android:layout_width="410dp"
-        android:layout_height="70dp"
+        android:id="@+id/advCoordinatorLayout"
+        android:layout_width="420dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4">
+        app:layout_constraintTop_toBottomOf="@+id/advTabLayout">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
-            android:layout_width="410dp"
-            android:layout_height="70dp"
+            android:layout_width="420dp"
+            android:layout_height="80dp"
             android:layout_gravity="bottom" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/advTabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="600dp"
+        app:layout_constraintBottom_toTopOf="@+id/advCoordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apartments" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Items" />
+
+    </com.google.android.material.tabs.TabLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

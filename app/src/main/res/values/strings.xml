@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppartmentBuddy</string>
-    <string name="apartments">Apartments ></string>
-    <string name="items">Items ></string>
+    <string name="app_name">ApartmentBuddy</string>
+    <string name="adv_tab_apartments">Apartments ></string>
+    <string name="adv_tab_items">Items ></string>
 </resources>
