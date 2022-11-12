@@ -6,43 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AdvertisementActivity">
 
-    <!-- Top Tab Layout for options Apartments/Items -->
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/advTabLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        app:layout_constraintBottom_toTopOf="@+id/advViewPager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@color/appThemeColor"
-        app:tabSelectedTextColor="@color/appThemeColor">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Apartments" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Items" />
-    </com.google.android.material.tabs.TabLayout>
-
-    <!-- View Pager for content display -->
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/advViewPager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="91dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/advTabLayout" />
-
     <!-- Bottom App Bar-->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/advCoordinatorLayout"
@@ -58,5 +21,14 @@
             android:layout_height="80dp"
             android:layout_gravity="bottom" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!-- Link Navigation Graph -->
+    <androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/nav_fragment_container_view"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/advertisement_nav_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

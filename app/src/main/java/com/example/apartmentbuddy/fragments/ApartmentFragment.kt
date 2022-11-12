@@ -5,12 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apartmentbuddy.adapter.AdvertisementRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentApartmentBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.apartmentbuddy.persistence.ApartmentDataSource
 
 /**
  * A simple [Fragment] subclass.
@@ -26,5 +24,12 @@ class ApartmentFragment : Fragment() {
     ): View? {
         binding = FragmentApartmentBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerView = binding.advRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = AdvertisementRecyclerViewAdapter(ApartmentDataSource().getApartmentList())
     }
 }

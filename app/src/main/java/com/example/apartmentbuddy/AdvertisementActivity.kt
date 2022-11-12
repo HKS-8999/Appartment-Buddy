@@ -16,13 +16,13 @@ class AdvertisementActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val viewPager = binding.advViewPager
+        /*val viewPager = binding.advViewPager
         val advertisementAdapter = AdvertisementViewPagerAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = advertisementAdapter
 
         val tabLayout = binding.advTabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabOptionsArray.get(position)
-        }.attach()
+        }.attach()*/
     }
 }
