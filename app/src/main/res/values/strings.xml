@@ -2,4 +2,6 @@
     <string name="app_name">ApartmentBuddy</string>
     <string name="adv_tab_apartments">Apartments ></string>
     <string name="adv_tab_items">Items ></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
