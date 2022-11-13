@@ -7,36 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:549344920444:android:82389c15c54fbc64765af9",
-        "android_client_info": {
-          "package_name": "Apartment.Buddy_14"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "549344920444-stib7ir7gvje57foi5b2k8ggtesuqh8q.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDjsdHAhE2uKybYVd4qa36yrV7SwEDB-L4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "549344920444-stib7ir7gvje57foi5b2k8ggtesuqh8q.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:549344920444:android:14f1c8766777a72c765af9",
+        "mobilesdk_app_id": "1:549344920444:android:37e7b0202f1831f5765af9",
         "android_client_info": {
           "package_name": "com.example.apartmentbuddy"
         }
