@@ -93,6 +93,8 @@ obj/
 *.iml
 *.iws
 /out/
+.DS_Store
+app/.DS_Store
 
 # User-specific configurations
 .idea/caches/
