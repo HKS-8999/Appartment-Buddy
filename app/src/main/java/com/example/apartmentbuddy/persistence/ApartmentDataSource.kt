@@ -11,28 +11,21 @@ class ApartmentDataSource() {
         return listOf(
             Apartment(
                 Uri.fromFile(File("gs://test_image_view/URIBrooksideHall2.jpg")),
-                2,
-                2,
-                2,
                 "A beautiful 2 bedroom apartment available at a beautiful location",
+                "Apartment",
+                2,
+                2,
+                2,
                 "2351".toFloat(),
                 Date(72818219)
             ),
             Apartment(
                 Uri.fromFile(File("gs://test_image_view/URIBrooksideHall2.jpg")),
+                "A beautiful 4 bedroom apartment available at a beautiful location",
+                "Apartment",
                 4,
                 2,
                 2,
-                "A beautiful 4 bedroom apartment available at a beautiful location",
-                "2351".toFloat(),
-                Date(72818219)
-            ),
-            Apartment(
-                Uri.fromFile(File("gs://test_image_view/URIBrooksideHall2.jpg")),
-                3,
-                2,
-                2,
-                "A beautiful 3 bedroom apartment available at a beautiful location",
                 "2351".toFloat(),
                 Date(72818219)
             )

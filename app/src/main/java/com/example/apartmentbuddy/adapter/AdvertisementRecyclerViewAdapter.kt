@@ -1,6 +1,5 @@
 package com.example.apartmentbuddy.adapter
 
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
-import com.example.apartmentbuddy.model.Apartment
+import com.example.apartmentbuddy.model.Advertisement
 
-class AdvertisementRecyclerViewAdapter(private val apartmentList: List<Apartment>) :
+class AdvertisementRecyclerViewAdapter(private val listings: List<Advertisement>) :
     RecyclerView.Adapter<AdvertisementRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -25,13 +24,13 @@ class AdvertisementRecyclerViewAdapter(private val apartmentList: List<Apartment
         holder: AdvertisementRecyclerViewAdapter.ViewHolder,
         position: Int
     ) {
-        val advertisementItem = apartmentList[position]
+        val advertisementItem = listings[position]
         holder.imageView.setImageURI(advertisementItem.images)
         holder.description.text = advertisementItem.description
     }
 
     override fun getItemCount(): Int {
-        return apartmentList.size
+        return listings.size
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
