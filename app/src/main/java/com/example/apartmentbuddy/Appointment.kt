@@ -66,8 +66,5 @@ class Appointment : Fragment() {
 
         nameList.add(AppointmentData("Saif","10-13-2022","10am"))
         nameList.add(AppointmentData("Saif","10-13-2022","10:30am"))
-
-
-
     }
 }
