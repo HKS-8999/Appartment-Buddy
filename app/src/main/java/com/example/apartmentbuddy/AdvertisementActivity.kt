@@ -1,13 +1,13 @@
 package com.example.apartmentbuddy
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.apartmentbuddy.adapter.AdvertisementViewPagerAdapter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.databinding.ActivityAdvertisementBinding
-import com.google.android.material.tabs.TabLayoutMediator
+import com.example.apartmentbuddy.fragments.AdvertisementHomeFragment
+import com.example.apartmentbuddy.fragments.PostApartmentFragment
 
 class AdvertisementActivity : AppCompatActivity() {
-    private val tabOptionsArray = arrayOf("Apartments", "Items")
     private lateinit var binding: ActivityAdvertisementBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,13 +16,23 @@ class AdvertisementActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        /*val viewPager = binding.advViewPager
-        val advertisementAdapter = AdvertisementViewPagerAdapter(supportFragmentManager, lifecycle)
-        viewPager.adapter = advertisementAdapter
+        //Display Advertisement Home Page
+        replaceFragment(AdvertisementHomeFragment())
 
-        val tabLayout = binding.advTabLayout
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = tabOptionsArray.get(position)
-        }.attach()*/
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.adv_home -> replaceFragment(AdvertisementHomeFragment())
+                R.id.adv_newPost -> replaceFragment(PostApartmentFragment())
+            }
+            true
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        if (null != fragment) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(binding.fragmentContainer.id, fragment)
+            transaction.commit()
+        }
     }
 }

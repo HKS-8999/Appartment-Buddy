@@ -10,7 +10,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:orientation="vertical"
-        android:paddingTop="30dp"
+        android:paddingTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,11 +26,11 @@
             app:srcCompat="@drawable/ic_baseline_cancel_24" />
 
         <TextView
-            android:id="@+id/postAdvView"
+            android:id="@+id/postItemView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="POST A NEW ADVERTISEMENT"
+            android:text="POST A NEW ITEM"
             android:textColor="@color/appThemeColor"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,40 +43,14 @@
             android:padding="10dp"
             app:dividerColor="@color/light_gray" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/bedroom"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_border"
-                android:hint="Bedrooms"
-                android:inputType="numberSigned"
-                android:padding="10dp" />
-
-            <EditText
-                android:id="@+id/bathroom"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_border"
-                android:hint="Bathrooms"
-                android:inputType="numberSigned"
-                android:padding="10dp" />
-        </LinearLayout>
-
         <EditText
-            android:id="@+id/apartment"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_border"
-            android:hint="Apartment Unit Number"
+            android:hint="Title"
+            android:inputType="text"
             android:minHeight="48dp"
             android:padding="10dp"
             android:textColor="@color/black" />
@@ -84,33 +58,75 @@
         <EditText
             android:id="@+id/description"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_border"
-            android:hint="Property Description"
+            android:hint="Description"
             android:inputType="textMultiLine"
             android:padding="10dp" />
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_border">
+
+                <Spinner
+                    android:id="@+id/condition"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/appThemeColor"
+                    android:spinnerMode="dropdown" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_border"
+                android:hint="Price"
+                android:inputType="number"
+                android:padding="10dp" />
+        </LinearLayout>
+
         <EditText
-            android:id="@+id/rent"
+            android:id="@+id/category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_border"
-            android:hint="Rent per Month"
+            android:hint="Category"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_border"
+            android:hint="Pickup Address"
             android:inputType="text"
             android:minHeight="48dp"
             android:padding="10dp"
             android:textColor="@color/black" />
 
         <EditText
-            android:id="@+id/availability"
+            android:id="@+id/contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_border"
-            android:hint="Availability Start Date"
-            android:inputType="date"
+            android:hint="Contact"
             android:minHeight="48dp"
             android:padding="10dp"
             android:textColor="@color/black" />
@@ -130,7 +146,6 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/blue"
             android:fontFamily="@font/sf_pro_display_bold"
-            android:padding="10dp"
             android:text="Post"
             android:textAllCaps="true"
             android:textColor="@color/white"

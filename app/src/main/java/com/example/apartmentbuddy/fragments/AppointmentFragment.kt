@@ -1,4 +1,4 @@
-package com.example.apartmentbuddy
+package com.example.apartmentbuddy.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apartmentbuddy.adapter.AppointmentAdapter
 import com.example.apartmentbuddy.databinding.FragmentAppointmentBinding
+import com.example.apartmentbuddy.model.AppointmentData
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.

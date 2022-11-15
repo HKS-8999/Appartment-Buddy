@@ -6,85 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".AdvertisementActivity">
 
-    <!-- Bottom App Bar-->
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/advCoordinatorLayout"
-        android:layout_width="420dp"
-        android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppBar"
-            android:layout_width="420dp"
-            android:layout_height="80dp"
-            android:layout_gravity="bottom" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/advHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:outlineSpotShadowColor="@color/white"
-
-            app:borderWidth="2.5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_outline_home_24" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/advViewPosts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="130dp"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:outlineSpotShadowColor="@color/white"
-            app:borderWidth="2.5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:srcCompat="@drawable/ic_outline_photo_library_24" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/advViewBookmarks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:outlineSpotShadowColor="@color/white"
-            app:borderWidth="2.5dp"
-            app:layout_anchor="@+id/advViewBookmarks"
-            app:layout_anchorGravity="end|center"
-            app:srcCompat="@drawable/ic_outline_bookmarks_24" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/advNewPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="330dp"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:outlineSpotShadowColor="@color/white"
-            app:borderWidth="2.5dp"
-            app:srcCompat="@drawable/ic_baseline_post_add_24" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <!-- Link Navigation Graph -->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_fragment_container_view"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <!-- Bottom Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/advertisement_nav_graph" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/advertisement_bottom_app_bar" />
+
+    <!--Frame layout for fragments -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
