@@ -2,8 +2,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Appointment Booking"
+        android:fontFamily="@font/sf_pro_display_bold"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:textAlignment="center"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"/>
 
     <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -37,6 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="New Appointment"
+                    android:fontFamily="@font/sf_pro_display_bold"
                     android:textSize="30dp"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
@@ -47,7 +60,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Book an appointment to meet management in person."
-                    android:textSize="16dp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:textSize="15dp"
                     android:textColor="@color/blue"
                     android:padding="5dp"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -86,6 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="View Appointment"
+                    android:fontFamily="@font/sf_pro_display_bold"
                     android:textSize="30dp"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
@@ -96,7 +111,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="View an appointment to check your previous appointments."
-                    android:textSize="16dp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:textSize="15dp"
                     android:textColor="@color/blue"
                     android:padding="5dp"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -135,6 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Cancel Appointment"
+                    android:fontFamily="@font/sf_pro_display_bold"
                     android:textSize="30dp"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
@@ -145,11 +162,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Cancel any upcoming appointments."
-                    android:textSize="16dp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:textSize="15dp"
                     android:textColor="@color/blue"
                     android:padding="5dp"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/btn_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/sf_pro_display_bold"
+        android:text="BACK"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 </LinearLayout>
 
