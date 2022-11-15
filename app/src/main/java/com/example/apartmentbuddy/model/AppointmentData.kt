@@ -1,4 +1,4 @@
-package com.example.apartmentbuddy
+package com.example.apartmentbuddy.model
 
 data class AppointmentData (
     val name:String ,
