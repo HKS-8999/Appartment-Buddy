@@ -14,7 +14,7 @@ class Appointment (){
             TODO()
         }
 
-    fun  validDate(hourOfDay: Int, minute : Int) : String {
+    fun  printValidTime(hourOfDay: Int, minute : Int) : String {
         var hour = hourOfDay
         var am_pm = ""
         // AM_PM decider logic
