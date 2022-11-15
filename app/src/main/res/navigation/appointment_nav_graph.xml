@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/appointment_nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appointment_nav_graph"
+    app:startDestination="@id/appointment_home">
 
+    <fragment
+        android:id="@+id/appointment_home"
+        android:name="com.example.apartmentbuddy.appointment_home"
+        android:label="fragment_appointment_home"
+        tools:layout="@layout/fragment_appointment_home" />
 </navigation>
