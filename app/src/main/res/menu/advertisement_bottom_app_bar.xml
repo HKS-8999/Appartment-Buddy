@@ -20,9 +20,9 @@
         android:icon="@drawable/ic_outline_bookmarks_24"
         android:title="Saved" />
 
-    <item
-        android:id="@+id/adv_newPost"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_post_add_24"
-        android:title="Post" />
+<!--    <item-->
+<!--        android:id="@+id/adv_newPost"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_baseline_post_add_24"-->
+<!--        android:title="Post" />-->
 </menu>

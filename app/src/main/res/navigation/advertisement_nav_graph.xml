@@ -6,28 +6,14 @@
     app:startDestination="@id/advertisementHomeFragment">
 
     <fragment
-        android:id="@+id/postAdvertisementOptions"
-        android:name="com.example.apartmentbuddy.fragments.PostAdvertisementOptions"
-        android:label="fragment_post_advertisement_options"
-        tools:layout="@layout/fragment_post_advertisement_options">
-        <action
-            android:id="@+id/action_postAdvertisementOptions_to_postApartmentFragment"
-            app:destination="@id/postApartmentFragment" />
-        <action
-            android:id="@+id/action_postAdvertisementOptions_to_postItemFragment"
-            app:destination="@id/postItemFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/postApartmentFragment"
         android:name="com.example.apartmentbuddy.fragments.PostApartmentFragment"
         android:label="PostApartmentFragment"
-        tools:layout="@layout/fragment_post_apartment" />
-    <fragment
-        android:id="@+id/postItemFragment"
-        android:name="com.example.apartmentbuddy.fragments.PostItemFragment"
-        android:label="PostItemFragment"
-        tools:layout="@layout/fragment_post_item" />
+        tools:layout="@layout/fragment_post_apartment" >
+        <action
+            android:id="@+id/action_postApartmentFragment_to_advertisementHomeFragment"
+            app:destination="@id/advertisementHomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/advertisementHomeFragment"
         android:name="com.example.apartmentbuddy.fragments.AdvertisementHomeFragment"
@@ -35,6 +21,19 @@
         tools:layout="@layout/fragment_advertisement_home" >
         <action
             android:id="@+id/action_advertisementHomeFragment_to_postAdvertisementOptions"
-            app:destination="@id/postAdvertisementOptions" />
+            app:destination="@id/postApartmentFragment" />
+        <action
+            android:id="@+id/action_advertisementHomeFragment_to_postItemFragment"
+            app:destination="@id/postItemFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/postItemFragment"
+        android:name="com.example.apartmentbuddy.fragments.PostItemFragment"
+        android:label="PostItemFragment"
+        tools:layout="@layout/fragment_post_item" >
+        <action
+            android:id="@+id/action_postItemFragment_to_advertisementHomeFragment"
+            app:destination="@id/advertisementHomeFragment" />
+    </fragment>
+
 </navigation>

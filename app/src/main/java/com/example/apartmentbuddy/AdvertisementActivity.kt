@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.databinding.ActivityAdvertisementBinding
 import com.example.apartmentbuddy.fragments.AdvertisementHomeFragment
-import com.example.apartmentbuddy.fragments.PostAdvertisementOptions
 
 class AdvertisementActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdvertisementBinding
@@ -22,11 +21,6 @@ class AdvertisementActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.adv_home -> replaceFragment(AdvertisementHomeFragment())
-                R.id.adv_newPost -> {
-                    supportFragmentManager.beginTransaction()
-                        .add(binding.fragmentContainer.id, PostAdvertisementOptions())
-                        .commit()
-                }
             }
             true
         }
