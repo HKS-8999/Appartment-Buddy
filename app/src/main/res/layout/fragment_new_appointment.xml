@@ -51,6 +51,7 @@
             android:layout_marginBottom="15dp"
             android:backgroundTint="#E6E6E6"/>
         <EditText
+            android:id="@+id/in_time"
             android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:textSize="18sp"
