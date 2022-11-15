@@ -10,9 +10,6 @@ import androidx.cardview.widget.CardView
 import com.example.apartmentbuddy.R
 
 class AppointmentHome : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +19,7 @@ class AppointmentHome : Fragment() {
         // Accessing Save button from Fragment 2
         val back: Button = view.findViewById(R.id.appointment_back)
         val new_appointment: CardView = view.findViewById(R.id.newAppointment)
+
         new_appointment.setOnClickListener {
 //                view.findNavController().navigate()
         }

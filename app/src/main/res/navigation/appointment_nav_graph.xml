@@ -9,5 +9,14 @@
         android:id="@+id/appointment_home"
         android:name="com.example.apartmentbuddy.fragments.AppointmentHome"
         android:label="fragment_appointment_home"
-        tools:layout="@layout/fragment_appointment_home" />
+        tools:layout="@layout/fragment_appointment_home" >
+        <action
+            android:id="@+id/action_appointment_home_to_newAppointment2"
+            app:destination="@id/newAppointment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/newAppointment2"
+        android:name="com.example.apartmentbuddy.NewAppointment"
+        android:label="fragment_new_appointment"
+        tools:layout="@layout/fragment_new_appointment" />
 </navigation>

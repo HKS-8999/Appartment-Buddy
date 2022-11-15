@@ -15,7 +15,8 @@
         android:fontFamily="@font/sf_pro_display_bold"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="@color/blue"
+        android:textColor="@color/white"
+        android:background="@color/blue"
         android:textAlignment="center"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="15dp"/>
@@ -29,7 +30,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardBackgroundColor="#E6E6E6"
         card_view:cardCornerRadius="25dp"
-        card_view:cardElevation="10dp"
+        card_view:cardElevation="7dp"
         card_view:cardUseCompatPadding="true"
         android:id="@+id/newAppointment">
 
@@ -38,12 +39,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                card_view:srcCompat="@drawable/new_appointment"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_margin="10dp"
+                card_view:srcCompat="@drawable/newappointment"
                 android:padding="7dp"
-                android:background="@color/white"/>
-
+                />
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -53,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text="New Appointment"
                     android:fontFamily="@font/sf_pro_display_bold"
-                    android:textSize="25sp"
+                    android:textSize="26sp"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
                     android:padding="5dp"/>
@@ -63,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:text="Book an appointment to meet management in person."
                     android:fontFamily="@font/sf_pro_display_medium"
-                    android:textSize="15dp"
+                    android:textSize="16dp"
                     android:textColor="@color/blue"
                     android:padding="5dp"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -79,7 +80,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardBackgroundColor="#E6E6E6"
         card_view:cardCornerRadius="25dp"
-        card_view:cardElevation="10dp"
+        card_view:cardElevation="7dp"
         card_view:cardUseCompatPadding="true"
         android:id="@+id/ViewAppointment">
 
@@ -88,11 +89,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                card_view:srcCompat="@drawable/view_calender"
-                android:padding="7dp"
-                android:background="@color/white"/>
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_margin="10dp"
+                card_view:srcCompat="@drawable/view_appointment"
+                android:padding="7dp"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -103,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:text="View Appointment"
                     android:fontFamily="@font/sf_pro_display_bold"
-                    android:textSize="25dp"
+                    android:textSize="26dp"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
                     android:padding="5dp"/>
@@ -113,7 +114,7 @@
                     android:layout_height="match_parent"
                     android:text="View an appointment to check your previous appointments."
                     android:fontFamily="@font/sf_pro_display_medium"
-                    android:textSize="15dp"
+                    android:textSize="16dp"
                     android:textColor="@color/blue"
                     android:padding="5dp"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -129,7 +130,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardBackgroundColor="#E6E6E6"
         card_view:cardCornerRadius="25dp"
-        card_view:cardElevation="10dp"
+        card_view:cardElevation="7dp"
         card_view:cardUseCompatPadding="true"
         android:id="@+id/CancelAppointment">
 
@@ -138,11 +139,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                card_view:srcCompat="@drawable/cancel_appointment"
-                android:padding="7dp"
-                android:background="@color/white"/>
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_margin="10dp"
+                card_view:srcCompat="@drawable/cancel_appointment_2"
+                android:padding="7dp"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -153,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:text="Cancel Appointment"
                     android:fontFamily="@font/sf_pro_display_bold"
-                    android:textSize="25dp"
+                    android:textSize="26dp"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
                     android:padding="5dp"/>
@@ -163,7 +164,7 @@
                     android:layout_height="match_parent"
                     android:text="Cancel any upcoming appointments."
                     android:fontFamily="@font/sf_pro_display_medium"
-                    android:textSize="15dp"
+                    android:textSize="16dp"
                     android:textColor="@color/blue"
                     android:padding="5dp"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -173,8 +174,8 @@
         android:id="@+id/appointment_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/sf_pro_display_bold"
         android:text="BACK"
