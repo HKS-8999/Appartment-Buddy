@@ -42,7 +42,7 @@ class NewAppointment : Fragment() {
             val timePickerDialog = TimePickerDialog(view.context,
                 // Reference : https://www.geeksforgeeks.org/timepicker-in-kotlin/
                 { view, hourOfDay, minute ->
-                        val msg = appointment.validDate(hourOfDay, minute)
+                        val msg = appointment.printValidTime(hourOfDay, minute)
                         txtTime.setText(msg)
                 },
                 mHour,
