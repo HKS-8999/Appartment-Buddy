@@ -1,16 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.AppointmentHome">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Appointment Booking"
         android:fontFamily="@font/sf_pro_display_bold"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/blue"
         android:textAlignment="center"
@@ -27,7 +30,8 @@
         card_view:cardBackgroundColor="#E6E6E6"
         card_view:cardCornerRadius="25dp"
         card_view:cardElevation="10dp"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        android:id="@+id/newAppointment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -45,18 +49,16 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/newAppointment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="New Appointment"
                     android:fontFamily="@font/sf_pro_display_bold"
-                    android:textSize="30dp"
+                    android:textSize="30sp"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
                     android:padding="5dp"/>
 
                 <TextView
-                    android:id="@+id/newAppointmentDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Book an appointment to meet management in person."
@@ -78,7 +80,8 @@
         card_view:cardBackgroundColor="#E6E6E6"
         card_view:cardCornerRadius="25dp"
         card_view:cardElevation="10dp"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        android:id="@+id/ViewAppointment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -96,7 +99,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/viewAppointmentTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="View Appointment"
@@ -107,7 +109,6 @@
                     android:padding="5dp"/>
 
                 <TextView
-                    android:id="@+id/viewAppointmentDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="View an appointment to check your previous appointments."
@@ -129,7 +130,8 @@
         card_view:cardBackgroundColor="#E6E6E6"
         card_view:cardCornerRadius="25dp"
         card_view:cardElevation="10dp"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        android:id="@+id/CancelAppointment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -147,7 +149,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/cancelAppointmentTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Cancel Appointment"
@@ -158,7 +159,6 @@
                     android:padding="5dp"/>
 
                 <TextView
-                    android:id="@+id/cancelAppointmentDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Cancel any upcoming appointments."
@@ -170,7 +170,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
     <Button
-        android:id="@+id/btn_sign_up"
+        android:id="@+id/appointment_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"

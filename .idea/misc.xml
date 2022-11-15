@@ -17,9 +17,10 @@
         <entry key="app/src/main/res/layout/fragment_advertisement_home.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/fragment_apartment.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/fragment_appointment.xml" value="0.13229166666666667" />
+        <entry key="app/src/main/res/layout/fragment_appointment_home.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/fragment_items.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/fragment_post_apartment.xml" value="0.13229166666666667" />
-        <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.33377135348226017" />
+        <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.125" />
         <entry key="app/src/main/res/layout/item_row.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/recycler_advertisement.xml" value="0.13229166666666667" />
       </map>
