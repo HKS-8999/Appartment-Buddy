@@ -22,6 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_items.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/fragment_new_appointment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_post_apartment.xml" value="0.13229166666666667" />
+        <entry key="app/src/main/res/layout/fragment_post_item.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.125" />
         <entry key="app/src/main/res/layout/item_row.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/layout/recycler_advertisement.xml" value="0.13229166666666667" />
