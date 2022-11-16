@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@color/white"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:padding="@dimen/cardview_default_elevation">
+
+        <ImageView
+            android:id="@+id/itemImages"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="5dp"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            app:dividerColor="@color/light_gray" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:minHeight="40dp"
+                android:text="Apartment Unit Number"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/apartmentUnitNumber"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:minHeight="40dp"
+                android:text="2" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/bookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:clickable="true"
+                android:outlineSpotShadowColor="@color/white"
+                app:borderWidth="2dp"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_outline_bookmarks_24" />
+        </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            app:dividerColor="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/apartmentDescription"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            android:text="Property Description" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            app:dividerColor="@color/light_gray" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="2dp"
+                android:text="Bedrooms"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/noOfbedrooms"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="2dp"
+                android:text="2" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="2dp"
+                android:text="Bathrooms"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/noOfBathrooms"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="2dp"
+                android:text="2" />
+        </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            app:dividerColor="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/apartmentRent"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            android:text="Rent" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            app:dividerColor="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/apartmentAvailability"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Availability Start Date" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            app:dividerColor="@color/light_gray" />
+
+        <TextView
+            android:id="@+id/apartmentContact"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Contact" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

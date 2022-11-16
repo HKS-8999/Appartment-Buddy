@@ -5,5 +5,6 @@ import android.net.Uri
 open class Advertisement(
     val images: Uri,
     val description: String,
-    val type: String
+    val type: String,
+    val contact: String
 )

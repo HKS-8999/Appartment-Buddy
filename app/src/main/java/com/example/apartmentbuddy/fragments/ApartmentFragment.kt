@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.apartmentbuddy.adapter.AdvertisementRecyclerViewAdapter
+import com.example.apartmentbuddy.adapter.ListApartmentAdvRecyclerViewAdapter
+import com.example.apartmentbuddy.adapter.ListItemAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentApartmentBinding
 import com.example.apartmentbuddy.persistence.ApartmentDataSource
 
@@ -30,6 +31,6 @@ class ApartmentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = binding.advRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = AdvertisementRecyclerViewAdapter(ApartmentDataSource().getApartmentList())
+        recyclerView.adapter = ListApartmentAdvRecyclerViewAdapter(ApartmentDataSource().getApartmentList())
     }
 }
