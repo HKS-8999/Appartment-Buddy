@@ -28,31 +28,31 @@ class AdvertisementHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAdvertisementHomeBinding.inflate(layoutInflater)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val viewPager = binding.advViewPager
-        val advertisementAdapter = AdvertisementViewPagerAdapter(parentFragmentManager, lifecycle)
-        viewPager.adapter = advertisementAdapter
-        fab = view.findViewById(R.id.fab)
+        viewPager.adapter = AdvertisementViewPagerAdapter(parentFragmentManager, lifecycle)
 
         val tabLayout = binding.advTabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabOptionsArray.get(position)
         }.attach()
+
+        fab = view.findViewById(R.id.fab)
         fab.setOnClickListener {
             val tabPosition = tabLayout.selectedTabPosition
             if (tabPosition == 0) {
                 val fragment = PostApartmentFragment()
-                val transaction = fragmentManager?.beginTransaction()
-                transaction?.replace(R.id.fragment_container,fragment)?.commit()
-            } else if (tabPosition == 1){
+                val transaction = parentFragmentManager?.beginTransaction()
+                transaction?.replace(R.id.fragment_container, fragment)?.commit()
+            } else if (tabPosition == 1) {
                 val fragment = PostItemFragment()
-                val transaction = fragmentManager?.beginTransaction()
-                transaction?.replace(R.id.fragment_container,fragment)?.commit()
+                val transaction = parentFragmentManager?.beginTransaction()
+                transaction?.replace(R.id.fragment_container, fragment)?.commit()
             }
         }
     }
