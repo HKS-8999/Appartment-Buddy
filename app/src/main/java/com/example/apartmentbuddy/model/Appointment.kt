@@ -1,19 +1,18 @@
 package com.example.apartmentbuddy.model
 
-import com.google.type.Date
-import com.google.type.TimeOfDay
-
-
 class Appointment (){
-    val date : Date
-        get() {
-            TODO()
-        }
-    val time : TimeOfDay
-        get() {
-            TODO()
-        }
+    private val date : Int = 0
+    private val time : Int = 0
 
+    fun getDate(): Int {
+        return date
+    }
+    fun getTime(): Int {
+        return time
+    }
+    fun setTime(hourOfDay: Int, minute: Int){
+
+    }
     fun  printValidTime(hourOfDay: Int, minute : Int) : String {
         var hour = hourOfDay
         var am_pm = ""
@@ -31,6 +30,5 @@ class Appointment (){
         val min = if (minute < 10) "0" + minute else minute
         // display format of time
         return "$hourDay : $min $am_pm"
-
     }
 }
