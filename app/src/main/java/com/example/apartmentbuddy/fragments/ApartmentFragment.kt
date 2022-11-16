@@ -18,12 +18,14 @@ import com.example.apartmentbuddy.persistence.ApartmentDataSource
  */
 class ApartmentFragment : Fragment() {
     private lateinit var binding: FragmentApartmentBinding
+    private lateinit var bottomNavValue: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentApartmentBinding.inflate(layoutInflater)
+        bottomNavValue = arguments?.get("bottomNavValue").toString()
         return binding.root
     }
 
@@ -31,6 +33,15 @@ class ApartmentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = binding.advRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = ListApartmentAdvRecyclerViewAdapter(ApartmentDataSource().getApartmentList())
+        if (bottomNavValue == "home" || bottomNavValue == "null") {
+            recyclerView.adapter =
+                ListApartmentAdvRecyclerViewAdapter(ApartmentDataSource().getAllApartmentList())
+        } else if (bottomNavValue == "myPosts") {
+            recyclerView.adapter =
+                ListApartmentAdvRecyclerViewAdapter(ApartmentDataSource().getMyApartmentsAdvertisement())
+        } else if (bottomNavValue == "bookmark") {
+            recyclerView.adapter =
+                ListApartmentAdvRecyclerViewAdapter(ApartmentDataSource().getBookmarkedAdvertisement())
+        }
     }
 }

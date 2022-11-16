@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.databinding.FragmentPostItemBinding
-import com.google.android.material.tabs.TabLayout
 
 class PostItemFragment : Fragment() {
     private lateinit var binding: FragmentPostItemBinding
@@ -26,7 +24,7 @@ class PostItemFragment : Fragment() {
 
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
+                .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
         }
     }
 }

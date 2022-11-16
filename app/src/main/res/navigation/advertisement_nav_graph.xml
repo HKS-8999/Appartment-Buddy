@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/advertisementHomeFragment"
-        android:name="com.example.apartmentbuddy.fragments.AdvertisementHomeFragment"
+        android:name="com.example.apartmentbuddy.fragments.AdvertisementDisplayFragment"
         android:label="fragment_advertisement_home"
         tools:layout="@layout/fragment_advertisement_home" >
         <action
