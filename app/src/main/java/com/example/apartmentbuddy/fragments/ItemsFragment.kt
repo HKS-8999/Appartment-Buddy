@@ -34,13 +34,16 @@ class ItemsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         if (bottomNavValue == "home" || bottomNavValue == "null") {
             recyclerView.adapter =
-                ListItemAdvRecyclerViewAdapter(ItemDataSource().getAllItemsList())
+                ListItemAdvRecyclerViewAdapter(ItemDataSource().getAllItemsList(), bottomNavValue)
         } else if (bottomNavValue == "myPosts") {
             recyclerView.adapter =
-                ListItemAdvRecyclerViewAdapter(ItemDataSource().getMyItemsList())
+                ListItemAdvRecyclerViewAdapter(ItemDataSource().getMyItemsList(), bottomNavValue)
         } else if (bottomNavValue == "bookmark") {
             recyclerView.adapter =
-                ListItemAdvRecyclerViewAdapter(ItemDataSource().getBookmarkedItemsList())
+                ListItemAdvRecyclerViewAdapter(
+                    ItemDataSource().getBookmarkedItemsList(),
+                    bottomNavValue
+                )
         }
     }
 }

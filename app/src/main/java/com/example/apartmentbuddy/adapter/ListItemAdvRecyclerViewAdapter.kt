@@ -8,15 +8,27 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Item
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ListItemAdvRecyclerViewAdapter(private val listings: List<Item>) :
-    RecyclerView.Adapter<ListItemAdvRecyclerViewAdapter.ViewHolder>() {
+class ListItemAdvRecyclerViewAdapter(
+    private val listings: List<Item>,
+    private val bottomNavValue: String
+) : RecyclerView.Adapter<ListItemAdvRecyclerViewAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_items, parent, false)
+        if (bottomNavValue == "myPosts") {
+            view.findViewById<FloatingActionButton>(R.id.edit).visibility = View.VISIBLE
+            view.findViewById<FloatingActionButton>(R.id.delete).visibility = View.VISIBLE
+            view.findViewById<FloatingActionButton>(R.id.bookmark).visibility = View.INVISIBLE
+        }
+        if (bottomNavValue == "bookmark") {
+            view.findViewById<FloatingActionButton>(R.id.bookmark_remove).visibility = View.VISIBLE
+        }
         return ViewHolder(view)
     }
 

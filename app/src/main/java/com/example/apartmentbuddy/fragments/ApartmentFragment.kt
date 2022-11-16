@@ -35,13 +35,22 @@ class ApartmentFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         if (bottomNavValue == "home" || bottomNavValue == "null") {
             recyclerView.adapter =
-                ListApartmentAdvRecyclerViewAdapter(ApartmentDataSource().getAllApartmentList())
+                ListApartmentAdvRecyclerViewAdapter(
+                    ApartmentDataSource().getAllApartmentList(),
+                    bottomNavValue
+                )
         } else if (bottomNavValue == "myPosts") {
             recyclerView.adapter =
-                ListApartmentAdvRecyclerViewAdapter(ApartmentDataSource().getMyApartmentsAdvertisement())
+                ListApartmentAdvRecyclerViewAdapter(
+                    ApartmentDataSource().getMyApartmentsAdvertisement(),
+                    bottomNavValue
+                )
         } else if (bottomNavValue == "bookmark") {
             recyclerView.adapter =
-                ListApartmentAdvRecyclerViewAdapter(ApartmentDataSource().getBookmarkedAdvertisement())
+                ListApartmentAdvRecyclerViewAdapter(
+                    ApartmentDataSource().getBookmarkedAdvertisement(),
+                    bottomNavValue
+                )
         }
     }
 }
