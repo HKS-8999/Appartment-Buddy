@@ -64,6 +64,8 @@ class PostItemFragment : Fragment() {
                 Toast.makeText(
                     activity, "Successfully posted!", Toast.LENGTH_LONG
                 ).show()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
             }.addOnFailureListener { error ->
                 Toast.makeText(
                     activity, error.message.toString(), Toast.LENGTH_LONG
