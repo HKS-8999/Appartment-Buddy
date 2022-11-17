@@ -1,6 +1,8 @@
 package com.example.apartmentbuddy.fragments
 
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import com.example.apartmentbuddy.databinding.FragmentPostApartmentBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class PostApartmentFragment : Fragment() {
     private lateinit var binding: FragmentPostApartmentBinding
@@ -47,6 +50,22 @@ class PostApartmentFragment : Fragment() {
         rentEditText = view.findViewById(R.id.rent)
         availabilityEditText = view.findViewById(R.id.availability)
         contactEditText = view.findViewById(R.id.contact)
+
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        // credit to https://stackoverflow.com/a/62139866 for calendar with edit text solution for following two lines
+        availabilityEditText.inputType = InputType.TYPE_NULL;
+        availabilityEditText.keyListener = null;
+
+
+        availabilityEditText.setOnClickListener {
+            val datePickDialog = DatePickerDialog(requireActivity(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                availabilityEditText.setText("$year/${monthOfYear+1}/$dayOfMonth")
+            }, year, month, day)
+            datePickDialog.show()
+        }
 
         postApartmentButton.setOnClickListener {
             val bedrooms = bedroomsEditText.text.toString().trim().toFloat()
