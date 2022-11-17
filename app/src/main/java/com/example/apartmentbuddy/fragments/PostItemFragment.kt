@@ -94,7 +94,7 @@ class PostItemFragment : Fragment() {
                     activity, "Successfully posted!", Toast.LENGTH_LONG
                 ).show()
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
+                    .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
             }.addOnFailureListener { error ->
                 Toast.makeText(
                     activity, error.message.toString(), Toast.LENGTH_LONG
@@ -104,7 +104,7 @@ class PostItemFragment : Fragment() {
 
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
+                .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
         }
 
         imageUploadButton.setOnClickListener {

@@ -122,7 +122,7 @@ class PostApartmentFragment : Fragment() {
                     activity, "Successfully posted!", Toast.LENGTH_LONG
                 ).show()
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
+                    .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
             }.addOnFailureListener { error ->
                 Toast.makeText(
                     activity, error.message.toString(), Toast.LENGTH_LONG
@@ -132,7 +132,7 @@ class PostApartmentFragment : Fragment() {
 
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
+                .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
         }
 
         imageUploadButton.setOnClickListener {
@@ -140,7 +140,6 @@ class PostApartmentFragment : Fragment() {
         }
 
     }
-
 
     private fun uploadImageToFirebase(fileUri: Uri) {
         if (fileUri != null) {

@@ -11,17 +11,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Apartment
 import com.example.apartmentbuddy.model.Item
+import com.example.apartmentbuddy.persistence.ApartmentDataSource
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class ListApartmentAdvRecyclerViewAdapter(private val listings: List<Apartment>) :
-    RecyclerView.Adapter<ListApartmentAdvRecyclerViewAdapter.ViewHolder>() {
+class ListApartmentAdvRecyclerViewAdapter(
+    private val listings: List<Apartment>,
+    private val bottomNavValue: String
+) : RecyclerView.Adapter<ListApartmentAdvRecyclerViewAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_apartments, parent, false)
+        if (bottomNavValue == "myPosts") {
+            view.findViewById<FloatingActionButton>(R.id.edit).visibility = View.VISIBLE
+            view.findViewById<FloatingActionButton>(R.id.delete).visibility = View.VISIBLE
+            view.findViewById<FloatingActionButton>(R.id.bookmark).visibility = View.INVISIBLE
+        }
+        if (bottomNavValue == "bookmark") {
+            view.findViewById<FloatingActionButton>(R.id.bookmark_remove).visibility = View.VISIBLE
+        }
         return ViewHolder(view)
     }
 

@@ -5,29 +5,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.AdvertisementViewPagerAdapter
 import com.example.apartmentbuddy.databinding.FragmentAdvertisementHomeBinding
-import com.example.apartmentbuddy.databinding.FragmentApartmentBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * A simple [Fragment] subclass.
- * Use the [AdvertisementHomeFragment.newInstance] factory method to
+ * Use the [AdvertisementDisplayFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AdvertisementHomeFragment : Fragment() {
+class AdvertisementDisplayFragment : Fragment() {
     private lateinit var binding: FragmentAdvertisementHomeBinding
     private val tabOptionsArray = arrayOf("Apartments", "Items")
     private lateinit var fab: FloatingActionButton
+    private lateinit var bottomNavValue: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAdvertisementHomeBinding.inflate(layoutInflater)
+        bottomNavValue = arguments?.get("bottomNavValue").toString()
         return binding.root
     }
 
@@ -35,7 +35,7 @@ class AdvertisementHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val viewPager = binding.advViewPager
-        viewPager.adapter = AdvertisementViewPagerAdapter(parentFragmentManager, lifecycle)
+        viewPager.adapter = AdvertisementViewPagerAdapter(parentFragmentManager, lifecycle, bottomNavValue)
 
         val tabLayout = binding.advTabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
