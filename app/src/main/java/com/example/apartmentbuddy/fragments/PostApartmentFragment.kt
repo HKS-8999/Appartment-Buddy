@@ -38,12 +38,13 @@ class PostApartmentFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private val apartmentCollection = db.collection("apartments")
     private val auth = Firebase.auth
+    val selectedImages = ArrayList<Uri>()
 
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) {uri ->
-        if (uri != null) {
-            uploadImageToFirebase(uri)
-        } else {
-            // insert code for toast showing no media selected
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) {uris: List<Uri> ->
+        for (uri in uris) {
+            if (uri != null) {
+                uploadImageToFirebase(uri)
+            }
         }
 }
 
@@ -97,6 +98,7 @@ class PostApartmentFragment : Fragment() {
             val ad =
                 Apartment(
                     userId,
+                    selectedImages,
                     bedrooms,
                     bathrooms,
                     apartment,
@@ -136,7 +138,7 @@ class PostApartmentFragment : Fragment() {
 
             val refStorage = FirebaseStorage.getInstance().reference.child("apartments/$fileName")
 
-            // credits to https://heartbeat.comet.ml/working-with-firebase-storage-in-android-part-1-a789f9eea037 for the following snippet
+            // credits to https://heartbeat.comet.ml/working-with-firebase-storage-in-android-part-1-a789f9eea037 for the following snippet lines 142-165
             refStorage.putFile(fileUri)
                 .addOnProgressListener {
                     // notify the user about current progress
@@ -150,13 +152,16 @@ class PostApartmentFragment : Fragment() {
                     }
                 }
                 .addOnSuccessListener {
-                    // file upload complered
+                    refStorage.downloadUrl.addOnSuccessListener { uri ->
+                        selectedImages.add(uri)
+                    }
                     Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
                         .show()
                 }
-                .addOnFailureListener {
-                    // file upload failed̥
-                    it.printStackTrace()
+                .addOnFailureListener { ex ->
+                    Toast.makeText(
+                        activity, "Posting failed due to " + ex.message, Toast.LENGTH_LONG
+                    ).show()
                 }
         }
     }
