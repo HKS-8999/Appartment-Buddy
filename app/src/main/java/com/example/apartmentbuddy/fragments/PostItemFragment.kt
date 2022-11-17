@@ -39,11 +39,13 @@ class PostItemFragment : Fragment() {
     private val selectedImages = ArrayList<Uri>()
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
+            postItemButton.isEnabled = false
             for (uri in uris) {
                 if (uri != null) {
                     uploadImageToFirebase(uri)
                 }
             }
+            postItemButton.isEnabled = true
         }
 
     override fun onCreateView(
