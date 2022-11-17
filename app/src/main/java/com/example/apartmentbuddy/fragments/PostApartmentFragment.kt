@@ -55,15 +55,16 @@ class PostApartmentFragment : Fragment() {
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        // credit to https://stackoverflow.com/a/62139866 for calendar with edit text solution for following two lines
+        // credit to https://stackoverflow.com/a/62139866 for calendar with edit text solution click disable for following two lines
         availabilityEditText.inputType = InputType.TYPE_NULL;
         availabilityEditText.keyListener = null;
 
 
         availabilityEditText.setOnClickListener {
-            val datePickDialog = DatePickerDialog(requireActivity(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                availabilityEditText.setText("$year/${monthOfYear+1}/$dayOfMonth")
-            }, year, month, day)
+            val datePickDialog = DatePickerDialog(requireActivity(),
+                { view, pickYear, pickMonth, pickDay ->
+                    availabilityEditText.setText("$pickYear/${pickMonth+1}/$pickDay")
+                }, year, month, day)
             datePickDialog.show()
         }
 
