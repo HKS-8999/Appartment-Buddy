@@ -42,11 +42,13 @@ class PostApartmentFragment : Fragment() {
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
+            postApartmentButton.isEnabled = false
             for (uri in uris) {
                 if (uri != null) {
                     uploadImageToFirebase(uri)
                 }
             }
+            postApartmentButton.isEnabled = true
         }
 
     override fun onCreateView(
