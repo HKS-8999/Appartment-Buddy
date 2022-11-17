@@ -7,9 +7,10 @@ class Apartment(
     images: Uri,
     description: String,
     type: String,
+    contact: String,
     val noOfBedrooms: Number,
     val noOfBathrooms: Number,
     val unitNumber: Number,
     val rent: Float,
     val startDate: Date
-) : Advertisement(images, description, type)
+) : Advertisement(images, description, type, contact)
