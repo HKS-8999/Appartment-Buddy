@@ -38,15 +38,16 @@ class PostApartmentFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private val apartmentCollection = db.collection("apartments")
     private val auth = Firebase.auth
-    val selectedImages = ArrayList<Uri>()
+    private val selectedImages = ArrayList<Uri>()
 
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) {uris: List<Uri> ->
-        for (uri in uris) {
-            if (uri != null) {
-                uploadImageToFirebase(uri)
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
+            for (uri in uris) {
+                if (uri != null) {
+                    uploadImageToFirebase(uri)
+                }
             }
         }
-}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,7 +79,8 @@ class PostApartmentFragment : Fragment() {
 
 
         availabilityEditText.setOnClickListener {
-            val datePickDialog = DatePickerDialog(requireActivity(),
+            val datePickDialog = DatePickerDialog(
+                requireActivity(),
                 { view, pickYear, pickMonth, pickDay ->
                     availabilityEditText.setText("$pickYear/${pickMonth + 1}/$pickDay")
                 }, year, month, day
