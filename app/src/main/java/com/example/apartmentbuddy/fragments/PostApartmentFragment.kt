@@ -1,19 +1,33 @@
 package com.example.apartmentbuddy.fragments
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.navigation.Navigation
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.R
-import com.example.apartmentbuddy.adapter.AdvertisementViewPagerAdapter
+import com.example.apartmentbuddy.data.Apartment
 import com.example.apartmentbuddy.databinding.FragmentPostApartmentBinding
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 class PostApartmentFragment : Fragment() {
     private lateinit var binding: FragmentPostApartmentBinding
+    private lateinit var postApartmentButton: Button
+    private lateinit var bathroomsEditText: EditText
+    private lateinit var bedroomsEditText: EditText
+    private lateinit var apartmentEditText: EditText
+    private lateinit var descriptionEditText: EditText
+    private lateinit var rentEditText: EditText
+    private lateinit var availabilityEditText: EditText
+    private lateinit var contactEditText: EditText
+    private val db = FirebaseFirestore.getInstance()
+    private val apartmentCollection = db.collection("apartments")
+    private val auth = Firebase.auth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +39,38 @@ class PostApartmentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postApartmentButton = view.findViewById(R.id.submit)
+        bathroomsEditText = view.findViewById(R.id.bathrooms)
+        bedroomsEditText = view.findViewById(R.id.bedrooms)
+        apartmentEditText = view.findViewById(R.id.apartment)
+        descriptionEditText = view.findViewById(R.id.description)
+        rentEditText = view.findViewById(R.id.rent)
+        availabilityEditText = view.findViewById(R.id.availability)
+        contactEditText = view.findViewById(R.id.contact)
 
+        postApartmentButton.setOnClickListener {
+            val bedrooms = bedroomsEditText.text.toString().trim().toFloat()
+            val bathrooms = bathroomsEditText.text.toString().trim().toFloat()
+            val apartment = apartmentEditText.text.toString().trim()
+            val description = descriptionEditText.text.toString().trim()
+            val rent = rentEditText.text.toString().trim().toFloat()
+            val availability = availabilityEditText.text.toString().trim()
+            val contact = contactEditText.text.toString().trim()
+            val userId = "UID"
+            val ad =
+                Apartment(userId, bedrooms, bathrooms, apartment, description, rent, availability, contact)
+            apartmentCollection.document().set(ad).addOnSuccessListener { void: Void? ->
+                Toast.makeText(
+                    activity, "Successfully posted!", Toast.LENGTH_LONG
+                ).show()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
+            }.addOnFailureListener { error ->
+                Toast.makeText(
+                    activity, error.message.toString(), Toast.LENGTH_LONG
+                ).show()
+            }
+        }
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
