@@ -1,6 +1,7 @@
 package com.example.apartmentbuddy.fragments
 
 import android.app.DatePickerDialog
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -8,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.data.Apartment
@@ -16,7 +19,9 @@ import com.example.apartmentbuddy.databinding.FragmentPostApartmentBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import java.util.*
+
 
 class PostApartmentFragment : Fragment() {
     private lateinit var binding: FragmentPostApartmentBinding
@@ -28,9 +33,20 @@ class PostApartmentFragment : Fragment() {
     private lateinit var rentEditText: EditText
     private lateinit var availabilityEditText: EditText
     private lateinit var contactEditText: EditText
+    private lateinit var imageUploadButton: ImageButton
+
     private val db = FirebaseFirestore.getInstance()
     private val apartmentCollection = db.collection("apartments")
     private val auth = Firebase.auth
+    val selectedImages = ArrayList<Uri>()
+
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) {uris: List<Uri> ->
+        for (uri in uris) {
+            if (uri != null) {
+                uploadImageToFirebase(uri)
+            }
+        }
+}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +66,7 @@ class PostApartmentFragment : Fragment() {
         rentEditText = view.findViewById(R.id.rent)
         availabilityEditText = view.findViewById(R.id.availability)
         contactEditText = view.findViewById(R.id.contact)
+        imageUploadButton = view.findViewById(R.id.addImages)
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -63,8 +80,9 @@ class PostApartmentFragment : Fragment() {
         availabilityEditText.setOnClickListener {
             val datePickDialog = DatePickerDialog(requireActivity(),
                 { view, pickYear, pickMonth, pickDay ->
-                    availabilityEditText.setText("$pickYear/${pickMonth+1}/$pickDay")
-                }, year, month, day)
+                    availabilityEditText.setText("$pickYear/${pickMonth + 1}/$pickDay")
+                }, year, month, day
+            )
             datePickDialog.show()
         }
 
@@ -78,7 +96,17 @@ class PostApartmentFragment : Fragment() {
             val contact = contactEditText.text.toString().trim()
             val userId = "UID"
             val ad =
-                Apartment(userId, bedrooms, bathrooms, apartment, description, rent, availability, contact)
+                Apartment(
+                    userId,
+                    selectedImages,
+                    bedrooms,
+                    bathrooms,
+                    apartment,
+                    description,
+                    rent,
+                    availability,
+                    contact
+                )
             apartmentCollection.document().set(ad).addOnSuccessListener { void: Void? ->
                 Toast.makeText(
                     activity, "Successfully posted!", Toast.LENGTH_LONG
@@ -91,9 +119,51 @@ class PostApartmentFragment : Fragment() {
                 ).show()
             }
         }
+
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
         }
+
+        imageUploadButton.setOnClickListener {
+            getContent.launch("image/*")
+        }
+
     }
+
+
+    private fun uploadImageToFirebase(fileUri: Uri) {
+        if (fileUri != null) {
+            val fileName = UUID.randomUUID().toString() + ".jpg"
+
+            val refStorage = FirebaseStorage.getInstance().reference.child("apartments/$fileName")
+
+            // credits to https://heartbeat.comet.ml/working-with-firebase-storage-in-android-part-1-a789f9eea037 for the following snippet lines 142-165
+            refStorage.putFile(fileUri)
+                .addOnProgressListener {
+                    // notify the user about current progress
+                    val completePercent = (it.bytesTransferred / it.totalByteCount) * 100
+                    if (completePercent.toInt() % 10 == 0) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Uploading : ${completePercent}% done",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+                .addOnSuccessListener {
+                    refStorage.downloadUrl.addOnSuccessListener { uri ->
+                        selectedImages.add(uri)
+                    }
+                    Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                .addOnFailureListener { ex ->
+                    Toast.makeText(
+                        activity, "Posting failed due to " + ex.message, Toast.LENGTH_LONG
+                    ).show()
+                }
+        }
+    }
+
 }
