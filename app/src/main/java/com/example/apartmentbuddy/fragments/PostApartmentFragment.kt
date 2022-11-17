@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.R
+import com.example.apartmentbuddy.adapter.CarouselAdapter
 import com.example.apartmentbuddy.data.Apartment
 import com.example.apartmentbuddy.databinding.FragmentPostApartmentBinding
 import com.google.firebase.auth.ktx.auth
@@ -39,6 +40,7 @@ class PostApartmentFragment : Fragment() {
     private val apartmentCollection = db.collection("apartments")
     private val auth = Firebase.auth
     private val selectedImages = ArrayList<Uri>()
+    private val adapter = CarouselAdapter(selectedImages)
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
@@ -56,6 +58,10 @@ class PostApartmentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPostApartmentBinding.inflate(layoutInflater)
+        binding.carouselRecyclerview.adapter = adapter
+        binding.carouselRecyclerview.apply {
+            setInfinite(true)
+        }
         return binding.root
     }
 
@@ -158,6 +164,7 @@ class PostApartmentFragment : Fragment() {
                 .addOnSuccessListener {
                     refStorage.downloadUrl.addOnSuccessListener { uri ->
                         selectedImages.add(uri)
+                        adapter.notifyDataSetChanged()
                     }
                     Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
                         .show()
