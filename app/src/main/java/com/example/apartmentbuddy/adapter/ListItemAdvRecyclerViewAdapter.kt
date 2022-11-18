@@ -4,14 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Item
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import me.relex.circleindicator.CircleIndicator
 
+/**
+ * Credits for circle indicator: https://medium.com/@mandvi2346verma/image-slider-with-dot-indicators-using-viewpager-firebase-kotlin-android-735968da76f6
+ */
 class ListItemAdvRecyclerViewAdapter(
     private val listings: List<Item>,
     private val bottomNavValue: String
@@ -20,6 +23,7 @@ class ListItemAdvRecyclerViewAdapter(
     lateinit var viewPager: ViewPager
     lateinit var viewPagerAdapter: ImageSliderViewPagerAdapter
     lateinit var context: Context
+    lateinit var indicator: CircleIndicator
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -36,6 +40,7 @@ class ListItemAdvRecyclerViewAdapter(
             view.findViewById<FloatingActionButton>(R.id.bookmark_remove).visibility = View.VISIBLE
         }
         viewPager = view.findViewById(R.id.idViewPager)
+        indicator = view.findViewById(R.id.indicator)
         context = parent.context
         return ViewHolder(view)
     }
@@ -48,6 +53,8 @@ class ListItemAdvRecyclerViewAdapter(
 
         viewPagerAdapter = ImageSliderViewPagerAdapter(context, advertisementItem.images)
         viewPager.adapter = viewPagerAdapter
+        indicator.setViewPager(viewPager)
+
         holder.title.text = advertisementItem.title
         holder.description.text = advertisementItem.description
         holder.price.text = advertisementItem.price.toString()

@@ -11,8 +11,12 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.example.apartmentbuddy.R
+import java.util.*
 
-
+/**
+ * Adapter for displaying advertisement images.
+ * Credit: https://www.geeksforgeeks.org/android-image-slider-using-viewpager-in-kotlin/
+ */
 class ImageSliderViewPagerAdapter(val context: Context, private val imageList: List<Uri>) :
     PagerAdapter() {
     override fun getCount(): Int {
@@ -20,7 +24,7 @@ class ImageSliderViewPagerAdapter(val context: Context, private val imageList: L
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object`
+        return view === `object` as RelativeLayout
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -31,8 +35,7 @@ class ImageSliderViewPagerAdapter(val context: Context, private val imageList: L
         Glide.with(context)
             .load(imageList[position])
             .into(imageView)
-        val vp = container as ViewPager
-        vp.addView(itemView, 0)
+        Objects.requireNonNull(container).addView(itemView)
         return itemView
     }
 

@@ -48,7 +48,7 @@ class ApartmentFragment : Fragment() {
                         val images: ArrayList<Uri> =
                             document.get("photos").toString().replace("[", "").replace("]", "")
                                 .split(",").map {
-                                    Uri.parse(it)
+                                    Uri.parse(it.trim())
                                 } as ArrayList<Uri>
 
                         apartmentList.add(
@@ -86,7 +86,7 @@ class ApartmentFragment : Fragment() {
                                 document.get("photos").toString().replace("[", "").replace("]", "")
                                     .split(",")
                                     .map {
-                                        Uri.parse(it)
+                                        Uri.parse(it.trim())
                                     } as ArrayList<Uri>
 
                             apartmentList.add(
@@ -115,7 +115,7 @@ class ApartmentFragment : Fragment() {
                 }
             }
             "bookmark" -> {
-                
+
             }
         }
     }

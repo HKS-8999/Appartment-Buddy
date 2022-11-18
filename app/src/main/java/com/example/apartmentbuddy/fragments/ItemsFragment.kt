@@ -50,7 +50,7 @@ class ItemsFragment : Fragment() {
                         val images: ArrayList<Uri> =
                             document.get("photos").toString().replace("[", "").replace("]", "")
                                 .split(",").map {
-                                    Uri.parse(it)
+                                    Uri.parse(it.trim())
                                 } as ArrayList<Uri>
 
                         itemList.add(
@@ -86,7 +86,7 @@ class ItemsFragment : Fragment() {
                             val images: ArrayList<Uri> =
                                 document.get("photos").toString().replace("[", "").replace("]", "")
                                     .split(",").map {
-                                        Uri.parse(it)
+                                        Uri.parse(it.trim())
                                     } as ArrayList<Uri>
 
                             itemList.add(
