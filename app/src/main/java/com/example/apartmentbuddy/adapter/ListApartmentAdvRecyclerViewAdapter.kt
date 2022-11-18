@@ -1,18 +1,20 @@
 package com.example.apartmentbuddy.adapter
 
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Apartment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import me.relex.circleindicator.CircleIndicator
 
+/**
+ * Credits for circle indicator: https://medium.com/@mandvi2346verma/image-slider-with-dot-indicators-using-viewpager-firebase-kotlin-android-735968da76f6
+ */
 class ListApartmentAdvRecyclerViewAdapter(
     private val listings: List<Apartment>,
     private val bottomNavValue: String
@@ -21,6 +23,7 @@ class ListApartmentAdvRecyclerViewAdapter(
     lateinit var viewPager: ViewPager
     lateinit var viewPagerAdapter: ImageSliderViewPagerAdapter
     lateinit var context: Context
+    lateinit var indicator: CircleIndicator
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -37,18 +40,21 @@ class ListApartmentAdvRecyclerViewAdapter(
             view.findViewById<FloatingActionButton>(R.id.bookmark_remove)?.visibility = View.VISIBLE
         }
         viewPager = view.findViewById(R.id.idViewPager)
+        indicator = view.findViewById(R.id.indicator)
         context = parent.context
         return ViewHolder(view)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int
     ) {
         val advertisementItem = listings[position]
+
         viewPagerAdapter = ImageSliderViewPagerAdapter(context, advertisementItem.images)
         viewPager.adapter = viewPagerAdapter
+        indicator.setViewPager(viewPager)
+
         holder.unit.text = advertisementItem.unitNumber
         holder.description.text = advertisementItem.description
         holder.bedrooms.text = advertisementItem.noOfBedrooms.toString()
