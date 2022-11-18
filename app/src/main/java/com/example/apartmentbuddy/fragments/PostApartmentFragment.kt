@@ -15,8 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.CarouselAdapter
-import com.example.apartmentbuddy.data.Apartment
 import com.example.apartmentbuddy.databinding.FragmentPostApartmentBinding
+import com.example.apartmentbuddy.model.Apartment
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -109,13 +109,14 @@ class PostApartmentFragment : Fragment() {
                 Apartment(
                     userId,
                     selectedImages,
+                    description,
+                    "apartment",
+                    contact,
                     bedrooms,
                     bathrooms,
                     apartment,
-                    description,
                     rent,
                     availability,
-                    contact
                 )
             apartmentCollection.document().set(ad).addOnSuccessListener { void: Void? ->
                 Toast.makeText(

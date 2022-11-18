@@ -22,9 +22,9 @@ class ListItemAdvRecyclerViewAdapter(
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_items, parent, false)
         if (bottomNavValue == "myPosts") {
-            view.findViewById<FloatingActionButton>(R.id.edit).visibility = View.VISIBLE
-            view.findViewById<FloatingActionButton>(R.id.delete).visibility = View.VISIBLE
-            view.findViewById<FloatingActionButton>(R.id.bookmark).visibility = View.INVISIBLE
+            view.findViewById<FloatingActionButton>(R.id.edit)?.visibility = View.VISIBLE
+            view.findViewById<FloatingActionButton>(R.id.delete)?.visibility = View.VISIBLE
+            view.findViewById<FloatingActionButton>(R.id.bookmark)?.visibility = View.INVISIBLE
         }
         if (bottomNavValue == "bookmark") {
             view.findViewById<FloatingActionButton>(R.id.bookmark_remove).visibility = View.VISIBLE
@@ -38,7 +38,7 @@ class ListItemAdvRecyclerViewAdapter(
     ) {
         val advertisementItem = listings[position]
         //TODO()
-        holder.imageView.setImageURI(advertisementItem.images)
+        //holder.imageView.setImageURI(advertisementItem.images)
         holder.title.text = advertisementItem.title
         holder.description.text = advertisementItem.description
         holder.price.text = advertisementItem.price.toString()
