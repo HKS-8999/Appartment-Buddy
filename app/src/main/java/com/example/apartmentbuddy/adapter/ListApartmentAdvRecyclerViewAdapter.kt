@@ -45,7 +45,7 @@ class ListApartmentAdvRecyclerViewAdapter(
     ) {
         val advertisementItem = listings[position]
         //TODO()
-        holder.imageView.setImageURI(advertisementItem.images)
+        //holder.imageView.setImageURI(advertisementItem.images)
         holder.unit.text = advertisementItem.unitNumber.toString()
         holder.description.text = advertisementItem.description
         holder.bedrooms.text = advertisementItem.noOfBedrooms.toString()

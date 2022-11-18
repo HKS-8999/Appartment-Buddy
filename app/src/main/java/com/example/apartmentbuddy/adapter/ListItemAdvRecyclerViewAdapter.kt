@@ -38,7 +38,7 @@ class ListItemAdvRecyclerViewAdapter(
     ) {
         val advertisementItem = listings[position]
         //TODO()
-        holder.imageView.setImageURI(advertisementItem.images)
+        //holder.imageView.setImageURI(advertisementItem.images)
         holder.title.text = advertisementItem.title
         holder.description.text = advertisementItem.description
         holder.price.text = advertisementItem.price.toString()
