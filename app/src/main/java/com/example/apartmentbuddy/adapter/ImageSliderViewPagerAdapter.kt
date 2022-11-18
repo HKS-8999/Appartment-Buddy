@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.example.apartmentbuddy.R
-import java.util.*
+
 
 class ImageSliderViewPagerAdapter(val context: Context, private val imageList: List<Uri>) :
     PagerAdapter() {
@@ -19,20 +20,19 @@ class ImageSliderViewPagerAdapter(val context: Context, private val imageList: L
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object` as RelativeLayout
+        return view === `object`
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val mLayoutInflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val itemView: View = mLayoutInflater.inflate(R.layout.recycler_apartments, container, false)
-        val imageView: ImageView = itemView.findViewById<View>(R.id.apartmentImage) as ImageView
+        val itemView: View = mLayoutInflater.inflate(R.layout.image_slider_item, container, false)
+        val imageView: ImageView = itemView.findViewById<View>(R.id.imageSliderItem) as ImageView
         Glide.with(context)
             .load(imageList[position])
-            .override(200, 200)
-            .centerCrop()
-            .into(imageView);
-        Objects.requireNonNull(container).addView(itemView)
+            .into(imageView)
+        val vp = container as ViewPager
+        vp.addView(itemView, 0)
         return itemView
     }
 

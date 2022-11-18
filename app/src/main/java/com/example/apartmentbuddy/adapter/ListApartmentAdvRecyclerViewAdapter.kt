@@ -5,18 +5,13 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Apartment
-import com.example.apartmentbuddy.model.Item
-import com.example.apartmentbuddy.persistence.ApartmentDataSource
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class ListApartmentAdvRecyclerViewAdapter(
     private val listings: List<Apartment>,
@@ -52,10 +47,8 @@ class ListApartmentAdvRecyclerViewAdapter(
         position: Int
     ) {
         val advertisementItem = listings[position]
-        //TODO()
         viewPagerAdapter = ImageSliderViewPagerAdapter(context, advertisementItem.images)
         viewPager.adapter = viewPagerAdapter
-
         holder.unit.text = advertisementItem.unitNumber
         holder.description.text = advertisementItem.description
         holder.bedrooms.text = advertisementItem.noOfBedrooms.toString()

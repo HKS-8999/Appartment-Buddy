@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apartmentbuddy.adapter.ListItemAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentItemsBinding
 import com.example.apartmentbuddy.model.Item
-import com.example.apartmentbuddy.persistence.ItemDataSource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -49,9 +48,10 @@ class ItemsFragment : Fragment() {
                     val itemList = mutableListOf<Item>()
                     itemCollection.get().await().documents.forEach { document ->
                         val images: ArrayList<Uri> =
-                            document.get("photos").toString().split(",").map {
-                                Uri.parse(it)
-                            } as ArrayList<Uri>
+                            document.get("photos").toString().replace("[", "").replace("]", "")
+                                .split(",").map {
+                                    Uri.parse(it)
+                                } as ArrayList<Uri>
 
                         itemList.add(
                             Item(
@@ -84,9 +84,10 @@ class ItemsFragment : Fragment() {
                     itemCollection.whereEqualTo("uid", "UID").get()
                         .await().documents.forEach { document ->
                             val images: ArrayList<Uri> =
-                                document.get("photos").toString().split(",").map {
-                                    Uri.parse(it)
-                                } as ArrayList<Uri>
+                                document.get("photos").toString().replace("[", "").replace("]", "")
+                                    .split(",").map {
+                                        Uri.parse(it)
+                                    } as ArrayList<Uri>
 
                             itemList.add(
                                 Item(
@@ -113,11 +114,7 @@ class ItemsFragment : Fragment() {
                 }
             }
             "bookmark" -> {
-                recyclerView.adapter =
-                    ListItemAdvRecyclerViewAdapter(
-                        ItemDataSource().getBookmarkedItemsList(),
-                        bottomNavValue
-                    )
+
             }
         }
     }

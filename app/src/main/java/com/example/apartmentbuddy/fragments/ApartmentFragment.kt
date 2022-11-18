@@ -2,17 +2,14 @@ package com.example.apartmentbuddy.fragments
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apartmentbuddy.adapter.ListApartmentAdvRecyclerViewAdapter
-import com.example.apartmentbuddy.adapter.ListItemAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentApartmentBinding
 import com.example.apartmentbuddy.model.Apartment
-import com.example.apartmentbuddy.persistence.ApartmentDataSource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
@@ -49,9 +46,10 @@ class ApartmentFragment : Fragment() {
                     val apartmentList = mutableListOf<Apartment>()
                     apartmentCollection.get().await().documents.forEach { document ->
                         val images: ArrayList<Uri> =
-                            document.get("photos").toString().split(",").map {
-                                Uri.parse(it)
-                            } as ArrayList<Uri>
+                            document.get("photos").toString().replace("[", "").replace("]", "")
+                                .split(",").map {
+                                    Uri.parse(it)
+                                } as ArrayList<Uri>
 
                         apartmentList.add(
                             Apartment(
@@ -84,9 +82,12 @@ class ApartmentFragment : Fragment() {
                     apartmentCollection.whereEqualTo("uid", "UID").get()
                         .await().documents.forEach { document ->
                             val images: ArrayList<Uri> =
-                                document.get("photos").toString().split(",").map {
-                                    Uri.parse(it)
-                                } as ArrayList<Uri>
+
+                                document.get("photos").toString().replace("[", "").replace("]", "")
+                                    .split(",")
+                                    .map {
+                                        Uri.parse(it)
+                                    } as ArrayList<Uri>
 
                             apartmentList.add(
                                 Apartment(
@@ -114,11 +115,7 @@ class ApartmentFragment : Fragment() {
                 }
             }
             "bookmark" -> {
-                recyclerView.adapter =
-                    ListApartmentAdvRecyclerViewAdapter(
-                        ApartmentDataSource().getBookmarkedAdvertisement(),
-                        bottomNavValue
-                    )
+                
             }
         }
     }
