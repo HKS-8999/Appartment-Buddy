@@ -77,7 +77,6 @@ class ApartmentFragment : Fragment() {
                     }
                 }
             }
-
             "myPosts" -> {
                 GlobalScope.launch(Dispatchers.IO) {
                     val apartmentList = mutableListOf<Apartment>()
