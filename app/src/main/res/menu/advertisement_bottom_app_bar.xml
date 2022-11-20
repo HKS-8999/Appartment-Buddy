@@ -6,8 +6,7 @@
         android:id="@+id/adv_home"
         android:enabled="true"
         android:icon="@drawable/ic_outline_home_24"
-        android:title="Ads"
-        />
+        android:title="Ads" />
 
     <item
         android:id="@+id/adv_myPosts"
@@ -21,9 +20,9 @@
         android:icon="@drawable/ic_outline_bookmarks_24"
         android:title="Saved" />
 
-    <item
-        android:id="@+id/adv_newPost"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_post_add_24"
-        android:title="Create" />
+<!--    <item-->
+<!--        android:id="@+id/adv_newPost"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_baseline_post_add_24"-->
+<!--        android:title="Post" />-->
 </menu>

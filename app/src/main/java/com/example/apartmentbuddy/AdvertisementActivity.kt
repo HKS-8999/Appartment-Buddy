@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.databinding.ActivityAdvertisementBinding
-import com.example.apartmentbuddy.fragments.AdvertisementHomeFragment
-import com.example.apartmentbuddy.fragments.PostApartmentFragment
+import com.example.apartmentbuddy.fragments.AdvertisementDisplayFragment
 
 class AdvertisementActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdvertisementBinding
@@ -17,12 +16,31 @@ class AdvertisementActivity : AppCompatActivity() {
         setContentView(view)
 
         //Display Advertisement Home Page
-        replaceFragment(AdvertisementHomeFragment())
+        replaceFragment(AdvertisementDisplayFragment())
 
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.adv_home -> replaceFragment(AdvertisementHomeFragment())
-                R.id.adv_newPost -> replaceFragment(PostApartmentFragment())
+                R.id.adv_home -> {
+                    val bundle = Bundle()
+                    bundle.putString("bottomNavValue", "home")
+                    val fragment = AdvertisementDisplayFragment()
+                    fragment.arguments = bundle
+                    replaceFragment(fragment)
+                }
+                R.id.adv_myPosts -> {
+                    val bundle = Bundle()
+                    bundle.putString("bottomNavValue", "myPosts")
+                    val fragment = AdvertisementDisplayFragment()
+                    fragment.arguments = bundle
+                    replaceFragment(fragment)
+                }
+                R.id.adv_bookmark -> {
+                    val bundle = Bundle()
+                    bundle.putString("bottomNavValue", "bookmark")
+                    val fragment = AdvertisementDisplayFragment()
+                    fragment.arguments = bundle
+                    replaceFragment(fragment)
+                }
             }
             true
         }

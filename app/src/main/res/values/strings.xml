@@ -32,6 +32,20 @@
     <string name="text_forgot_password">Forgot Password?</string>
     <string name="text_new_user">New User?</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="go_to_home_page">Go to Home Page</string>
+    <string-array name="Condition">
+        <item>New</item>
+        <item>Used</item>
+    </string-array>
+    <string-array name="Category">
+        <item>Books</item>
+        <item>Bikes</item>
+        <item>Cell Phones</item>
+        <item>Clothing</item>
+        <item>Electronics</item>
+        <item>Tools</item>
+        <item>TV &amp; Video</item>
+    </string-array>
     <string name="status">status</string>
     <string name="time">time</string>
 </resources>
