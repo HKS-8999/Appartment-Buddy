@@ -54,19 +54,19 @@ class Appointment : Fragment() {
     }
 
     private fun loadData(){
-        nameList.add(AppointmentData("Saif","10-12-2022","9am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-        nameList.add(AppointmentData("Saif","10-12-2022","9am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-
-        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
-        nameList.add(AppointmentData("Saif","10-13-2022","10:30am"))
+//        nameList.add(AppointmentData("Saif","10-12-2022","9am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//        nameList.add(AppointmentData("Saif","10-12-2022","9am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//
+//        nameList.add(AppointmentData("Saif","10-13-2022","10am"))
+//        nameList.add(AppointmentData("Saif","10-13-2022","10:30am"))
     }
 }
