@@ -1,12 +1,12 @@
 package com.example.apartmentbuddy.model
 
-import java.sql.Timestamp
-
 data class AppointmentData(
-    val name:String,
-    val date: String,
-    val time:String,
-    val user_id: String,
-    var location: String,
-    val timestamp: String
+    val name:String?= null,
+    val date: String?= null,
+    val time:String?= null,
+    val user_id: String?= null,
+    var location: String?= null,
+    val timestamp: String? = null
 )
+
+

@@ -38,7 +38,7 @@ class Appointment (){
     @RequiresApi(Build.VERSION_CODES.O)
     // Reference : https://www.programiz.com/kotlin-programming/examples/current-date-time
     // Format the current Date and time in "yyyy-MM-dd HH:mm:ss"
-    fun buildTimeStamp() : String {
+    fun buildTimeStamp() : String? {
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val formatted = current.format(formatter)
