@@ -107,6 +107,7 @@ class PostApartmentFragment : Fragment() {
             val userId = "UID"
             val ad =
                 Apartment(
+                    "document ID",
                     userId,
                     selectedImages,
                     description,
@@ -117,6 +118,7 @@ class PostApartmentFragment : Fragment() {
                     apartment,
                     rent,
                     availability,
+                    mutableListOf()
                 )
             apartmentCollection.document().set(ad).addOnSuccessListener { void: Void? ->
                 Toast.makeText(
