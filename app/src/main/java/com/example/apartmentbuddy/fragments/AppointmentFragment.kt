@@ -45,7 +45,6 @@ class Appointment : Fragment() {
         EventChangeListener()
         /**  Reference : https://medium.com/@ezatpanah/recyclerview-in-android-with-example-in-depth-guide-94462a6b573b  */
         sampleAdapter = AppointmentAdapter(nameList)
-        sampleAdapter.notifyDataSetChanged()
         binding.apply {
             rvMain.apply {
                 layoutManager = LinearLayoutManager(context)
@@ -71,6 +70,7 @@ class Appointment : Fragment() {
                         println(nameList)
 
                     }
+                    sampleAdapter.notifyDataSetChanged()
 
                 }
             }
