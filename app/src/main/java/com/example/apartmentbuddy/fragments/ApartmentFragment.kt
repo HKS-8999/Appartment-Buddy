@@ -82,6 +82,7 @@ class ApartmentFragment : Fragment() {
 
             apartmentList.add(
                 Apartment(
+                    document.id,
                     document.data?.get("uid").toString(),
                     images,
                     document.data?.get("description").toString(),
@@ -92,6 +93,8 @@ class ApartmentFragment : Fragment() {
                     document.data?.get("apartment").toString(),
                     document.data?.get("rent").toString().toFloat(),
                     document.data?.get("availability").toString(),
+                    document.data?.get("bookmarkUserList").toString()
+                        .split(",") as MutableList<String>
                 )
             )
         }

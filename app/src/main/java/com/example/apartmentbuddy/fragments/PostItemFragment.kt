@@ -86,8 +86,18 @@ class PostItemFragment : Fragment() {
             val userId = "UID"
             val item =
                 Item(
-                    userId, selectedImages, description, "Item", contact,
-                    title, condition, price, category, address
+                    "document ID",
+                    userId,
+                    selectedImages,
+                    description,
+                    "Item",
+                    contact,
+                    title,
+                    condition,
+                    price,
+                    category,
+                    address,
+                    mutableListOf()
                 )
             itemCollection.document().set(item).addOnSuccessListener { void: Void? ->
                 Toast.makeText(

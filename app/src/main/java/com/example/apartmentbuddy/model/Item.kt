@@ -4,6 +4,7 @@ import android.net.Uri
 import java.util.ArrayList
 
 class Item(
+    documentId: String,
     uid: String,
     images: ArrayList<Uri>,
     description: String,
@@ -13,5 +14,6 @@ class Item(
     val condition: String,
     val price: Float,
     val category: String,
-    val address: String
-) : Advertisement(uid, images, description, type, contact)
+    val address: String,
+    bookmarkUserList: MutableList<String>
+) : Advertisement(documentId, uid, images, description, type, contact, bookmarkUserList)

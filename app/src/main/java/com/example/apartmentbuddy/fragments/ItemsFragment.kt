@@ -84,6 +84,7 @@ class ItemsFragment : Fragment() {
 
             itemList.add(
                 Item(
+                    document.id,
                     document.data?.get("uid").toString(),
                     images,
                     document.data?.get("description").toString(),
@@ -94,6 +95,7 @@ class ItemsFragment : Fragment() {
                     document.data?.get("price").toString().toFloat(),
                     document.data?.get("category").toString(),
                     document.data?.get("address").toString(),
+                    document.data?.get("bookmarkUserList").toString().split(",") as MutableList<String>
                 )
             )
         }
