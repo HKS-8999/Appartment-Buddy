@@ -42,7 +42,7 @@ class ApartmentFragment : Fragment() {
         val recyclerView = binding.advRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        var apartmentList: List<Apartment>? = null
+        var apartmentList: MutableList<Apartment>? = null
         var documentSnapshot: MutableList<DocumentSnapshot> = mutableListOf()
         GlobalScope.launch(Dispatchers.IO) {
             when (bottomNavValue) {
@@ -70,7 +70,6 @@ class ApartmentFragment : Fragment() {
                     apartmentList = mapApartmentDataToView(documentSnapshot)
                 }
             }
-
             withContext(Dispatchers.Main) {
                 recyclerView.adapter = apartmentList?.let {
                     ListApartmentAdvRecyclerViewAdapter(
@@ -81,7 +80,7 @@ class ApartmentFragment : Fragment() {
         }
     }
 
-    private fun mapApartmentDataToView(documents: List<DocumentSnapshot>): List<Apartment> {
+    private fun mapApartmentDataToView(documents: List<DocumentSnapshot>): MutableList<Apartment>? {
         val apartmentList = mutableListOf<Apartment>()
         for (document in documents) {
             val images: ArrayList<Uri> =

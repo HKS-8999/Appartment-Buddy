@@ -18,7 +18,7 @@ import me.relex.circleindicator.CircleIndicator
  * Credits for circle indicator: https://medium.com/@mandvi2346verma/image-slider-with-dot-indicators-using-viewpager-firebase-kotlin-android-735968da76f6
  */
 class ListApartmentAdvRecyclerViewAdapter(
-    private val listings: List<Apartment>,
+    private var listings: MutableList<Apartment>,
     private val bottomNavValue: String
 ) : RecyclerView.Adapter<ListApartmentAdvRecyclerViewAdapter.ViewHolder>() {
 
@@ -45,10 +45,6 @@ class ListApartmentAdvRecyclerViewAdapter(
                 view.findViewById<FloatingActionButton>(R.id.delete)?.visibility = View.VISIBLE
                 view.findViewById<FloatingActionButton>(R.id.bookmark)?.visibility = View.INVISIBLE
             }
-            "bookmark" -> {
-                view.findViewById<FloatingActionButton>(R.id.bookmark_remove)?.visibility =
-                    View.VISIBLE
-            }
         }
 
         viewPager = view.findViewById(R.id.idViewPager)
@@ -73,8 +69,6 @@ class ListApartmentAdvRecyclerViewAdapter(
         holder.startDate.text = advertisementItem.startDate
         holder.contact.text = advertisementItem.contact
 
-        //displayRemoveBookmarkFab(advertisementItem.bookmarkUserList, holder)
-
         //TODO(): Compare with loggedIn user's ID
         val loggedInUser = advertisementItem.uid
         if (advertisementItem.bookmarkUserList?.map { string ->
@@ -91,6 +85,8 @@ class ListApartmentAdvRecyclerViewAdapter(
                 //TODO(): Pass loggedIn USER ID
                 advertisementItem.uid
             )
+            holder.bookmarkRemove.visibility = View.VISIBLE
+            notifyDataSetChanged()
         }
 
         //Remove Bookmark
@@ -101,6 +97,11 @@ class ListApartmentAdvRecyclerViewAdapter(
                 //TODO(): Pass loggedIn USER ID
                 advertisementItem.uid
             )
+            holder.bookmarkRemove.visibility = View.INVISIBLE
+            if (bottomNavValue == "bookmark") {
+                listings.remove(advertisementItem)
+            }
+            notifyDataSetChanged()
         }
     }
 
@@ -118,16 +119,5 @@ class ListApartmentAdvRecyclerViewAdapter(
         val contact: TextView = itemView.findViewById(R.id.apartmentContact)
         val bookmark: FloatingActionButton = itemView.findViewById(R.id.bookmark)
         val bookmarkRemove: FloatingActionButton = itemView.findViewById(R.id.bookmark_remove)
-    }
-
-    fun displayRemoveBookmarkFab(list: MutableList<String>?, holder: ViewHolder) {
-        //TODO(): Compare with loggedIn user's ID
-        val loggedInUser = "Minal"
-
-        if (list?.map { string ->
-                string.replace("[", "").replace("]", "")
-            }?.contains(loggedInUser) == true) {
-            holder.bookmarkRemove.visibility = View.VISIBLE
-        }
     }
 }
