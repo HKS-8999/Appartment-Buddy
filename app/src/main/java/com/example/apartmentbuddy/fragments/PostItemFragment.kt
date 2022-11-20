@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.CarouselAdapter
-import com.example.apartmentbuddy.data.Item
+import com.example.apartmentbuddy.model.Item
 import com.example.apartmentbuddy.databinding.FragmentPostItemBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -86,15 +86,15 @@ class PostItemFragment : Fragment() {
             val userId = "UID"
             val item =
                 Item(
-                    userId, selectedImages,
-                    title, description, condition, price, category, address, contact
+                    userId, selectedImages, description, "Item", contact,
+                    title, condition, price, category, address
                 )
             itemCollection.document().set(item).addOnSuccessListener { void: Void? ->
                 Toast.makeText(
                     activity, "Successfully posted!", Toast.LENGTH_LONG
                 ).show()
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
+                    .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
             }.addOnFailureListener { error ->
                 Toast.makeText(
                     activity, error.message.toString(), Toast.LENGTH_LONG
@@ -104,7 +104,7 @@ class PostItemFragment : Fragment() {
 
         binding.cancelButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AdvertisementHomeFragment()).commit()
+                .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
         }
 
         imageUploadButton.setOnClickListener {

@@ -4,13 +4,14 @@ import android.net.Uri
 import java.util.*
 
 class Apartment(
-    images: Uri,
+    uid: String,
+    images: ArrayList<Uri>,
     description: String,
     type: String,
     contact: String,
-    val noOfBedrooms: Number,
-    val noOfBathrooms: Number,
-    val unitNumber: Number,
+    val noOfBedrooms: Float,
+    val noOfBathrooms: Float,
+    val unitNumber: String,
     val rent: Float,
-    val startDate: Date
-) : Advertisement(images, description, type, contact)
+    val startDate: String
+) : Advertisement(uid, images, description, type, contact)
