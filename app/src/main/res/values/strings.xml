@@ -46,6 +46,11 @@
         <item>Tools</item>
         <item>TV &amp; Video</item>
     </string-array>
-    <string name="status">status</string>
     <string name="time">time</string>
+    <string name="status">status</string>
+    <string-array name="status_options">
+        <item>Not responded</item>
+        <item>Open</item>
+        <item>Close</item>
+    </string-array>
 </resources>

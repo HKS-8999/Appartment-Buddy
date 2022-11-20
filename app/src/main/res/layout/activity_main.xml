@@ -31,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/appointment_nav_graph" />
+        app:navGraph="@navigation/ticket_nav_graph" />
 
 
 
