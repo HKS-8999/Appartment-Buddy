@@ -43,6 +43,7 @@ class ApartmentFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         var apartmentList: List<Apartment>? = null
+        var documentSnapshot: MutableList<DocumentSnapshot> = mutableListOf()
         GlobalScope.launch(Dispatchers.IO) {
             when (bottomNavValue) {
                 "home", "null" -> {
@@ -50,17 +51,26 @@ class ApartmentFragment : Fragment() {
                         mapApartmentDataToView(apartmentCollection.get().await().documents)
                 }
                 "myPosts" -> {
-                    //TODO: Add user ID of the user logged In
+                    //TODO: Add user ID of logged In user
                     apartmentList =
                         mapApartmentDataToView(
                             apartmentCollection.whereEqualTo("uid", "UID").get().await().documents
                         )
                 }
                 "bookmark" -> {
-                    apartmentList =
-                        mapApartmentDataToView(apartmentCollection.get().await().documents)
+                    apartmentCollection.get().await().documents.forEach {
+                        val list = it.data?.get("bookmarkUserList") as MutableList<String>
+                        //TODO() Replace by logged in user ID
+                        if (list.map { string ->
+                                string.replace("[", "").replace("]", "")
+                            }.contains(it.data?.get("uid"))) {
+                            documentSnapshot.add(it)
+                        }
+                    }
+                    apartmentList = mapApartmentDataToView(documentSnapshot)
                 }
             }
+
             withContext(Dispatchers.Main) {
                 recyclerView.adapter = apartmentList?.let {
                     ListApartmentAdvRecyclerViewAdapter(
@@ -93,8 +103,7 @@ class ApartmentFragment : Fragment() {
                     document.data?.get("apartment").toString(),
                     document.data?.get("rent").toString().toFloat(),
                     document.data?.get("availability").toString(),
-                    document.data?.get("bookmarkUserList").toString()
-                        .split(",") as MutableList<String>
+                    document.data?.get("bookmarkUserList") as MutableList<String>
                 )
             )
         }

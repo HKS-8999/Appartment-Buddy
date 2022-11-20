@@ -23,7 +23,7 @@ class AdvertisementController {
             "bookmarkUserList", FieldValue.arrayRemove(userId)
         ).addOnCompleteListener { removeBookmark ->
             if (removeBookmark.isSuccessful) {
-                Log.e("Bookmark", "$userId removed bookmark $documentId")
+                Log.e("Bookmark Remove", "$userId removed bookmark $documentId")
             }
         }
     }
