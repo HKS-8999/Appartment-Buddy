@@ -10,4 +10,9 @@
         android:name="com.example.apartmentbuddy.fragments.Appointment"
         android:label="fragment_appointment"
         tools:layout="@layout/fragment_appointment" />
+    <fragment
+        android:id="@+id/ticketFragment"
+        android:name="com.example.apartmentbuddy.TicketFragment"
+        android:label="fragment_ticket"
+        tools:layout="@layout/fragment_ticket" />
 </navigation>
