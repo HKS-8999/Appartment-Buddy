@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
         <CalendarView
+            android:id="@+id/appointment_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"/>
@@ -62,7 +63,7 @@
             android:layout_marginBottom="15dp"
             android:backgroundTint="#E6E6E6"/>
         <EditText
-            android:id="@+id/in_time"
+            android:id="@+id/appointment_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
