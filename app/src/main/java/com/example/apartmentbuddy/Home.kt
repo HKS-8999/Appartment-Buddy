@@ -34,7 +34,7 @@ class Home : AppCompatActivity() {
             // Check if user's email is verified
             val emailVerified = user.isEmailVerified
             val user_id = user.uid
-//            welcome_text.setText(user_id)
+            welcome_text.setText(user_id)
             val btn_logout = findViewById<Button>(R.id.btn_logout)
             val btnb_navigate_apartment = findViewById<Button>(R.id.btn_navigate_appointment)
             btn_logout.setOnClickListener {
