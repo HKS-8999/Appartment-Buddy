@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.apartmentbuddy.R
-import com.example.apartmentbuddy.controller.AdvertisementController
 import com.example.apartmentbuddy.controller.ItemController
+import com.example.apartmentbuddy.interfaces.EditClickListener
 import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.example.apartmentbuddy.model.Item
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -24,7 +24,8 @@ import me.relex.circleindicator.CircleIndicator
  */
 class ListItemAdvRecyclerViewAdapter(
     private val listings: MutableList<Item>,
-    private val bottomNavValue: String
+    private val bottomNavValue: String,
+    val listener: EditClickListener
 ) : RecyclerView.Adapter<ListItemAdvRecyclerViewAdapter.ViewHolder>() {
 
     lateinit var viewPager: ViewPager
@@ -34,6 +35,7 @@ class ListItemAdvRecyclerViewAdapter(
     lateinit var bookmark: FloatingActionButton
     lateinit var bookmarkRemove: FloatingActionButton
     lateinit var delete: FloatingActionButton
+    lateinit var edit: FloatingActionButton
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -44,6 +46,7 @@ class ListItemAdvRecyclerViewAdapter(
 
         bookmark = view.findViewById(R.id.bookmark)
         bookmarkRemove = view.findViewById(R.id.bookmark_remove)
+        edit = view.findViewById(R.id.edit)
 
         delete = view.findViewById(R.id.delete)
         if (bottomNavValue == "myPosts") {
@@ -142,6 +145,11 @@ class ListItemAdvRecyclerViewAdapter(
                         }
                 }
                 .show()
+        }
+
+        //Edit the post from MyPosts tab
+        edit.setOnClickListener {
+            listener.onAdvertisementEditClick(advertisementItem)
         }
     }
 

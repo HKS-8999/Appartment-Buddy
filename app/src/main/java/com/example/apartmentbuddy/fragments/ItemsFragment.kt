@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.ListItemAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentItemsBinding
+import com.example.apartmentbuddy.interfaces.EditClickListener
+import com.example.apartmentbuddy.model.Advertisement
 import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.example.apartmentbuddy.model.Item
 import com.google.firebase.firestore.DocumentSnapshot
@@ -24,9 +27,10 @@ import kotlinx.coroutines.withContext
  * Use the [ItemsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ItemsFragment : Fragment() {
+class ItemsFragment : Fragment(), EditClickListener {
     private lateinit var binding: FragmentItemsBinding
     private lateinit var bottomNavValue: String
+    lateinit var listener: EditClickListener
 
     private val db = FirebaseFirestore.getInstance()
     private val itemCollection = db.collection("items")
@@ -37,6 +41,7 @@ class ItemsFragment : Fragment() {
     ): View? {
         binding = FragmentItemsBinding.inflate(layoutInflater)
         bottomNavValue = arguments?.get("bottomNavValue").toString()
+        listener = this
         return binding.root
     }
 
@@ -75,7 +80,7 @@ class ItemsFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 recyclerView.adapter = itemList?.let {
                     ListItemAdvRecyclerViewAdapter(
-                        it, bottomNavValue
+                        it, bottomNavValue, listener
                     )
                 }
             }
@@ -110,5 +115,16 @@ class ItemsFragment : Fragment() {
             )
         }
         return itemList
+    }
+
+    override fun onAdvertisementEditClick(advertisement: Advertisement) {
+        //Navigate to myPosts on POST click
+        val bundle = Bundle()
+        bundle.putString("bottomNavValue", bottomNavValue)
+        val fragment = PostItemFragment(advertisement)
+        fragment.arguments = bundle
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }

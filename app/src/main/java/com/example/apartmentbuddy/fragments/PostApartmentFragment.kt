@@ -26,7 +26,9 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
-class PostApartmentFragment(private val advertisement: Apartment?) : Fragment() {
+class PostApartmentFragment(advertisementItem: Advertisement?) : Fragment() {
+    val advertisement: Apartment = advertisementItem as Apartment
+
     private lateinit var bottomNavValue: String
 
     private lateinit var binding: FragmentPostApartmentBinding
@@ -150,7 +152,6 @@ class PostApartmentFragment(private val advertisement: Apartment?) : Fragment() 
                             activity, "Successfully posted!", Toast.LENGTH_LONG
                         ).show()
 
-                        //Navigate to myPosts on POST click
                         val bundle = Bundle()
                         bundle.putString("bottomNavValue", bottomNavValue)
                         val fragment = AdvertisementDisplayFragment()

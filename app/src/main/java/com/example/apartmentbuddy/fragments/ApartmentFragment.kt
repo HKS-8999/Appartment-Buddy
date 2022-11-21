@@ -11,6 +11,7 @@ import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.ListApartmentAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentApartmentBinding
 import com.example.apartmentbuddy.interfaces.EditClickListener
+import com.example.apartmentbuddy.model.Advertisement
 import com.example.apartmentbuddy.model.Apartment
 import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.google.firebase.firestore.DocumentSnapshot
@@ -113,7 +114,7 @@ class ApartmentFragment : Fragment(), EditClickListener {
         return apartmentList
     }
 
-    override fun onAdvertisementEditClick(advertisement: Apartment) {
+    override fun onAdvertisementEditClick(advertisement: Advertisement) {
         //Navigate to myPosts on POST click
         val bundle = Bundle()
         bundle.putString("bottomNavValue", bottomNavValue)

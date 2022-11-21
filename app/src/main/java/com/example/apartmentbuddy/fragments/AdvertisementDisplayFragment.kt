@@ -35,7 +35,8 @@ class AdvertisementDisplayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val viewPager = binding.advViewPager
-        viewPager.adapter = AdvertisementViewPagerAdapter(parentFragmentManager, lifecycle, bottomNavValue)
+        viewPager.adapter =
+            AdvertisementViewPagerAdapter(parentFragmentManager, lifecycle, bottomNavValue)
 
         val tabLayout = binding.advTabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
@@ -51,12 +52,15 @@ class AdvertisementDisplayFragment : Fragment() {
                 val fragment = PostApartmentFragment(null)
                 fragment.arguments = bundle
 
-                val transaction = parentFragmentManager?.beginTransaction()
-                transaction?.replace(R.id.fragment_container, fragment)?.commit()
+                parentFragmentManager?.beginTransaction()
+                    ?.replace(R.id.fragment_container, fragment)?.commit()
             } else if (tabPosition == 1) {
-                val fragment = PostItemFragment()
-                val transaction = parentFragmentManager?.beginTransaction()
-                transaction?.replace(R.id.fragment_container, fragment)?.commit()
+                val bundle = Bundle()
+                bundle.putString("bottomNavValue", bottomNavValue)
+                val fragment = PostItemFragment(null)
+
+                parentFragmentManager?.beginTransaction()
+                    ?.replace(R.id.fragment_container, fragment)?.commit()
             }
         }
     }
