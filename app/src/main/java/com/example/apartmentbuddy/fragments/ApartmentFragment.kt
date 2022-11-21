@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.ListApartmentAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentApartmentBinding
+import com.example.apartmentbuddy.interfaces.EditClickListener
 import com.example.apartmentbuddy.model.Apartment
 import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.google.firebase.firestore.DocumentSnapshot
@@ -21,10 +23,11 @@ import kotlinx.coroutines.tasks.await
  * Use the [ApartmentFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ApartmentFragment : Fragment() {
+class ApartmentFragment : Fragment(), EditClickListener {
     private lateinit var binding: FragmentApartmentBinding
     private lateinit var bottomNavValue: String
     var adapter: ListApartmentAdvRecyclerViewAdapter? = null
+    lateinit var listener: EditClickListener
 
     private val db = FirebaseFirestore.getInstance()
     private val apartmentCollection = db.collection("apartments")
@@ -35,6 +38,7 @@ class ApartmentFragment : Fragment() {
     ): View? {
         binding = FragmentApartmentBinding.inflate(layoutInflater)
         bottomNavValue = arguments?.get("bottomNavValue").toString()
+        listener = this
         return binding.root
     }
 
@@ -73,7 +77,7 @@ class ApartmentFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 recyclerView.adapter = apartmentList?.let {
                     ListApartmentAdvRecyclerViewAdapter(
-                        it, bottomNavValue
+                        it, bottomNavValue, listener
                     )
                 }
             }
@@ -97,9 +101,9 @@ class ApartmentFragment : Fragment() {
                     document.data?.get("description").toString(),
                     document.data?.get("type").toString(),
                     document.data?.get("contact").toString(),
-                    document.data?.get("bathrooms").toString().toFloat(),
-                    document.data?.get("bedrooms").toString().toFloat(),
-                    document.data?.get("apartment").toString(),
+                    document.data?.get("noOfBathrooms").toString().toFloat(),
+                    document.data?.get("noOfBedrooms").toString().toFloat(),
+                    document.data?.get("unitNumber").toString(),
                     document.data?.get("rent").toString().toFloat(),
                     document.data?.get("availability").toString(),
                     document.data?.get("bookmarkUserList") as MutableList<String>
@@ -107,5 +111,11 @@ class ApartmentFragment : Fragment() {
             )
         }
         return apartmentList
+    }
+
+    override fun onAdvertisementEditClick(advertisement: Apartment) {
+        val fragment = PostApartmentFragment(advertisement)
+        val transaction = parentFragmentManager?.beginTransaction()
+        transaction?.replace(R.id.fragment_container, fragment)?.commit()
     }
 }
