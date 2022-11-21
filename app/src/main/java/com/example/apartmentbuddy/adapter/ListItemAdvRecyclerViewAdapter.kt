@@ -19,7 +19,7 @@ import me.relex.circleindicator.CircleIndicator
  * Credits for circle indicator: https://medium.com/@mandvi2346verma/image-slider-with-dot-indicators-using-viewpager-firebase-kotlin-android-735968da76f6
  */
 class ListItemAdvRecyclerViewAdapter(
-    private val listings: List<Item>,
+    private val listings: MutableList<Item>,
     private val bottomNavValue: String
 ) : RecyclerView.Adapter<ListItemAdvRecyclerViewAdapter.ViewHolder>() {
 
@@ -80,6 +80,7 @@ class ListItemAdvRecyclerViewAdapter(
                         .delete()
                         .addOnSuccessListener { Toast.makeText(context, "Listing deleted!", Toast.LENGTH_SHORT)
                             .show()
+                            listings.remove(advertisementItem)
                             notifyDataSetChanged()
                         }
                         .addOnFailureListener { Toast.makeText(context, "Unable to delete listing! Try again", Toast.LENGTH_LONG)

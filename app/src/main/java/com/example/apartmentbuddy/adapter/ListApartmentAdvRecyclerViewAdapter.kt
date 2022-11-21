@@ -121,6 +121,7 @@ class ListApartmentAdvRecyclerViewAdapter(
                         .delete()
                         .addOnSuccessListener { Toast.makeText(context, "Listing deleted!", Toast.LENGTH_SHORT)
                             .show()
+                            listings.remove(advertisementItem)
                             notifyDataSetChanged()
                         }
                         .addOnFailureListener { Toast.makeText(context, "Unable to delete listing! Try again", Toast.LENGTH_LONG)
