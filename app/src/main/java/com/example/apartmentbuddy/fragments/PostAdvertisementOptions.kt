@@ -24,13 +24,4 @@ class PostAdvertisementOptions : Fragment() {
         binding = FragmentPostAdvertisementOptionsBinding.inflate(layoutInflater)
         return binding.root
     }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        binding.apartments.setOnClickListener {
-//            Navigation.findNavController(it)
-//                .navigate(R.id.action_postAdvertisementOptions_to_postApartmentFragment)
-//        }
-//    }
 }

@@ -75,7 +75,7 @@ class ItemsFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 recyclerView.adapter = itemList?.let {
                     ListItemAdvRecyclerViewAdapter(
-                        it as MutableList<Item>, bottomNavValue
+                        it, bottomNavValue
                     )
                 }
             }

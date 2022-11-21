@@ -16,15 +16,19 @@ import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.CarouselAdapter
 import com.example.apartmentbuddy.databinding.FragmentPostApartmentBinding
+import com.example.apartmentbuddy.model.Advertisement
 import com.example.apartmentbuddy.model.Apartment
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
+class PostApartmentFragment(private val advertisement: Apartment?) : Fragment() {
+    private lateinit var bottomNavValue: String
 
-class PostApartmentFragment : Fragment() {
     private lateinit var binding: FragmentPostApartmentBinding
     private lateinit var postApartmentButton: Button
     private lateinit var bathroomsEditText: EditText
@@ -38,8 +42,9 @@ class PostApartmentFragment : Fragment() {
 
     private val db = FirebaseFirestore.getInstance()
     private val apartmentCollection = db.collection("apartments")
-    private val auth = Firebase.auth
-    private val selectedImages = ArrayList<Uri>()
+    private var documentId: String? = null
+
+    private var selectedImages = ArrayList<Uri>()
     private val adapter = CarouselAdapter(selectedImages)
 
     private val getContent =
@@ -62,11 +67,13 @@ class PostApartmentFragment : Fragment() {
         binding.carouselRecyclerview.apply {
             setInfinite(true)
         }
+        bottomNavValue = arguments?.get("bottomNavValue").toString()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         postApartmentButton = view.findViewById(R.id.submit)
         bathroomsEditText = view.findViewById(R.id.bathrooms)
         bedroomsEditText = view.findViewById(R.id.bedrooms)
@@ -77,14 +84,13 @@ class PostApartmentFragment : Fragment() {
         contactEditText = view.findViewById(R.id.contact)
         imageUploadButton = view.findViewById(R.id.addImages)
 
+        // credit to https://stackoverflow.com/a/62139866 for calendar with edit text solution click disable for following two lines
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        // credit to https://stackoverflow.com/a/62139866 for calendar with edit text solution click disable for following two lines
         availabilityEditText.inputType = InputType.TYPE_NULL;
         availabilityEditText.keyListener = null;
-
 
         availabilityEditText.setOnClickListener {
             val datePickDialog = DatePickerDialog(
@@ -96,6 +102,23 @@ class PostApartmentFragment : Fragment() {
             datePickDialog.show()
         }
 
+        //If the user is editing the existing post
+        if (null != advertisement && advertisement.documentId.isNotBlank()) {
+            documentId = advertisement.documentId
+            bedroomsEditText.setText(advertisement.noOfBedrooms.toString())
+            bathroomsEditText.setText(advertisement.noOfBathrooms.toString())
+            apartmentEditText.setText(advertisement.unitNumber)
+            descriptionEditText.setText(advertisement.description)
+            rentEditText.setText(advertisement.rent.toString())
+            availabilityEditText.setText(advertisement.availability)
+            contactEditText.setText(advertisement.contact)
+            selectedImages = advertisement.photos
+            binding.carouselRecyclerview.adapter = CarouselAdapter(selectedImages)
+            binding.carouselRecyclerview.apply {
+                setInfinite(true)
+            }
+        }
+
         postApartmentButton.setOnClickListener {
             val bedrooms = bedroomsEditText.text.toString().trim().toFloat()
             val bathrooms = bathroomsEditText.text.toString().trim().toFloat()
@@ -104,44 +127,59 @@ class PostApartmentFragment : Fragment() {
             val rent = rentEditText.text.toString().trim().toFloat()
             val availability = availabilityEditText.text.toString().trim()
             val contact = contactEditText.text.toString().trim()
-            val userId = "UID"
-            val ad =
-                Apartment(
-                    "document ID",
-                    userId,
-                    selectedImages,
-                    description,
-                    "apartment",
-                    contact,
-                    bedrooms,
-                    bathrooms,
-                    apartment,
-                    rent,
-                    availability,
-                    mutableListOf()
-                )
-            apartmentCollection.document().set(ad).addOnSuccessListener { void: Void? ->
-                Toast.makeText(
-                    activity, "Successfully posted!", Toast.LENGTH_LONG
-                ).show()
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
-            }.addOnFailureListener { error ->
-                Toast.makeText(
-                    activity, error.message.toString(), Toast.LENGTH_LONG
-                ).show()
+            val userId = FirebaseAuthUser.getUserId().toString()
+            val ad = Apartment(
+                "",
+                userId,
+                selectedImages,
+                description,
+                "apartment",
+                contact,
+                bedrooms,
+                bathrooms,
+                apartment,
+                rent,
+                availability,
+                mutableListOf()
+            )
+            //Insert or update the document in apartments collection
+            documentId?.let { id ->
+                apartmentCollection.document(id).set(ad, SetOptions.merge())
+                    .addOnSuccessListener { void: Void? ->
+                        Toast.makeText(
+                            activity, "Successfully posted!", Toast.LENGTH_LONG
+                        ).show()
+
+                        //Navigate to myPosts on POST click
+                        val bundle = Bundle()
+                        bundle.putString("bottomNavValue", bottomNavValue)
+                        val fragment = AdvertisementDisplayFragment()
+                        fragment.arguments = bundle
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .commit()
+                    }.addOnFailureListener { error ->
+                        Toast.makeText(
+                            activity, error.message.toString(), Toast.LENGTH_LONG
+                        ).show()
+                    }
             }
         }
 
         binding.cancelButton.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("bottomNavValue", bottomNavValue)
+            val fragment = AdvertisementDisplayFragment()
+            fragment.arguments = bundle
+
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
         }
 
         imageUploadButton.setOnClickListener {
             getContent.launch("image/*")
         }
-
     }
 
     private fun uploadImageToFirebase(fileUri: Uri) {
@@ -178,5 +216,4 @@ class PostApartmentFragment : Fragment() {
                 }
         }
     }
-
 }

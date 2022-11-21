@@ -46,7 +46,11 @@ class AdvertisementDisplayFragment : Fragment() {
         fab.setOnClickListener {
             val tabPosition = tabLayout.selectedTabPosition
             if (tabPosition == 0) {
-                val fragment = PostApartmentFragment()
+                val bundle = Bundle()
+                bundle.putString("bottomNavValue", bottomNavValue)
+                val fragment = PostApartmentFragment(null)
+                fragment.arguments = bundle
+
                 val transaction = parentFragmentManager?.beginTransaction()
                 transaction?.replace(R.id.fragment_container, fragment)?.commit()
             } else if (tabPosition == 1) {

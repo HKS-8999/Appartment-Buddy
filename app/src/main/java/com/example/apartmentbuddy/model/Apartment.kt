@@ -14,6 +14,6 @@ class Apartment(
     val noOfBathrooms: Float,
     val unitNumber: String,
     val rent: Float,
-    val startDate: String,
+    val availability: String,
     bookmarkUserList: MutableList<String>
 ) : Advertisement(documentId, uid, photos, description, type, contact, bookmarkUserList)

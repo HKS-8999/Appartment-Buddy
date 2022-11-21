@@ -9,7 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.apartmentbuddy.R
-import com.example.apartmentbuddy.controller.AdvertisementController
+import com.example.apartmentbuddy.controller.ApartmentController
+import com.example.apartmentbuddy.interfaces.EditClickListener
 import com.example.apartmentbuddy.model.Apartment
 import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -23,16 +24,20 @@ import me.relex.circleindicator.CircleIndicator
  */
 class ListApartmentAdvRecyclerViewAdapter(
     private var listings: MutableList<Apartment>,
-    private val bottomNavValue: String
+    private val bottomNavValue: String,
+    val listener: EditClickListener
 ) : RecyclerView.Adapter<ListApartmentAdvRecyclerViewAdapter.ViewHolder>() {
+
+    lateinit var context: Context
 
     lateinit var viewPager: ViewPager
     lateinit var viewPagerAdapter: ImageSliderViewPagerAdapter
-    lateinit var context: Context
-    lateinit var indicator: CircleIndicator
+    private lateinit var indicator: CircleIndicator
+
     lateinit var bookmark: FloatingActionButton
     lateinit var bookmarkRemove: FloatingActionButton
     lateinit var delete: FloatingActionButton
+    lateinit var edit: FloatingActionButton
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -44,6 +49,7 @@ class ListApartmentAdvRecyclerViewAdapter(
         bookmark = view.findViewById(R.id.bookmark)
         bookmarkRemove = view.findViewById(R.id.bookmark_remove)
         delete = view.findViewById(R.id.delete)
+        edit = view.findViewById(R.id.edit)
 
         when (bottomNavValue) {
             "myPosts" -> {
@@ -72,7 +78,7 @@ class ListApartmentAdvRecyclerViewAdapter(
         holder.bedrooms.text = advertisementItem.noOfBedrooms.toString()
         holder.bathrooms.text = advertisementItem.noOfBathrooms.toString()
         holder.rent.text = advertisementItem.rent.toString()
-        holder.startDate.text = advertisementItem.startDate
+        holder.startDate.text = advertisementItem.availability
         holder.contact.text = advertisementItem.contact
 
         //Display bookmark-remove action button if the ad is bookmarked by the logged in user
@@ -87,7 +93,7 @@ class ListApartmentAdvRecyclerViewAdapter(
         bookmark.setOnClickListener {
             Snackbar.make(it, "Post Saved For Later", 2000).show()
             if (loggedInUser != null) {
-                AdvertisementController().addUserToBookmarkList(
+                ApartmentController().addUserToBookmarkList(
                     advertisementItem.documentId,
                     loggedInUser
                 )
@@ -100,7 +106,7 @@ class ListApartmentAdvRecyclerViewAdapter(
         bookmarkRemove.setOnClickListener {
             Snackbar.make(it, "Bookmark Removed", 2000).show()
             if (loggedInUser != null) {
-                AdvertisementController().removeUserToBookmarkList(
+                ApartmentController().removeUserToBookmarkList(
                     advertisementItem.documentId,
                     loggedInUser
                 )
@@ -141,6 +147,11 @@ class ListApartmentAdvRecyclerViewAdapter(
                 }
                 .show()
             notifyDataSetChanged()
+        }
+
+        //Edit the post from MyPosts tab
+        edit.setOnClickListener {
+            listener.onAdvertisementEditClick(advertisementItem)
         }
     }
 
