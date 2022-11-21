@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apartmentbuddy.adapter.ListApartmentAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentApartmentBinding
 import com.example.apartmentbuddy.model.Apartment
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
@@ -51,19 +52,18 @@ class ApartmentFragment : Fragment() {
                         mapApartmentDataToView(apartmentCollection.get().await().documents)
                 }
                 "myPosts" -> {
-                    //TODO: Add user ID of logged In user
                     apartmentList =
                         mapApartmentDataToView(
-                            apartmentCollection.whereEqualTo("uid", "UID").get().await().documents
+                            apartmentCollection.whereEqualTo("uid", FirebaseAuthUser.getUserId())
+                                .get().await().documents
                         )
                 }
                 "bookmark" -> {
                     apartmentCollection.get().await().documents.forEach {
                         val list = it.data?.get("bookmarkUserList") as MutableList<String>
-                        //TODO() Replace by logged in user ID
                         if (list.map { string ->
                                 string.replace("[", "").replace("]", "")
-                            }.contains(it.data?.get("uid"))) {
+                            }.contains(FirebaseAuthUser.getUserId())) {
                             documentSnapshot.add(it)
                         }
                     }

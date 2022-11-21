@@ -9,9 +9,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.apartmentbuddy.R
+import com.example.apartmentbuddy.controller.AdvertisementController
+import com.example.apartmentbuddy.controller.ItemController
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.example.apartmentbuddy.model.Item
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import me.relex.circleindicator.CircleIndicator
 
@@ -27,6 +31,8 @@ class ListItemAdvRecyclerViewAdapter(
     lateinit var viewPagerAdapter: ImageSliderViewPagerAdapter
     lateinit var context: Context
     lateinit var indicator: CircleIndicator
+    lateinit var bookmark: FloatingActionButton
+    lateinit var bookmarkRemove: FloatingActionButton
     lateinit var delete: FloatingActionButton
 
     override fun onCreateViewHolder(
@@ -35,18 +41,21 @@ class ListItemAdvRecyclerViewAdapter(
     ): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_items, parent, false)
+
+        bookmark = view.findViewById(R.id.bookmark)
+        bookmarkRemove = view.findViewById(R.id.bookmark_remove)
+
+        delete = view.findViewById(R.id.delete)
         if (bottomNavValue == "myPosts") {
             view.findViewById<FloatingActionButton>(R.id.edit)?.visibility = View.VISIBLE
             view.findViewById<FloatingActionButton>(R.id.delete)?.visibility = View.VISIBLE
             view.findViewById<FloatingActionButton>(R.id.bookmark)?.visibility = View.INVISIBLE
         }
-        if (bottomNavValue == "bookmark") {
-            view.findViewById<FloatingActionButton>(R.id.bookmark_remove).visibility = View.VISIBLE
-        }
-        delete = view.findViewById(R.id.delete)
+
         viewPager = view.findViewById(R.id.idViewPager)
         indicator = view.findViewById(R.id.indicator)
         context = parent.context
+
         return ViewHolder(view)
     }
 
@@ -56,7 +65,7 @@ class ListItemAdvRecyclerViewAdapter(
     ) {
         val advertisementItem = listings[position]
 
-        viewPagerAdapter = ImageSliderViewPagerAdapter(context, advertisementItem.images)
+        viewPagerAdapter = ImageSliderViewPagerAdapter(context, advertisementItem.photos)
         viewPager.adapter = viewPagerAdapter
         indicator.setViewPager(viewPager)
 
@@ -68,6 +77,44 @@ class ListItemAdvRecyclerViewAdapter(
         holder.address.text = advertisementItem.address
         holder.contact.text = advertisementItem.contact
 
+        //Display bookmark-remove action button if the ad is bookmarked by the logged in user
+        val loggedInUser = FirebaseAuthUser.getUserId()
+        if (advertisementItem.bookmarkUserList?.map { string ->
+                string.replace("[", "").replace("]", "")
+            }?.contains(loggedInUser) == true) {
+            holder.bookmarkRemove.visibility = View.VISIBLE
+        }
+
+        //Bookmark the post
+        bookmark.setOnClickListener {
+            Snackbar.make(it, "Post Saved For Later", 2000).show()
+            if (loggedInUser != null) {
+                ItemController().addUserToBookmarkList(
+                    advertisementItem.documentId,
+                    loggedInUser
+                )
+            }
+            holder.bookmarkRemove.visibility = View.VISIBLE
+            notifyDataSetChanged()
+        }
+
+        //Remove Bookmark
+        bookmarkRemove.setOnClickListener {
+            Snackbar.make(it, "Bookmark Removed", 2000).show()
+            if (loggedInUser != null) {
+                ItemController().removeUserFromBookmarkList(
+                    advertisementItem.documentId,
+                    loggedInUser
+                )
+            }
+            holder.bookmarkRemove.visibility = View.INVISIBLE
+            if (bottomNavValue == "bookmark") {
+                listings.remove(advertisementItem)
+            }
+            notifyDataSetChanged()
+        }
+
+        //Delete the post from MyPosts tab
         delete.setOnClickListener {
             MaterialAlertDialogBuilder(context)
                 .setTitle("Delete Item Listing?")
@@ -76,25 +123,31 @@ class ListItemAdvRecyclerViewAdapter(
                 .setNegativeButton("Cancel") { _, _ ->
                 }
                 .setPositiveButton("Delete") { dialog, which ->
-                    FirebaseFirestore.getInstance().collection("items").document(advertisementItem.documentId)
+                    FirebaseFirestore.getInstance().collection("items")
+                        .document(advertisementItem.documentId)
                         .delete()
-                        .addOnSuccessListener { Toast.makeText(context, "Listing deleted!", Toast.LENGTH_SHORT)
-                            .show()
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Listing deleted!", Toast.LENGTH_SHORT)
+                                .show()
                             listings.remove(advertisementItem)
                             notifyDataSetChanged()
                         }
-                        .addOnFailureListener { Toast.makeText(context, "Unable to delete listing! Try again", Toast.LENGTH_LONG)
-                            .show() }
+                        .addOnFailureListener {
+                            Toast.makeText(
+                                context,
+                                "Unable to delete listing! Try again",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        }
                 }
                 .show()
-
         }
     }
 
     override fun getItemCount(): Int {
         return listings.size
     }
-
 
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
@@ -105,5 +158,6 @@ class ListItemAdvRecyclerViewAdapter(
         val category: TextView = itemView.findViewById(R.id.itemCategory)
         val address: TextView = itemView.findViewById(R.id.itemAddress)
         val contact: TextView = itemView.findViewById(R.id.itemContact)
+        val bookmarkRemove: FloatingActionButton = itemView.findViewById(R.id.bookmark_remove)
     }
 }
