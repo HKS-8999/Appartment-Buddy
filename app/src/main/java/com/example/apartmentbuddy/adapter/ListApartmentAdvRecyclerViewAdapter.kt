@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.controller.AdvertisementController
 import com.example.apartmentbuddy.model.Apartment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.FirebaseFirestore
 import me.relex.circleindicator.CircleIndicator
 
 /**
@@ -28,6 +31,7 @@ class ListApartmentAdvRecyclerViewAdapter(
     lateinit var indicator: CircleIndicator
     lateinit var bookmark: FloatingActionButton
     lateinit var bookmarkRemove: FloatingActionButton
+    lateinit var delete: FloatingActionButton
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -38,6 +42,7 @@ class ListApartmentAdvRecyclerViewAdapter(
 
         bookmark = view.findViewById(R.id.bookmark)
         bookmarkRemove = view.findViewById(R.id.bookmark_remove)
+        delete = view.findViewById(R.id.delete)
 
         when (bottomNavValue) {
             "myPosts" -> {
@@ -101,6 +106,28 @@ class ListApartmentAdvRecyclerViewAdapter(
             if (bottomNavValue == "bookmark") {
                 listings.remove(advertisementItem)
             }
+            notifyDataSetChanged()
+        }
+
+        delete.setOnClickListener {
+            MaterialAlertDialogBuilder(context)
+                .setTitle("Delete Apartment Listing?")
+                .setMessage("Are you sure you want to delete this listing?")
+
+                .setNegativeButton("Cancel") { _, _ ->
+                }
+                .setPositiveButton("Delete") { dialog, which ->
+                    FirebaseFirestore.getInstance().collection("apartments").document(advertisementItem.documentId)
+                        .delete()
+                        .addOnSuccessListener { Toast.makeText(context, "Listing deleted!", Toast.LENGTH_SHORT)
+                            .show()
+                            notifyDataSetChanged()
+                        }
+                        .addOnFailureListener { Toast.makeText(context, "Unable to delete listing! Try again", Toast.LENGTH_LONG)
+                            .show() }
+                }
+                .show()
+
             notifyDataSetChanged()
         }
     }
