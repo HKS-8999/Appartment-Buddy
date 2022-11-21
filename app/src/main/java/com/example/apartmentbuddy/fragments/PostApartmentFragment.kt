@@ -27,6 +27,8 @@ import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
 class PostApartmentFragment(private val advertisement: Apartment?) : Fragment() {
+    private lateinit var bottomNavValue: String
+
     private lateinit var binding: FragmentPostApartmentBinding
     private lateinit var postApartmentButton: Button
     private lateinit var bathroomsEditText: EditText
@@ -65,6 +67,7 @@ class PostApartmentFragment(private val advertisement: Apartment?) : Fragment() 
         binding.carouselRecyclerview.apply {
             setInfinite(true)
         }
+        bottomNavValue = arguments?.get("bottomNavValue").toString()
         return binding.root
     }
 
@@ -146,8 +149,14 @@ class PostApartmentFragment(private val advertisement: Apartment?) : Fragment() 
                         Toast.makeText(
                             activity, "Successfully posted!", Toast.LENGTH_LONG
                         ).show()
+
+                        //Navigate to myPosts on POST click
+                        val bundle = Bundle()
+                        bundle.putString("bottomNavValue", bottomNavValue)
+                        val fragment = AdvertisementDisplayFragment()
+                        fragment.arguments = bundle
                         parentFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, AdvertisementDisplayFragment())
+                            .replace(R.id.fragment_container, fragment)
                             .commit()
                     }.addOnFailureListener { error ->
                         Toast.makeText(
@@ -158,8 +167,14 @@ class PostApartmentFragment(private val advertisement: Apartment?) : Fragment() 
         }
 
         binding.cancelButton.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("bottomNavValue", bottomNavValue)
+            val fragment = AdvertisementDisplayFragment()
+            fragment.arguments = bundle
+
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
         }
 
         imageUploadButton.setOnClickListener {

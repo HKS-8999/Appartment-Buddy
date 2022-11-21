@@ -114,8 +114,13 @@ class ApartmentFragment : Fragment(), EditClickListener {
     }
 
     override fun onAdvertisementEditClick(advertisement: Apartment) {
+        //Navigate to myPosts on POST click
+        val bundle = Bundle()
+        bundle.putString("bottomNavValue", bottomNavValue)
         val fragment = PostApartmentFragment(advertisement)
-        val transaction = parentFragmentManager?.beginTransaction()
-        transaction?.replace(R.id.fragment_container, fragment)?.commit()
+        fragment.arguments = bundle
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }
