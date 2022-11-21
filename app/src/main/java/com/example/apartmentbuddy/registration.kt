@@ -1,29 +1,25 @@
 package com.example.apartmentbuddy
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.apartmentbuddy.databinding.ActivityMainBinding
 import com.example.apartmentbuddy.databinding.FragmentLogin2Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.core.View
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-class MainActivity : AppCompatActivity() {
+class registration : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-   private  lateinit var binding:ActivityMainBinding
+    private  lateinit var binding: ActivityMainBinding
     private lateinit var selectedRadioButton: RadioButton
     private lateinit var radioGroup: RadioGroup
     private lateinit var progressBar:ProgressBar
@@ -31,15 +27,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       setContentView(R.layout.fragment_registration2)
-        auth=Firebase.auth
+     //   setContentView(R.layout.fragment_registration2)
         val new_user:Button=findViewById(R.id.btn_register)
+        val email_address: EditText =findViewById(R.id.txt_email)
+        val login_button_click:Button=findViewById(R.id.btn_login_app)
         new_user.setOnClickListener{
-            performSignup()
+            Toast.makeText(applicationContext, "registration button is clicked", Toast.LENGTH_SHORT).show()
+            //performSignup()
+            //getUserInformation()
+
         }
+
     }
 
-    @SuppressLint("SuspiciousIndentation")
     private fun performSignup(){
         val email:EditText=findViewById(R.id.txt_email)
         val password:EditText=findViewById(R.id.txt_password)
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             val uid = user.uid
 
             val name_fragment:EditText=findViewById(R.id.txt_username)
-             val apartment_no:EditText=findViewById(R.id.txt_aprtnumber)
+            val apartment_no:EditText=findViewById(R.id.txt_aprtnumber)
             val contact_no:EditText=findViewById(R.id.txt_contact_number)
             radioGroup =findViewById(R.id.radioGroup)
             val selectedRadioButtonId: Int  = radioGroup.checkedRadioButtonId
