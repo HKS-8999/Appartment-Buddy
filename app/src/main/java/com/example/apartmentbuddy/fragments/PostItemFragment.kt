@@ -13,15 +13,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.CarouselAdapter
-import com.example.apartmentbuddy.model.Item
 import com.example.apartmentbuddy.databinding.FragmentPostItemBinding
-import com.google.firebase.auth.ktx.auth
+import com.example.apartmentbuddy.model.Advertisement
+import com.example.apartmentbuddy.model.FirebaseAuthUser
+import com.example.apartmentbuddy.model.Item
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
-class PostItemFragment : Fragment() {
+class PostItemFragment(advertisementItem: Advertisement?) : Fragment() {
+    val advertisement: Item = advertisementItem as Item
+    private lateinit var bottomNavValue: String
+
     private lateinit var binding: FragmentPostItemBinding
     private lateinit var postItemButton: Button
     private lateinit var titleEditText: EditText
@@ -35,9 +39,9 @@ class PostItemFragment : Fragment() {
 
     private val db = FirebaseFirestore.getInstance()
     private val itemCollection = db.collection("items")
-    private val auth = Firebase.auth
+    private var documentId: String? = null
 
-    private val selectedImages = ArrayList<Uri>()
+    private var selectedImages = ArrayList<Uri>()
     private val adapter = CarouselAdapter(selectedImages)
 
     private val getContent =
@@ -60,6 +64,7 @@ class PostItemFragment : Fragment() {
         binding.carouselRecyclerview.apply {
             setInfinite(true)
         }
+        bottomNavValue = arguments?.get("bottomNavValue").toString()
         return binding.root
     }
 
@@ -75,6 +80,23 @@ class PostItemFragment : Fragment() {
         contactEditText = view.findViewById(R.id.contact)
         imageUploadButton = view.findViewById(R.id.addImages)
 
+        //If the user is editing the existing post
+        if (null != advertisement && advertisement.documentId.isNotBlank()) {
+            documentId = advertisement.documentId
+            titleEditText.setText(advertisement.title)
+            descriptionEditText.setText(advertisement.description)
+            conditionEditText.setText(advertisement.condition)
+            priceEditText.setText(advertisement.price.toString())
+            categoryEditText.setText(advertisement.category)
+            addressEditText.setText(advertisement.address)
+            contactEditText.setText(advertisement.contact)
+            selectedImages = advertisement.photos
+            binding.carouselRecyclerview.adapter = CarouselAdapter(selectedImages)
+            binding.carouselRecyclerview.apply {
+                setInfinite(true)
+            }
+        }
+
         postItemButton.setOnClickListener {
             val title = titleEditText.text.toString().trim()
             val description = descriptionEditText.text.toString().trim()
@@ -83,10 +105,10 @@ class PostItemFragment : Fragment() {
             val category = categoryEditText.text.toString().trim()
             val address = addressEditText.text.toString().trim()
             val contact = contactEditText.text.toString().trim()
-            val userId = "UID"
+            val userId = FirebaseAuthUser.getUserId().toString()
             val item =
                 Item(
-                    "document ID",
+                    "",
                     userId,
                     selectedImages,
                     description,
@@ -99,20 +121,34 @@ class PostItemFragment : Fragment() {
                     address,
                     mutableListOf()
                 )
-            itemCollection.document().set(item).addOnSuccessListener { void: Void? ->
-                Toast.makeText(
-                    activity, "Successfully posted!", Toast.LENGTH_LONG
-                ).show()
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
-            }.addOnFailureListener { error ->
-                Toast.makeText(
-                    activity, error.message.toString(), Toast.LENGTH_LONG
-                ).show()
+            documentId?.let { it1 ->
+                itemCollection.document(it1).set(item, SetOptions.merge())
+                    .addOnSuccessListener { void: Void? ->
+                        Toast.makeText(
+                            activity, "Successfully posted!", Toast.LENGTH_LONG
+                        ).show()
+
+                        val bundle = Bundle()
+                        bundle.putString("bottomNavValue", bottomNavValue)
+                        val fragment = AdvertisementDisplayFragment()
+                        fragment.arguments = bundle
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, AdvertisementDisplayFragment())
+                            .commit()
+                    }.addOnFailureListener { error ->
+                        Toast.makeText(
+                            activity, error.message.toString(), Toast.LENGTH_LONG
+                        ).show()
+                    }
             }
         }
 
         binding.cancelButton.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("bottomNavValue", bottomNavValue)
+            val fragment = AdvertisementDisplayFragment()
+            fragment.arguments = bundle
+
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
         }
