@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.controller.AdvertisementController
 import com.example.apartmentbuddy.model.Apartment
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -62,7 +63,7 @@ class ListApartmentAdvRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val advertisementItem = listings[position]
 
-        viewPagerAdapter = ImageSliderViewPagerAdapter(context, advertisementItem.images)
+        viewPagerAdapter = ImageSliderViewPagerAdapter(context, advertisementItem.photos)
         viewPager.adapter = viewPagerAdapter
         indicator.setViewPager(viewPager)
 
@@ -74,8 +75,8 @@ class ListApartmentAdvRecyclerViewAdapter(
         holder.startDate.text = advertisementItem.startDate
         holder.contact.text = advertisementItem.contact
 
-        //TODO(): Compare with loggedIn user's ID
-        val loggedInUser = advertisementItem.uid
+        //Display bookmark-remove action button if the ad is bookmarked by the logged in user
+        val loggedInUser = FirebaseAuthUser.getUserId()
         if (advertisementItem.bookmarkUserList?.map { string ->
                 string.replace("[", "").replace("]", "")
             }?.contains(loggedInUser) == true) {
@@ -85,11 +86,12 @@ class ListApartmentAdvRecyclerViewAdapter(
         //Bookmark the post
         bookmark.setOnClickListener {
             Snackbar.make(it, "Post Saved For Later", 2000).show()
-            AdvertisementController().addUserToBookmarkList(
-                advertisementItem.documentId,
-                //TODO(): Pass loggedIn USER ID
-                advertisementItem.uid
-            )
+            if (loggedInUser != null) {
+                AdvertisementController().addUserToBookmarkList(
+                    advertisementItem.documentId,
+                    loggedInUser
+                )
+            }
             holder.bookmarkRemove.visibility = View.VISIBLE
             notifyDataSetChanged()
         }
@@ -97,11 +99,12 @@ class ListApartmentAdvRecyclerViewAdapter(
         //Remove Bookmark
         bookmarkRemove.setOnClickListener {
             Snackbar.make(it, "Bookmark Removed", 2000).show()
-            AdvertisementController().removeUserToBookmarkList(
-                advertisementItem.documentId,
-                //TODO(): Pass loggedIn USER ID
-                advertisementItem.uid
-            )
+            if (loggedInUser != null) {
+                AdvertisementController().removeUserToBookmarkList(
+                    advertisementItem.documentId,
+                    loggedInUser
+                )
+            }
             holder.bookmarkRemove.visibility = View.INVISIBLE
             if (bottomNavValue == "bookmark") {
                 listings.remove(advertisementItem)
@@ -109,6 +112,7 @@ class ListApartmentAdvRecyclerViewAdapter(
             notifyDataSetChanged()
         }
 
+        //Delete the post from MyPosts tab
         delete.setOnClickListener {
             MaterialAlertDialogBuilder(context)
                 .setTitle("Delete Apartment Listing?")
@@ -117,18 +121,25 @@ class ListApartmentAdvRecyclerViewAdapter(
                 .setNegativeButton("Cancel") { _, _ ->
                 }
                 .setPositiveButton("Delete") { dialog, which ->
-                    FirebaseFirestore.getInstance().collection("apartments").document(advertisementItem.documentId)
+                    FirebaseFirestore.getInstance().collection("apartments")
+                        .document(advertisementItem.documentId)
                         .delete()
-                        .addOnSuccessListener { Toast.makeText(context, "Listing deleted!", Toast.LENGTH_SHORT)
-                            .show()
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Listing deleted!", Toast.LENGTH_SHORT)
+                                .show()
                             listings.remove(advertisementItem)
                             notifyDataSetChanged()
                         }
-                        .addOnFailureListener { Toast.makeText(context, "Unable to delete listing! Try again", Toast.LENGTH_LONG)
-                            .show() }
+                        .addOnFailureListener {
+                            Toast.makeText(
+                                context,
+                                "Unable to delete listing! Try again",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        }
                 }
                 .show()
-
             notifyDataSetChanged()
         }
     }
@@ -145,7 +156,6 @@ class ListApartmentAdvRecyclerViewAdapter(
         val rent: TextView = itemView.findViewById(R.id.apartmentRent)
         val startDate: TextView = itemView.findViewById(R.id.apartmentAvailability)
         val contact: TextView = itemView.findViewById(R.id.apartmentContact)
-        val bookmark: FloatingActionButton = itemView.findViewById(R.id.bookmark)
         val bookmarkRemove: FloatingActionButton = itemView.findViewById(R.id.bookmark_remove)
     }
 }
