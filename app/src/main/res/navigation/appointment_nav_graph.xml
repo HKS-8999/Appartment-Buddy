@@ -22,10 +22,17 @@
         <action
             android:id="@+id/action_newAppointment_to_appointment_home"
             app:destination="@id/appointment_home" />
+        <action
+            android:id="@+id/action_newAppointment_to_confirmAppointment"
+            app:destination="@id/confirmAppointment" />
     </fragment>
     <fragment
         android:id="@+id/confirmAppointment"
         android:name="com.example.apartmentbuddy.ConfirmAppointment"
         android:label="fragment_confirm_appointment"
-        tools:layout="@layout/fragment_confirm_appointment" />
+        tools:layout="@layout/fragment_confirm_appointment" >
+        <action
+            android:id="@+id/action_confirmAppointment_to_appointment_home"
+            app:destination="@id/appointment_home" />
+    </fragment>
 </navigation>
