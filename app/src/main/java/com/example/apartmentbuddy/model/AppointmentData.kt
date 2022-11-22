@@ -1,7 +1,5 @@
 package com.example.apartmentbuddy.model
 
-import java.sql.Timestamp
-
 data class AppointmentData(
     val name:String,
     val date: String,
