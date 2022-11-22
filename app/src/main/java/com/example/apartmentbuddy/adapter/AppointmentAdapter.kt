@@ -21,9 +21,9 @@ class AppointmentAdapter (val items : MutableList<AppointmentData>)
     inner class ViewHolder(itemView : ItemRowBinding) : RecyclerView.ViewHolder(itemView.root){
         fun bind(item : AppointmentData){
             binding.apply {
-                tvName.text = "Name: " + item.name
-                tvDate.text = "Date: " +item.date
-                tvTime.text = "Time: " +item.time
+                tvFirstName.text = item.name
+                tvDate.text = item.date
+                tvTime.text = item.time
             }
         }
     }

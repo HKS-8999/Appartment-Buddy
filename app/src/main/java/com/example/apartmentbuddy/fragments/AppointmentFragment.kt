@@ -6,9 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.AppointmentAdapter
 import com.example.apartmentbuddy.databinding.FragmentAppointmentBinding
 import com.example.apartmentbuddy.model.AppointmentData
@@ -36,6 +41,24 @@ class Appointment : Fragment() {
     ): View? {
 
         _binding = FragmentAppointmentBinding.inflate(inflater, container, false)
+        val myToolbar: Toolbar = binding.toolbar
+        myToolbar.inflateMenu(R.menu.appointment_new)
+        myToolbar.title = "Appointment"
+        myToolbar.setTitleTextAppearance(this.context, R.style.CustomActionBarStyle)
+        myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        myToolbar.setNavigationOnClickListener { view ->
+            findNavController().navigate(R.id.action_appointment_to_home5)
+        }
+        myToolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_home -> {
+                    // TODO: Navigate to HOME PAGE
+                    findNavController().navigate(R.id.action_appointment_to_home5)
+                    true
+                }
+                else -> false
+            }
+        }
         return binding.root
 
     }
