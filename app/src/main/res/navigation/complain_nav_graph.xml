@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/complain_nav_graph"
+    app:startDestination="@id/fragment_complain_home">
+
+    <fragment
+        android:id="@+id/fragment_complain_home"
+        android:name="com.example.apartmentbuddy.complain_home"
+        android:label="fragment_complain_home"
+        tools:layout="@layout/fragment_complain_home" >
+        <action
+            android:id="@+id/action_fragment_complain_home_to_fragment_complain_form"
+            app:destination="@id/fragment_complain_form" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_complain_form"
+        android:name="com.example.apartmentbuddy.complain_form"
+        android:label="fragment_complain_form"
+        tools:layout="@layout/fragment_complain_form"/>
+</navigation>
