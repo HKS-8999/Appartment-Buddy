@@ -74,6 +74,7 @@ class Appointment (){
         alertDialog.show()
     }
 
+    // Populates the database with new appointment details
     @RequiresApi(Build.VERSION_CODES.O)
     fun addNewAppointment(date: String, time: String, user_id: String, user_name: String, context: Context?) : Boolean{
         val appointmentData = AppointmentData(user_name, date, time, user_id, location = "Office 2", timestamp = buildTimeStamp())
