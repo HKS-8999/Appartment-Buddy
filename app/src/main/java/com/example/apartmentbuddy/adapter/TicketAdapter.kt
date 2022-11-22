@@ -10,6 +10,9 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Tickets
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class TicketAdapter(
     private val c: Context,
@@ -17,7 +20,9 @@ class TicketAdapter(
     private val statusAdapter: ArrayAdapter<String>,
 
     ) : RecyclerView.Adapter<TicketAdapter.MyViewHolder>()
-{
+    {
+        private val db = FirebaseFirestore.getInstance()
+        private val appointmentCollection = db.collection("appointment")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketAdapter.MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_tickets,parent,false)
         return MyViewHolder(itemView)
