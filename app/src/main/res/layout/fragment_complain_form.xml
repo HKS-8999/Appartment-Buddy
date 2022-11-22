@@ -30,7 +30,7 @@
         android:background="@android:color/transparent"
         android:fontFamily="@font/sf_pro_display_semibold"
         android:hint="Unit Number"
-        android:inputType="text"
+        android:inputType="number"
         android:minHeight="48dp"
         android:textColor="@color/black"
         android:textColorHint="@color/light_gray"
