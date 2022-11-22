@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.ListItemAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentItemsBinding
+import com.example.apartmentbuddy.interfaces.EditClickListener
+import com.example.apartmentbuddy.model.Advertisement
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.example.apartmentbuddy.model.Item
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,9 +27,10 @@ import kotlinx.coroutines.withContext
  * Use the [ItemsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ItemsFragment : Fragment() {
+class ItemsFragment : Fragment(), EditClickListener {
     private lateinit var binding: FragmentItemsBinding
     private lateinit var bottomNavValue: String
+    lateinit var listener: EditClickListener
 
     private val db = FirebaseFirestore.getInstance()
     private val itemCollection = db.collection("items")
@@ -36,6 +41,7 @@ class ItemsFragment : Fragment() {
     ): View? {
         binding = FragmentItemsBinding.inflate(layoutInflater)
         bottomNavValue = arguments?.get("bottomNavValue").toString()
+        listener = this
         return binding.root
     }
 
@@ -44,7 +50,8 @@ class ItemsFragment : Fragment() {
         val recyclerView = binding.advRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        var itemList: List<Item>? = null
+        var itemList: MutableList<Item>? = null
+        var documentSnapshot: MutableList<DocumentSnapshot> = mutableListOf()
         GlobalScope.launch(Dispatchers.IO) {
             when (bottomNavValue) {
                 "home", "null" -> {
@@ -52,28 +59,35 @@ class ItemsFragment : Fragment() {
                         mapItemDataToView(itemCollection.get().await().documents)
                 }
                 "myPosts" -> {
-                    //TODO: Add user ID of the user logged In
                     itemList =
                         mapItemDataToView(
-                            itemCollection.whereEqualTo("uid", "UID").get().await().documents
+                            itemCollection.whereEqualTo("uid", FirebaseAuthUser.getUserId()).get()
+                                .await().documents
                         )
                 }
                 "bookmark" -> {
-                    itemList =
-                        mapItemDataToView(itemCollection.get().await().documents)
+                    itemCollection.get().await().documents.forEach {
+                        val list = it.data?.get("bookmarkUserList") as MutableList<String>
+                        if (list.map { string ->
+                                string.replace("[", "").replace("]", "")
+                            }.contains(FirebaseAuthUser.getUserId())) {
+                            documentSnapshot.add(it)
+                        }
+                    }
+                    itemList = mapItemDataToView(documentSnapshot)
                 }
             }
             withContext(Dispatchers.Main) {
                 recyclerView.adapter = itemList?.let {
                     ListItemAdvRecyclerViewAdapter(
-                        it, bottomNavValue
+                        it, bottomNavValue, listener
                     )
                 }
             }
         }
     }
 
-    private fun mapItemDataToView(documents: List<DocumentSnapshot>): List<Item> {
+    private fun mapItemDataToView(documents: List<DocumentSnapshot>): MutableList<Item> {
         val itemList = mutableListOf<Item>()
         for (document in documents) {
             val images: ArrayList<Uri> =
@@ -95,10 +109,22 @@ class ItemsFragment : Fragment() {
                     document.data?.get("price").toString().toFloat(),
                     document.data?.get("category").toString(),
                     document.data?.get("address").toString(),
-                    document.data?.get("bookmarkUserList").toString().split(",") as MutableList<String>
+                    document.data?.get("bookmarkUserList").toString()
+                        .split(",") as MutableList<String>
                 )
             )
         }
         return itemList
+    }
+
+    override fun onAdvertisementEditClick(advertisement: Advertisement) {
+        //Navigate to myPosts on POST click
+        val bundle = Bundle()
+        bundle.putString("bottomNavValue", bottomNavValue)
+        val fragment = PostItemFragment(advertisement)
+        fragment.arguments = bundle
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }
