@@ -58,6 +58,7 @@ class AdvertisementDisplayFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putString("bottomNavValue", bottomNavValue)
                 val fragment = PostItemFragment(null)
+                fragment.arguments = bundle
 
                 parentFragmentManager?.beginTransaction()
                     ?.replace(R.id.fragment_container, fragment)?.commit()

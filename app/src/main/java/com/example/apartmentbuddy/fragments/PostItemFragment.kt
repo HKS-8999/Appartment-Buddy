@@ -22,8 +22,7 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
-class PostItemFragment(advertisementItem: Advertisement?) : Fragment() {
-    val advertisement: Item = advertisementItem as Item
+class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment() {
     private lateinit var bottomNavValue: String
 
     private lateinit var binding: FragmentPostItemBinding
@@ -81,7 +80,8 @@ class PostItemFragment(advertisementItem: Advertisement?) : Fragment() {
         imageUploadButton = view.findViewById(R.id.addImages)
 
         //If the user is editing the existing post
-        if (null != advertisement && advertisement.documentId.isNotBlank()) {
+        if (null != advertisementItem && advertisementItem.documentId.isNotBlank()) {
+            val advertisement: Item = advertisementItem as Item
             documentId = advertisement.documentId
             titleEditText.setText(advertisement.title)
             descriptionEditText.setText(advertisement.description)
@@ -133,7 +133,7 @@ class PostItemFragment(advertisementItem: Advertisement?) : Fragment() {
                         val fragment = AdvertisementDisplayFragment()
                         fragment.arguments = bundle
                         parentFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, AdvertisementDisplayFragment())
+                            .replace(R.id.fragment_container, fragment)
                             .commit()
                     }.addOnFailureListener { error ->
                         Toast.makeText(
@@ -150,7 +150,7 @@ class PostItemFragment(advertisementItem: Advertisement?) : Fragment() {
             fragment.arguments = bundle
 
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
+                .replace(R.id.fragment_container, fragment).commit()
         }
 
         imageUploadButton.setOnClickListener {

@@ -26,9 +26,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
-class PostApartmentFragment(advertisementItem: Advertisement?) : Fragment() {
-    val advertisement: Apartment = advertisementItem as Apartment
-
+class PostApartmentFragment(private val advertisementItem: Advertisement?) : Fragment() {
     private lateinit var bottomNavValue: String
 
     private lateinit var binding: FragmentPostApartmentBinding
@@ -105,7 +103,8 @@ class PostApartmentFragment(advertisementItem: Advertisement?) : Fragment() {
         }
 
         //If the user is editing the existing post
-        if (null != advertisement && advertisement.documentId.isNotBlank()) {
+        if (null != advertisementItem && advertisementItem.documentId.isNotBlank()) {
+            val advertisement: Apartment = advertisementItem as Apartment
             documentId = advertisement.documentId
             bedroomsEditText.setText(advertisement.noOfBedrooms.toString())
             bathroomsEditText.setText(advertisement.noOfBathrooms.toString())
