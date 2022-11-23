@@ -16,34 +16,34 @@ import com.example.apartmentbuddy.adapter.TicketAdapter
 import com.example.apartmentbuddy.model.Tickets
 import com.google.firebase.firestore.*
 
-open class Ticket : Fragment() {
+class PendingTickets : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var list: MutableList<Tickets>
     lateinit var adapter: TicketAdapter
     private val db = FirebaseFirestore.getInstance()
     private val ticketCollection = db.collection("tickets")
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_ticket, container, false)
+        val view = inflater.inflate(R.layout.fragment_pending_tickets, container, false)
 
         val myToolbar: Toolbar = view.findViewById(R.id.toolbar) as Toolbar
-        myToolbar.inflateMenu(R.menu.tickets)
-        myToolbar.title = "Tickets"
+        myToolbar.inflateMenu(R.menu.pending_tickets)
+        myToolbar.title = "Pending Tickets"
         myToolbar.setTitleTextAppearance(this.context,R.style.CustomActionBarStyle)
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         myToolbar.setNavigationOnClickListener { view ->
-            view.findNavController().navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
+            view.findNavController().navigate(R.id.action_pendingTickets_to_ticket)
         }
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.pending_tickets -> {
                     // TODO: Navigate to HOME PAGE
                     view.findNavController()
-                        .navigate(R.id.action_ticket_to_pendingTickets)
+                        .navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
                     true
                 }
+
                 else -> false
             }
         }
@@ -78,11 +78,12 @@ open class Ticket : Fragment() {
                         val name: String? = dc.document.getString("name")
                         val status: String? = dc.document.getString("status")
                         val date: String? = dc.document.getString("time")
+                        if(status == "Not responded" || status == "Open")
                         list.add(Tickets(name, status, date, dc.document.id));
 
                     }
                     println(list)
-                adapter.notifyDataSetChanged()
+                    adapter.notifyDataSetChanged()
                 }
             }
         })

@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Tickets
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class TicketAdapter(
     private val c: Context,
@@ -21,8 +19,7 @@ class TicketAdapter(
 
     ) : RecyclerView.Adapter<TicketAdapter.MyViewHolder>()
     {
-        private val db = FirebaseFirestore.getInstance()
-        private val appointmentCollection = db.collection("appointment")
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketAdapter.MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_tickets,parent,false)
         return MyViewHolder(itemView)
@@ -72,8 +69,17 @@ class TicketAdapter(
                         true
                     }
                     else -> {
-                        userList.set(position, Tickets(list.name,result, list.date))
+                        userList.set(position, Tickets(list.name,result, list.date, list.documentId))
                         notifyItemChanged(position)
+                        val userMap = hashMapOf(
+                        "name" to list.name,
+                        "status" to result,
+                        "time" to list.date,
+                        )
+                        val db = FirebaseFirestore.getInstance()
+                        val ticketCollection = db.collection("tickets")
+                        list.documentId?.let { it1 -> ticketCollection.document(it1).set(userMap)
+                        statusAdapter.notifyDataSetChanged()}
                     }
                 }
                 dialog.dismiss()
