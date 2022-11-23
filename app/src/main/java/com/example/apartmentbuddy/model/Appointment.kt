@@ -25,8 +25,6 @@ class Appointment (){
     private val db = FirebaseFirestore.getInstance()
     private lateinit var id : String
 
-
-
     fun  printValidTime(hourOfDay: Int, minute : Int) : String {
         var hour = hourOfDay
         var am_pm = ""
@@ -87,8 +85,8 @@ class Appointment (){
 
     // Populates the database with new appointment details
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addNewAppointment(date: String, time: String, user_id: String, user_name: String, context: Context?) : Boolean{
-        val appointmentData = AppointmentData(user_name, date, time, user_id, location = "Office 2", timestamp = buildTimeStamp())
+    fun addNewAppointment(date: String, time: String, userId: String, userName: String, context: Context?) : Boolean{
+        val appointmentData = AppointmentData(name = userName, date = date, time = time, userId = userId, location = "Office 2", timestamp = buildTimeStamp())
         db.collection("appointment").add(appointmentData)
             .addOnSuccessListener {
                 Toast.makeText(context, "Appointment Booked", Toast.LENGTH_SHORT)
@@ -102,7 +100,7 @@ class Appointment (){
         return true
     }
 
-    fun showAppointment(user_id: String) {
+    fun showAppointment(user_id: String, function : (Boolean) -> Unit ) {
         db.collection("appointment").whereEqualTo("user_id", user_id).get().addOnSuccessListener { documents ->
                 for (document in documents) {
                     val data = document.data.get("name")
@@ -116,11 +114,13 @@ class Appointment (){
                     var location : String = document.data.get("location").toString()
                     var timestamp : String = document.data.get("timestamp").toString()
                     var appointment_id : String = document.id
-                    AppointmentList.add(ShowAppointmentData(name, date, time, user_id, location, timestamp, appointment_id))
+                    AppointmentList.add(AppointmentData(appointment_id,name, date, time, user_id, location, timestamp))
+                    function(true)
                 }
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
+                function(false)
             }
     }
 
@@ -156,7 +156,7 @@ class Appointment (){
                         var location : String = document.data.get("location").toString()
                         var timestamp : String = document.data.get("timestamp").toString()
                         var appointment_id : String = document.id
-                        PendingAppointmentList.add(ShowAppointmentData(name, date, time, user_id, location, timestamp, appointment_id))
+                        PendingAppointmentList.add(AppointmentData(appointment_id, name, date, time, user_id, location, timestamp))
                         Log.e(TAG, "Pending")
                     }
 

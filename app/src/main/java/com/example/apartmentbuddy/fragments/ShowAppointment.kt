@@ -56,6 +56,10 @@ class ShowAppointment : Fragment() {
         recyclerAdapter = AppointmentRecyclerAdapter(AppointmentList.getAllAppointment())
         recyclerView.adapter = recyclerAdapter
 
+        appointment.showAppointment(user_id) { success ->
+            recyclerAdapter.notifyDataSetChanged()
+
+        }
 
         val back: Button = view.findViewById(R.id.appointment_back)
         back.setOnClickListener {

@@ -63,7 +63,6 @@ class AppointmentHome : Fragment() {
 
         val view_appointment : CardView = view.findViewById(R.id.ViewAppointment)
         view_appointment.setOnClickListener {
-            appointment.showAppointment(user_id)
             view.findNavController().navigate(AppointmentHomeDirections.actionAppointmentHomeToShowAppointment())
         }
 

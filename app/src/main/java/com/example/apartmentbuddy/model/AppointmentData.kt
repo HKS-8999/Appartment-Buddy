@@ -1,12 +1,17 @@
 package com.example.apartmentbuddy.model
 
+import android.os.Parcelable
+import androidx.versionedparcelable.ParcelField
 import com.google.firebase.firestore.DocumentId
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class AppointmentData(
-    val name:String,
-    val date: String,
-    val time:String,
-    val user_id: String,
-    var location: String,
-    val timestamp: String,
-)
+    @DocumentId val appointmentID: String ? = null,
+    val name:String ? = null,
+    val date: String ? = null,
+    val time:String ? = null,
+    val userId: String? = null,
+    var location: String? = null,
+    val timestamp: String? = null,
+) : Parcelable

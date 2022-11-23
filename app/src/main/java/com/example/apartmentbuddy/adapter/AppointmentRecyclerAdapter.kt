@@ -15,7 +15,7 @@ import com.example.apartmentbuddy.model.AppointmentData
 import com.example.apartmentbuddy.model.ShowAppointmentData
 import com.google.firebase.firestore.QueryDocumentSnapshot
 
-class AppointmentRecyclerAdapter(private val appointment: List<ShowAppointmentData>) : RecyclerView.Adapter<AppointmentRecyclerAdapter.ViewHolder>() {
+class AppointmentRecyclerAdapter(private val appointment: List<AppointmentData>) : RecyclerView.Adapter<AppointmentRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_view_each_appointment,parent,false)
@@ -23,11 +23,11 @@ class AppointmentRecyclerAdapter(private val appointment: List<ShowAppointmentDa
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.appointmentId.text = appointment[position].appointment_id
+            holder.appointmentId.text = appointment[position].appointmentID.toString()
             holder.appointmentDate.text = appointment[position].date
             holder.appointmentTime.text = appointment[position].time
             holder.appointmentLocation.text = appointment[position].location
-            holder.appointment_name = appointment[position].name
+            holder.appointment_name = appointment[position].name.toString()
 
         }
 

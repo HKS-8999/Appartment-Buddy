@@ -1,10 +1,10 @@
 package com.example.apartmentbuddy.model
 
 object AppointmentList {
-        private val appointmentList = mutableListOf<ShowAppointmentData>()
+        private val appointmentList = mutableListOf<AppointmentData>()
 
     // Method to add data in Appointment list
-        fun add(appointment: ShowAppointmentData) {
+        fun add(appointment: AppointmentData) {
             if(!appointmentList.contains(appointment)){
                 appointmentList.add(appointment)
             }
@@ -15,7 +15,7 @@ object AppointmentList {
         }
 
         // Method to fetch the data in Appointment List
-        fun getAllAppointment(): List<ShowAppointmentData> {
+        fun getAllAppointment(): List<AppointmentData> {
             return appointmentList
         }
 }

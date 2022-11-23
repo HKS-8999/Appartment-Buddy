@@ -3,10 +3,10 @@ package com.example.apartmentbuddy.model
 import com.example.apartmentbuddy.fragments.ShowAppointment
 
 object PendingAppointmentList {
-    private val pendingAppointmentList = mutableListOf<ShowAppointmentData>()
+    private val pendingAppointmentList = mutableListOf<AppointmentData>()
 
     // Method to add data in Appointment list
-    fun add(pendingAppointment: ShowAppointmentData) {
+    fun add(pendingAppointment: AppointmentData) {
         if(!pendingAppointmentList.contains(pendingAppointment)){
             pendingAppointmentList.add(pendingAppointment)
         }
@@ -17,7 +17,7 @@ object PendingAppointmentList {
     }
 
     // Method to fetch the data in Appointment List
-    fun getAllAppointment(): List<ShowAppointmentData> {
+    fun getAllAppointment(): List<AppointmentData> {
         return pendingAppointmentList
     }
 }
