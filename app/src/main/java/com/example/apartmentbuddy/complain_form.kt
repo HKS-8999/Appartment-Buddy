@@ -82,14 +82,10 @@ class complain_form : Fragment() {
             val category = categoryComplainEditText.text.toString().trim()
             val subject = subjectComplainEditText.text.toString().trim()
             val description = descriptionComplainEditText.text.toString().trim()
-            val userId = "dhruv@dal.ca"
+            val userId = "dhruv@gmail.com"
             val status ="No responded"
             val name ="Dhruvit"
-            println("hfffffffffffffffffffffffffffffnnnnnnnnnnnnnnnnnnnnnnnnnnnfffffffffff")
-                println("$ticketid is this of app of ticketid")
-            println("$unitnumber app Unitnumer is there ")
-            println("$description app Unitnumer is there ")
-            println("jdddddddddddddddddddddddddddnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnndddddddddddddddddd")
+
             val complains =
                 Complain(
                     userId,
@@ -103,7 +99,7 @@ class complain_form : Fragment() {
                     name,
                     ticketid
                 )
-            println("jjdj $complains ")
+
             complainCollection.document().set(complains).addOnSuccessListener { void: Void? ->
                 Toast.makeText(
                     activity, "Successfully posted!", Toast.LENGTH_LONG)
@@ -160,18 +156,6 @@ class complain_form : Fragment() {
                     }
             }
         }
-
-
-
-
-
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_complain_form, container, false)
-//    }
 
 
 }
