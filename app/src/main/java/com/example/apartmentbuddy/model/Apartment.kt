@@ -6,7 +6,7 @@ import java.util.*
 class Apartment(
     documentId: String,
     uid: String,
-    images: ArrayList<Uri>,
+    photos: ArrayList<Uri>,
     description: String,
     type: String,
     contact: String,
@@ -14,6 +14,6 @@ class Apartment(
     val noOfBathrooms: Float,
     val unitNumber: String,
     val rent: Float,
-    val startDate: String,
+    val availability: String,
     bookmarkUserList: MutableList<String>
-) : Advertisement(documentId, uid, images, description, type, contact, bookmarkUserList)
+) : Advertisement(documentId, uid, photos, description, type, contact, bookmarkUserList)
