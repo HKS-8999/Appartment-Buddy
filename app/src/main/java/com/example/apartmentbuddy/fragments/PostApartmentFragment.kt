@@ -43,7 +43,7 @@ class PostApartmentFragment(private val advertisementItem: Advertisement?) : Fra
     private var documentId: String? = null
 
     private var selectedImages = ArrayList<Uri>()
-    private val adapter = CarouselAdapter(selectedImages)
+    private var adapter = CarouselAdapter(selectedImages)
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
@@ -143,10 +143,8 @@ class PostApartmentFragment(private val advertisementItem: Advertisement?) : Fra
                     availability,
                     mutableListOf()
                 )
-
-                //Insert or update the document in apartments collection
-                documentId?.let { id ->
-                    apartmentCollection.document(id).set(ad, SetOptions.merge())
+                if (documentId == null) {
+                    apartmentCollection.document().set(ad)
                         .addOnSuccessListener { void: Void? ->
                             Toast.makeText(
                                 activity, "Successfully posted!", Toast.LENGTH_LONG
@@ -164,7 +162,31 @@ class PostApartmentFragment(private val advertisementItem: Advertisement?) : Fra
                                 activity, error.message.toString(), Toast.LENGTH_LONG
                             ).show()
                         }
+                } else {
+                    documentId?.let { id ->
+
+                        apartmentCollection.document(id).set(ad, SetOptions.merge())
+                            .addOnSuccessListener { void: Void? ->
+                                Toast.makeText(
+                                    activity, "Listing updated!", Toast.LENGTH_LONG
+                                ).show()
+
+                                val bundle = Bundle()
+                                bundle.putString("bottomNavValue", bottomNavValue)
+                                val fragment = AdvertisementDisplayFragment()
+                                fragment.arguments = bundle
+                                parentFragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, fragment)
+                                    .commit()
+                            }.addOnFailureListener { error ->
+                                Toast.makeText(
+                                    activity, error.message.toString(), Toast.LENGTH_LONG
+                                ).show()
+                            }
+                    }
                 }
+
+
             }
         }
 
@@ -247,10 +269,14 @@ class PostApartmentFragment(private val advertisementItem: Advertisement?) : Fra
                 .addOnSuccessListener {
                     refStorage.downloadUrl.addOnSuccessListener { uri ->
                         selectedImages.add(uri)
-                        adapter.notifyDataSetChanged()
+                        adapter = CarouselAdapter(selectedImages)
+                        binding.carouselRecyclerview.adapter = adapter
+                        binding.carouselRecyclerview.apply {
+                            setInfinite(true)
+                        }
+                        Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                    Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
-                        .show()
                 }
                 .addOnFailureListener { ex ->
                     Toast.makeText(

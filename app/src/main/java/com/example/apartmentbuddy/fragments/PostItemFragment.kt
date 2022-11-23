@@ -41,7 +41,7 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
     private var documentId: String? = null
 
     private var selectedImages = ArrayList<Uri>()
-    private val adapter = CarouselAdapter(selectedImages)
+    private var adapter = CarouselAdapter(selectedImages)
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
@@ -122,8 +122,8 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
                         address,
                         mutableListOf()
                     )
-                documentId?.let { it1 ->
-                    itemCollection.document(it1).set(item, SetOptions.merge())
+                if (documentId == null) {
+                    itemCollection.document().set(item)
                         .addOnSuccessListener { void: Void? ->
                             Toast.makeText(
                                 activity, "Successfully posted!", Toast.LENGTH_LONG
@@ -141,6 +141,27 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
                                 activity, error.message.toString(), Toast.LENGTH_LONG
                             ).show()
                         }
+                } else {
+                    documentId?.let { it1 ->
+                        itemCollection.document(it1).set(item, SetOptions.merge())
+                            .addOnSuccessListener { void: Void? ->
+                                Toast.makeText(
+                                    activity, "Listing updated!", Toast.LENGTH_LONG
+                                ).show()
+
+                                val bundle = Bundle()
+                                bundle.putString("bottomNavValue", bottomNavValue)
+                                val fragment = AdvertisementDisplayFragment()
+                                fragment.arguments = bundle
+                                parentFragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, fragment)
+                                    .commit()
+                            }.addOnFailureListener { error ->
+                                Toast.makeText(
+                                    activity, error.message.toString(), Toast.LENGTH_LONG
+                                ).show()
+                            }
+                    }
                 }
             }
         }
@@ -223,10 +244,14 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
                 .addOnSuccessListener {
                     refStorage.downloadUrl.addOnSuccessListener { uri ->
                         selectedImages.add(uri)
-                        adapter.notifyDataSetChanged()
+                        adapter = CarouselAdapter(selectedImages)
+                        binding.carouselRecyclerview.adapter = adapter
+                        binding.carouselRecyclerview.apply {
+                            setInfinite(true)
+                        }
+                        Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                    Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
-                        .show()
                 }
                 .addOnFailureListener { ex ->
                     Toast.makeText(
