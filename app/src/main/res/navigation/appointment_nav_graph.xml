@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_appointment_home_to_showAppointment"
             app:destination="@id/showAppointment" />
+        <action
+            android:id="@+id/action_appointment_home_to_cancelAppointment"
+            app:destination="@id/cancelAppointment" />
     </fragment>
     <fragment
         android:id="@+id/newAppointment"
@@ -40,11 +43,32 @@
     </fragment>
     <fragment
         android:id="@+id/showAppointment"
-        android:name="com.example.apartmentbuddy.ShowAppointment"
+        android:name="com.example.apartmentbuddy.fragments.ShowAppointment"
         android:label="fragment_show_appointment"
         tools:layout="@layout/fragment_show_appointment" >
         <action
             android:id="@+id/action_showAppointment_to_appointment_home"
             app:destination="@id/appointment_home" />
+        <action
+            android:id="@+id/action_showAppointment_to_final_cancel_appointment"
+            app:destination="@id/final_cancel_appointment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cancelAppointment"
+        android:name="com.example.apartmentbuddy.fragments.CancelAppointment"
+        android:label="fragment_cancel_appointment"
+        tools:layout="@layout/fragment_cancel_appointment" >
+        <action
+            android:id="@+id/action_cancelAppointment_to_appointment_home"
+            app:destination="@id/appointment_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/final_cancel_appointment"
+        android:name="com.example.apartmentbuddy.final_cancel_appointment"
+        android:label="fragment_final_cancel_appointment"
+        tools:layout="@layout/fragment_final_cancel_appointment" >
+        <action
+            android:id="@+id/action_final_cancel_appointment_to_showAppointment"
+            app:destination="@id/showAppointment" />
     </fragment>
 </navigation>

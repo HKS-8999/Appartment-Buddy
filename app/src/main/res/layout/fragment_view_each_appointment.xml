@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     card_view:cardCornerRadius="15dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="25dp"
-    android:id="@+id/card_view">
+    android:id="@+id/card_view"
+    tools:context=".adapter.AppointmentRecyclerAdapter">
 
 
     <androidx.cardview.widget.CardView
+        android:orientation="vertical"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -16,15 +18,17 @@
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardBackgroundColor="#E6E6E6"
-        card_view:cardCornerRadius="25dp"
-        card_view:cardElevation="7dp"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="4dp"
         card_view:cardUseCompatPadding="true"
         android:id="@+id/newAppointment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/each_appointment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -36,20 +40,41 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Date:"
+                        android:text="Appointment ID#"
                         android:fontFamily="@font/sf_pro_display_bold"
-                        android:textSize="26sp"
+                        android:textSize="18sp"
                         android:textColor="@color/blue"
                         android:textStyle="bold"
+                        android:padding="5dp"/>
+                    <TextView
+                        android:id="@+id/show_appointment_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_pro_display_light"
+                        android:textSize="13sp"
+                        android:textColor="@color/blue"
+                        android:textStyle="bold"
+                        android:padding="5dp"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Date:"
+                        android:fontFamily="@font/sf_pro_display_bold"
+                        android:textSize="20sp"
+                        android:textColor="@color/blue"
                         android:padding="5dp"/>
                     <TextView
                         android:id="@+id/show_appointment_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sf_pro_display_bold"
-                        android:textSize="26sp"
+                        android:fontFamily="@font/sf_pro_display_medium"
+                        android:textSize="20sp"
                         android:textColor="@color/blue"
-                        android:textStyle="bold"
                         android:padding="5dp"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -61,18 +86,16 @@
                         android:layout_height="wrap_content"
                         android:text="Time:"
                         android:fontFamily="@font/sf_pro_display_bold"
-                        android:textSize="26sp"
+                        android:textSize="20sp"
                         android:textColor="@color/blue"
-                        android:textStyle="bold"
                         android:padding="5dp"/>
                     <TextView
                         android:id="@+id/show_appointment_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sf_pro_display_bold"
-                        android:textSize="26sp"
+                        android:fontFamily="@font/sf_pro_display_medium"
+                        android:textSize="20sp"
                         android:textColor="@color/blue"
-                        android:textStyle="bold"
                         android:padding="5dp"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -84,23 +107,19 @@
                         android:layout_height="wrap_content"
                         android:text="Location:"
                         android:fontFamily="@font/sf_pro_display_bold"
-                        android:textSize="26sp"
+                        android:textSize="20sp"
                         android:textColor="@color/blue"
-                        android:textStyle="bold"
                         android:padding="5dp"/>
                     <TextView
                         android:id="@+id/show_appointment_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/sf_pro_display_bold"
-                        android:textSize="26sp"
+                        android:fontFamily="@font/sf_pro_display_medium"
+                        android:textSize="20sp"
                         android:textColor="@color/blue"
-                        android:textStyle="bold"
                         android:padding="5dp"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
-
-
-</androidx.cardview.widget.CardView>
+</androidx.appcompat.widget.LinearLayoutCompat>
