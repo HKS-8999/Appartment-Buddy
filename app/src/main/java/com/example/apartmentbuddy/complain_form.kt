@@ -72,7 +72,7 @@ class complain_form : Fragment() {
         imageUploadButton = view.findViewById(R.id.addComplainImages)
 
         val simpleDate = SimpleDateFormat("dd/M/yyyy ")
-        val currentDate = simpleDate.format(Date())
+        val date = simpleDate.format(Date())
 
         val calendar = Calendar.getInstance()
         val ticketid= calendar.timeInMillis.toString()
@@ -84,21 +84,24 @@ class complain_form : Fragment() {
             val description = descriptionComplainEditText.text.toString().trim()
             val userId = "dhruv@gmail.com"
             val status ="No responded"
-            val name ="Dhruvit"
+            val firstname ="Dhruvit"
+            println("Hello my name is $firstname")
+            println("Hell this is my status of complain $status")
 
             val complains =
                 Complain(
                     userId,
-                    selectedImages,
-                    description,
-                    subject,
-                    currentDate,
+                selectedImages,
+                description,
+                subject,
+                date,
                     category,
-                    unitnumber,
-                    status,
-                    name,
-                    ticketid
+                unitnumber,
+                firstname,
+                status,
+                ticketid
                 )
+
 
             complainCollection.document().set(complains).addOnSuccessListener { void: Void? ->
                 Toast.makeText(
@@ -114,8 +117,9 @@ class complain_form : Fragment() {
         }
         binding.backComplain.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
+                .replace(R.id.fragment_complain_home, complain_home()).commit()
         }
+
 
         imageUploadButton.setOnClickListener {
             getContent.launch("image/*")
