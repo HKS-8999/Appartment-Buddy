@@ -72,6 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                app:errorEnabled="true"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/design_default_color_error"
                 android:hint="Bedrooms">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -89,13 +92,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
+                app:errorEnabled="true"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/design_default_color_error"
                 android:hint="Bathrooms">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/bathrooms"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,6 +112,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            app:errorEnabled="true"
+            app:helperText="Required"
+            app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Apartment Unit Number">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -122,6 +131,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            app:errorEnabled="true"
+            app:helperText="Required"
+            app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Property Description">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -138,13 +150,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            app:errorEnabled="true"
+            app:helperText="Required"
+            app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Rent per Month">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/rent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,6 +171,9 @@
             android:layout_marginTop="20dp"
             app:startIconDrawable="@drawable/ic_baseline_edit_calendar_24"
             app:startIconContentDescription="Calendar"
+            app:errorEnabled="true"
+            app:helperText="Required"
+            app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Availability Start Date">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -171,13 +189,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            app:errorEnabled="true"
+            app:helperText="Required"
+            app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Contact">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
