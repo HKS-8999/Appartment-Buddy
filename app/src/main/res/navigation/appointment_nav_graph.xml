@@ -49,9 +49,6 @@
         <action
             android:id="@+id/action_showAppointment_to_appointment_home"
             app:destination="@id/appointment_home" />
-        <action
-            android:id="@+id/action_showAppointment_to_final_cancel_appointment"
-            app:destination="@id/final_cancel_appointment" />
     </fragment>
     <fragment
         android:id="@+id/cancelAppointment"
@@ -61,6 +58,9 @@
         <action
             android:id="@+id/action_cancelAppointment_to_appointment_home"
             app:destination="@id/appointment_home" />
+        <action
+            android:id="@+id/action_cancelAppointment_to_final_cancel_appointment"
+            app:destination="@id/final_cancel_appointment" />
     </fragment>
     <fragment
         android:id="@+id/final_cancel_appointment"
@@ -68,7 +68,21 @@
         android:label="fragment_final_cancel_appointment"
         tools:layout="@layout/fragment_final_cancel_appointment" >
         <action
-            android:id="@+id/action_final_cancel_appointment_to_showAppointment"
-            app:destination="@id/showAppointment" />
+            android:id="@+id/action_final_cancel_appointment_to_cancelAppointment"
+            app:destination="@id/cancelAppointment" />
+        <action
+            android:id="@+id/action_final_cancel_appointment_to_appointment_home"
+            app:destination="@id/appointment_home" />
+        <argument
+            android:name="appointment_id"
+            app:argType="string" />
+        <argument
+            android:name="appointment_date"
+            app:argType="string" />
+        <argument
+            android:name="appointment_name"
+            app:argType="string" />
+        <argument android:name="appointment_location"
+            app:argType="string" />
     </fragment>
 </navigation>

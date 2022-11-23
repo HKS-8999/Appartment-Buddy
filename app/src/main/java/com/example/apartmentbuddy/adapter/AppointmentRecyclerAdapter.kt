@@ -27,6 +27,8 @@ class AppointmentRecyclerAdapter(private val appointment: List<ShowAppointmentDa
             holder.appointmentDate.text = appointment[position].date
             holder.appointmentTime.text = appointment[position].time
             holder.appointmentLocation.text = appointment[position].location
+            holder.appointment_name = appointment[position].name
+
         }
 
         override fun getItemCount(): Int {
@@ -37,18 +39,24 @@ class AppointmentRecyclerAdapter(private val appointment: List<ShowAppointmentDa
             var appointmentDate : TextView
             var appointmentTime : TextView
             var appointmentLocation : TextView
-            lateinit var appointmentId : TextView
-//            var thisAppointment : LinearLayout
+            var appointmentId : TextView
+            var thisAppointment : CardView
+            lateinit var appointment_name : String
 
             init {
                 appointmentId = itemView.findViewById(R.id.show_appointment_count)
                 appointmentDate = itemView.findViewById(R.id.show_appointment_date)
                 appointmentTime = itemView.findViewById(R.id.show_appointment_time)
                 appointmentLocation = itemView.findViewById(R.id.show_appointment_location)
-//                thisAppointment = itemView.findViewById(R.id.each_appointment)
-//                thisAppointment.setOnClickListener {
-////                    itemView.findNavController().navigate(CancelAppointmentDirections.)
-//                }
+                thisAppointment = itemView.findViewById(R.id.each_appointment)
+                thisAppointment.setOnClickListener {
+                    itemView.findNavController().navigate(CancelAppointmentDirections.actionCancelAppointmentToAppointmentHome(
+//                        appointmentId.toString(),
+//                        appointmentDate.toString(),
+//                        appointmentTime.toString(),
+//                        appointmentLocation.toString()
+                    ))
+                }
             }
         }
     }
