@@ -58,8 +58,5 @@ class Login : AppCompatActivity() {
             .addOnFailureListener{
             Toast.makeText(this,"Error OCcured ${it.localizedMessage}",Toast.LENGTH_SHORT).show()
         }
-
     }
-
-
 }
