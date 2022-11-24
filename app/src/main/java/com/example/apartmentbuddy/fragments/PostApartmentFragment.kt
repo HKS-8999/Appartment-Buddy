@@ -19,10 +19,8 @@ import com.example.apartmentbuddy.databinding.FragmentPostApartmentBinding
 import com.example.apartmentbuddy.model.Advertisement
 import com.example.apartmentbuddy.model.Apartment
 import com.example.apartmentbuddy.model.FirebaseAuthUser
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
@@ -45,7 +43,7 @@ class PostApartmentFragment(private val advertisementItem: Advertisement?) : Fra
     private var documentId: String? = null
 
     private var selectedImages = ArrayList<Uri>()
-    private val adapter = CarouselAdapter(selectedImages)
+    private var adapter = CarouselAdapter(selectedImages)
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
@@ -120,49 +118,75 @@ class PostApartmentFragment(private val advertisementItem: Advertisement?) : Fra
             }
         }
 
-        postApartmentButton.setOnClickListener {
-            val bedrooms = bedroomsEditText.text.toString().trim().toFloat()
-            val bathrooms = bathroomsEditText.text.toString().trim().toFloat()
-            val apartment = apartmentEditText.text.toString().trim()
-            val description = descriptionEditText.text.toString().trim()
-            val rent = rentEditText.text.toString().trim().toFloat()
-            val availability = availabilityEditText.text.toString().trim()
-            val contact = contactEditText.text.toString().trim()
-            val userId = FirebaseAuthUser.getUserId().toString()
-            val ad = Apartment(
-                "",
-                userId,
-                selectedImages,
-                description,
-                "apartment",
-                contact,
-                bedrooms,
-                bathrooms,
-                apartment,
-                rent,
-                availability,
-                mutableListOf()
-            )
-            //Insert or update the document in apartments collection
-            documentId?.let { id ->
-                apartmentCollection.document(id).set(ad, SetOptions.merge())
-                    .addOnSuccessListener { void: Void? ->
-                        Toast.makeText(
-                            activity, "Successfully posted!", Toast.LENGTH_LONG
-                        ).show()
 
-                        val bundle = Bundle()
-                        bundle.putString("bottomNavValue", bottomNavValue)
-                        val fragment = AdvertisementDisplayFragment()
-                        fragment.arguments = bundle
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, fragment)
-                            .commit()
-                    }.addOnFailureListener { error ->
-                        Toast.makeText(
-                            activity, error.message.toString(), Toast.LENGTH_LONG
-                        ).show()
+        postApartmentButton.setOnClickListener {
+            if(checkValidation()) {
+                val bedrooms = bedroomsEditText.text.toString().trim().toFloat()
+                val bathrooms = bathroomsEditText.text.toString().trim().toFloat()
+                val apartment = apartmentEditText.text.toString().trim()
+                val description = descriptionEditText.text.toString().trim()
+                val rent = rentEditText.text.toString().trim().toFloat()
+                val availability = availabilityEditText.text.toString().trim()
+                val contact = contactEditText.text.toString().trim()
+                val userId = FirebaseAuthUser.getUserId().toString()
+                val ad = Apartment(
+                    "",
+                    userId,
+                    selectedImages,
+                    description,
+                    "apartment",
+                    contact,
+                    bedrooms,
+                    bathrooms,
+                    apartment,
+                    rent,
+                    availability,
+                    mutableListOf()
+                )
+                if (documentId == null) {
+                    apartmentCollection.document().set(ad)
+                        .addOnSuccessListener { void: Void? ->
+                            Toast.makeText(
+                                activity, "Successfully posted!", Toast.LENGTH_LONG
+                            ).show()
+
+                            val bundle = Bundle()
+                            bundle.putString("bottomNavValue", bottomNavValue)
+                            val fragment = AdvertisementDisplayFragment()
+                            fragment.arguments = bundle
+                            parentFragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .commit()
+                        }.addOnFailureListener { error ->
+                            Toast.makeText(
+                                activity, error.message.toString(), Toast.LENGTH_LONG
+                            ).show()
+                        }
+                } else {
+                    documentId?.let { id ->
+
+                        apartmentCollection.document(id).set(ad, SetOptions.merge())
+                            .addOnSuccessListener { void: Void? ->
+                                Toast.makeText(
+                                    activity, "Listing updated!", Toast.LENGTH_LONG
+                                ).show()
+
+                                val bundle = Bundle()
+                                bundle.putString("bottomNavValue", bottomNavValue)
+                                val fragment = AdvertisementDisplayFragment()
+                                fragment.arguments = bundle
+                                parentFragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, fragment)
+                                    .commit()
+                            }.addOnFailureListener { error ->
+                                Toast.makeText(
+                                    activity, error.message.toString(), Toast.LENGTH_LONG
+                                ).show()
+                            }
                     }
+                }
+
+
             }
         }
 
@@ -180,6 +204,47 @@ class PostApartmentFragment(private val advertisementItem: Advertisement?) : Fra
         imageUploadButton.setOnClickListener {
             getContent.launch("image/*")
         }
+    }
+
+    private fun checkValidation(): Boolean {
+        bedroomsEditText.error=null
+        bathroomsEditText.error =null
+        apartmentEditText.error =null
+        descriptionEditText.error =null
+        rentEditText.error =null
+        availabilityEditText.error =null
+        contactEditText.error =null
+
+        var isValid = true
+        if (bedroomsEditText.text.toString().trim().isNullOrBlank()) {
+            bedroomsEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (bathroomsEditText.text.toString().trim().isNullOrBlank()) {
+            bathroomsEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (apartmentEditText.text.toString().trim().isNullOrBlank()) {
+            apartmentEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (descriptionEditText.text.toString().trim().isNullOrBlank()) {
+            descriptionEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (rentEditText.text.toString().trim().isNullOrBlank()) {
+            rentEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (availabilityEditText.text.toString().trim().isNullOrBlank()) {
+            availabilityEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (contactEditText.text.toString().trim().length != 10 ) {
+            contactEditText.error = "Field should contain 10 digits"
+            isValid = false
+        }
+        return isValid
     }
 
     private fun uploadImageToFirebase(fileUri: Uri) {
@@ -204,10 +269,14 @@ class PostApartmentFragment(private val advertisementItem: Advertisement?) : Fra
                 .addOnSuccessListener {
                     refStorage.downloadUrl.addOnSuccessListener { uri ->
                         selectedImages.add(uri)
-                        adapter.notifyDataSetChanged()
+                        adapter = CarouselAdapter(selectedImages)
+                        binding.carouselRecyclerview.adapter = adapter
+                        binding.carouselRecyclerview.apply {
+                            setInfinite(true)
+                        }
+                        Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                    Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
-                        .show()
                 }
                 .addOnFailureListener { ex ->
                     Toast.makeText(
