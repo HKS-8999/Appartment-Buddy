@@ -162,7 +162,7 @@ class ListApartmentAdvRecyclerViewAdapter(
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val unit: TextView = itemView.findViewById(R.id.apartmentUnitNumber)
         val description: TextView = itemView.findViewById(R.id.apartmentDescription)
-        val bedrooms: TextView = itemView.findViewById(R.id.noOfbedrooms)
+        val bedrooms: TextView = itemView.findViewById(R.id.noOfBedrooms)
         val bathrooms: TextView = itemView.findViewById(R.id.noOfBathrooms)
         val rent: TextView = itemView.findViewById(R.id.apartmentRent)
         val startDate: TextView = itemView.findViewById(R.id.apartmentAvailability)

@@ -41,7 +41,7 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
     private var documentId: String? = null
 
     private var selectedImages = ArrayList<Uri>()
-    private val adapter = CarouselAdapter(selectedImages)
+    private var adapter = CarouselAdapter(selectedImages)
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
@@ -98,48 +98,71 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
         }
 
         postItemButton.setOnClickListener {
-            val title = titleEditText.text.toString().trim()
-            val description = descriptionEditText.text.toString().trim()
-            val condition = conditionEditText.text.toString().trim()
-            val price = priceEditText.text.toString().trim().toFloat()
-            val category = categoryEditText.text.toString().trim()
-            val address = addressEditText.text.toString().trim()
-            val contact = contactEditText.text.toString().trim()
-            val userId = FirebaseAuthUser.getUserId().toString()
-            val item =
-                Item(
-                    "",
-                    userId,
-                    selectedImages,
-                    description,
-                    "Item",
-                    contact,
-                    title,
-                    condition,
-                    price,
-                    category,
-                    address,
-                    mutableListOf()
-                )
-            documentId?.let { it1 ->
-                itemCollection.document(it1).set(item, SetOptions.merge())
-                    .addOnSuccessListener { void: Void? ->
-                        Toast.makeText(
-                            activity, "Successfully posted!", Toast.LENGTH_LONG
-                        ).show()
+            if (checkValidation()) {
+                val title = titleEditText.text.toString().trim()
+                val description = descriptionEditText.text.toString().trim()
+                val condition = conditionEditText.text.toString().trim()
+                val price = priceEditText.text.toString().trim().toFloat()
+                val category = categoryEditText.text.toString().trim()
+                val address = addressEditText.text.toString().trim()
+                val contact = contactEditText.text.toString().trim()
+                val userId = FirebaseAuthUser.getUserId().toString()
+                val item =
+                    Item(
+                        "",
+                        userId,
+                        selectedImages,
+                        description,
+                        "Item",
+                        contact,
+                        title,
+                        condition,
+                        price,
+                        category,
+                        address,
+                        mutableListOf()
+                    )
+                if (documentId == null) {
+                    itemCollection.document().set(item)
+                        .addOnSuccessListener { void: Void? ->
+                            Toast.makeText(
+                                activity, "Successfully posted!", Toast.LENGTH_LONG
+                            ).show()
 
-                        val bundle = Bundle()
-                        bundle.putString("bottomNavValue", bottomNavValue)
-                        val fragment = AdvertisementDisplayFragment()
-                        fragment.arguments = bundle
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, fragment)
-                            .commit()
-                    }.addOnFailureListener { error ->
-                        Toast.makeText(
-                            activity, error.message.toString(), Toast.LENGTH_LONG
-                        ).show()
+                            val bundle = Bundle()
+                            bundle.putString("bottomNavValue", bottomNavValue)
+                            val fragment = AdvertisementDisplayFragment()
+                            fragment.arguments = bundle
+                            parentFragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .commit()
+                        }.addOnFailureListener { error ->
+                            Toast.makeText(
+                                activity, error.message.toString(), Toast.LENGTH_LONG
+                            ).show()
+                        }
+                } else {
+                    documentId?.let { it1 ->
+                        itemCollection.document(it1).set(item, SetOptions.merge())
+                            .addOnSuccessListener { void: Void? ->
+                                Toast.makeText(
+                                    activity, "Listing updated!", Toast.LENGTH_LONG
+                                ).show()
+
+                                val bundle = Bundle()
+                                bundle.putString("bottomNavValue", bottomNavValue)
+                                val fragment = AdvertisementDisplayFragment()
+                                fragment.arguments = bundle
+                                parentFragmentManager.beginTransaction()
+                                    .replace(R.id.fragment_container, fragment)
+                                    .commit()
+                            }.addOnFailureListener { error ->
+                                Toast.makeText(
+                                    activity, error.message.toString(), Toast.LENGTH_LONG
+                                ).show()
+                            }
                     }
+                }
             }
         }
 
@@ -156,6 +179,47 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
         imageUploadButton.setOnClickListener {
             getContent.launch("image/*")
         }
+    }
+
+    private fun checkValidation(): Boolean {
+        titleEditText.error=null
+        descriptionEditText.error=null
+        conditionEditText.error=null
+        priceEditText.error=null
+        categoryEditText.error=null
+        addressEditText.error=null
+        contactEditText.error=null
+
+        var isValid = true
+        if (titleEditText.text.toString().trim().isNullOrBlank()) {
+            titleEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (descriptionEditText.text.toString().trim().isNullOrBlank()) {
+            descriptionEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (conditionEditText.text.toString().trim().isNullOrBlank()) {
+            conditionEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (priceEditText.text.toString().trim().isNullOrBlank()) {
+            priceEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (categoryEditText.text.toString().trim().isNullOrBlank()) {
+            categoryEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (addressEditText.text.toString().trim().isNullOrBlank()) {
+            addressEditText.error = "Required Field!"
+            isValid = false
+        }
+        if (contactEditText.text.toString().trim().length != 10) {
+            contactEditText.error = "Field should contain 10 digits"
+            isValid = false
+        }
+        return isValid
     }
 
     private fun uploadImageToFirebase(fileUri: Uri) {
@@ -180,10 +244,14 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
                 .addOnSuccessListener {
                     refStorage.downloadUrl.addOnSuccessListener { uri ->
                         selectedImages.add(uri)
-                        adapter.notifyDataSetChanged()
+                        adapter = CarouselAdapter(selectedImages)
+                        binding.carouselRecyclerview.adapter = adapter
+                        binding.carouselRecyclerview.apply {
+                            setInfinite(true)
+                        }
+                        Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                    Toast.makeText(requireContext(), "Image uploaded!", Toast.LENGTH_SHORT)
-                        .show()
                 }
                 .addOnFailureListener { ex ->
                     Toast.makeText(
