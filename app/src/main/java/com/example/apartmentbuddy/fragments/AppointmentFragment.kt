@@ -18,6 +18,8 @@ import com.example.apartmentbuddy.adapter.AppointmentAdapter
 import com.example.apartmentbuddy.databinding.FragmentAppointmentBinding
 import com.example.apartmentbuddy.model.AppointmentData
 import com.google.firebase.firestore.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -47,13 +49,13 @@ class Appointment : Fragment() {
         myToolbar.setTitleTextAppearance(this.context, R.style.CustomActionBarStyle)
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         myToolbar.setNavigationOnClickListener { view ->
-            findNavController().navigate(R.id.action_appointment_to_home5)
+//            findNavController().navigate(R.id.action_appointment_to_home5)
         }
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
                     // TODO: Navigate to HOME PAGE
-                    findNavController().navigate(R.id.action_appointment_to_home5)
+//                    findNavController().navigate(R.id.action_appointment_to_home5)
                     true
                 }
                 else -> false
@@ -63,6 +65,7 @@ class Appointment : Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         EventChangeListener()
@@ -76,9 +79,12 @@ class Appointment : Fragment() {
         }
 
     }
-
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun EventChangeListener() {
         appointmentCollection.addSnapshotListener(object: EventListener<QuerySnapshot>{
+            val current_date = LocalDate.now()
+            val formatter_date = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            val formatted_date = current_date.format(formatter_date)
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                 if(error != null) {
                     Log.e("Firestore Error",error.message.toString())
@@ -86,12 +92,14 @@ class Appointment : Fragment() {
                 }
                 for(dc: DocumentChange in value?.documentChanges!!) {
                     if(dc.type == DocumentChange.Type.ADDED) {
-                        val name: String? = dc.document.getString("name")
-                        val date: String? = dc.document.getString("date")
-                        val time: String? = dc.document.getString("time")
-                        nameList.add(AppointmentData(name,date,time));
-                        println(nameList)
-
+                        val date = dc.document.getString("date")
+                        if(date.toString() > formatted_date.toString()) {
+                            val name: String? = dc.document.getString("name")
+                            val date: String? = dc.document.getString("date")
+                            val time: String? = dc.document.getString("time")
+                            nameList.add(AppointmentData(name, date, time));
+                            println(nameList)
+                        }
                     }
                     sampleAdapter.notifyDataSetChanged()
 
