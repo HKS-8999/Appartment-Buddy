@@ -47,13 +47,13 @@ class Appointment : Fragment() {
         myToolbar.setTitleTextAppearance(this.context, R.style.CustomActionBarStyle)
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         myToolbar.setNavigationOnClickListener { view ->
-            findNavController().navigate(R.id.action_appointment_to_home5)
+//            findNavController().navigate(R.id.action_appointment_to_home5)
         }
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
                     // TODO: Navigate to HOME PAGE
-                    findNavController().navigate(R.id.action_appointment_to_home5)
+//                    findNavController().navigate(R.id.action_appointment_to_home5)
                     true
                 }
                 else -> false
