@@ -1,4 +1,4 @@
-package com.example.apartmentbuddy
+package com.example.apartmentbuddy.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,10 +17,10 @@ import com.google.firebase.ktx.Firebase
 
 /**
  * A simple [Fragment] subclass.
- * Use the [forgetPassword.newInstance] factory method to
+ * Use the [ForgetPassword.newInstance] factory method to
  * create an instance of this fragment.
  */
-class forgetPassword : Fragment() {
+class ForgetPassword : Fragment() {
     private  var _forgetBinding: FragmentForgetPasswordBinding?=null
     private val forgetBinding get()=_forgetBinding!!
     private lateinit var auth: FirebaseAuth

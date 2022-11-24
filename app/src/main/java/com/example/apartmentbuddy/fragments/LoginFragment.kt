@@ -1,22 +1,19 @@
 package com.example.apartmentbuddy.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.apartmentbuddy.Home
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.databinding.FragmentLogin2Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class Login_frag :Fragment(){
+class LoginFragment :Fragment(){
     private  var _loginBinding: FragmentLogin2Binding?=null
     private val loginBinding get()=_loginBinding!!
     private lateinit var auth: FirebaseAuth

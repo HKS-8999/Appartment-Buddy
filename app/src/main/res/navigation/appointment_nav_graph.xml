@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/confirmAppointment"
-        android:name="com.example.apartmentbuddy.ConfirmAppointment"
+        android:name="com.example.apartmentbuddy.fragments.ConfirmAppointment"
         android:label="fragment_confirm_appointment"
         tools:layout="@layout/fragment_confirm_appointment" >
         <action

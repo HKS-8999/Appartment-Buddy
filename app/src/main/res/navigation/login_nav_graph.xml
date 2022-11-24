@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/login"
-        android:name="com.example.apartmentbuddy.fragments.Login_frag"
+        android:name="com.example.apartmentbuddy.fragments.LoginFragment"
         android:label="fragment_login2"
         tools:layout="@layout/fragment_login2" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/registration"
-        android:name="com.example.apartmentbuddy.registration"
+        android:name="com.example.apartmentbuddy.fragments.Registration"
         android:label="fragment_registration2"
         tools:layout="@layout/fragment_registration2" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/home2"
-        android:name="com.example.apartmentbuddy.Home"
+        android:name="com.example.apartmentbuddy.fragments.Home"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgetPassword"
-        android:name="com.example.apartmentbuddy.forgetPassword"
+        android:name="com.example.apartmentbuddy.fragments.ForgetPassword"
         android:label="fragment_forget_password"
         tools:layout="@layout/fragment_forget_password" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateProfile"
-        android:name="com.example.apartmentbuddy.UpdateProfile"
+        android:name="com.example.apartmentbuddy.fragments.UpdateProfile"
         android:label="fragment_update_profile"
         tools:layout="@layout/fragment_update_profile" >
         <action
