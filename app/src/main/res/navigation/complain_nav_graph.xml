@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_fragment_complain_home_to_fragment_complain_form"
             app:destination="@id/fragment_complain_form" />
+        <action
+            android:id="@+id/action_fragment_complain_home_to_complainListView"
+            app:destination="@id/complainListView" />
     </fragment>
     <fragment
         android:id="@+id/fragment_complain_form"
@@ -21,6 +24,15 @@
         tools:layout="@layout/fragment_complain_form">
         <action
             android:id="@+id/action_fragment_complain_form_to_fragment_complain_home"
+            app:destination="@id/fragment_complain_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/complainListView"
+        android:name="com.example.apartmentbuddy.complainListView"
+        android:label="fragment_complain_list_view"
+        tools:layout="@layout/fragment_complain_list_view" >
+        <action
+            android:id="@+id/action_complainListView_to_fragment_complain_home"
             app:destination="@id/fragment_complain_home" />
     </fragment>
 </navigation>

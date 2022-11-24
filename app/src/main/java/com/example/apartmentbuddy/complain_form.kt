@@ -54,6 +54,7 @@ class complain_form : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentComplainFormBinding.inflate(layoutInflater)
         binding.carouselRecyclerview.adapter = adapter
         binding.carouselRecyclerview.apply {
@@ -76,6 +77,7 @@ class complain_form : Fragment() {
 
         val calendar = Calendar.getInstance()
         val ticketid= calendar.timeInMillis.toString()
+
 
         postComplainButton.setOnClickListener {
             val unitnumber = unitNumberEditText.text.toString().trim()
@@ -119,7 +121,6 @@ class complain_form : Fragment() {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_complain_home, complain_home()).commit()
         }
-
 
         imageUploadButton.setOnClickListener {
             getContent.launch("image/*")
