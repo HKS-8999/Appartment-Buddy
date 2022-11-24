@@ -1,6 +1,5 @@
-package com.example.apartmentbuddy
+package com.example.apartmentbuddy.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,19 +9,16 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.apartmentbuddy.databinding.ActivityMainBinding
+import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.databinding.FragmentRegistration2Binding
-import com.example.apartmentbuddy.fragments.Login_frag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-class registration : Fragment() {
+class Registration : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var selectedRadioButton: RadioButton
