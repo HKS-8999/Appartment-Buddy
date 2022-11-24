@@ -8,24 +8,36 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
+import com.example.apartmentbuddy.databinding.FragmentHomeBinding
+import com.example.apartmentbuddy.databinding.FragmentLogin2Binding
 import com.example.apartmentbuddy.fragments.Appointment
+import com.example.apartmentbuddy.fragments.Login_frag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.core.View
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class Home : AppCompatActivity() {
+class Home : Fragment() {
     // TODO: Rename and change types of parameters
 
     private lateinit var auth: FirebaseAuth
     private var db=Firebase.firestore
+    private  var _homeBinding: FragmentHomeBinding?=null
+    private val homeBinding get()=_homeBinding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        auth = Firebase.auth
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_home)
-        val welcome_text: TextView = findViewById(R.id.txt_view_username)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): android.view.View? {
+        auth= Firebase.auth
+        _homeBinding= FragmentHomeBinding.inflate(inflater,container,false)
+        return homeBinding.root
+    }
+    override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val user = Firebase.auth.currentUser
         user?.let {
             // Name, email address, and profile photo Url
@@ -34,21 +46,26 @@ class Home : AppCompatActivity() {
             // Check if user's email is verified
             val emailVerified = user.isEmailVerified
             val user_id = user.uid
-            welcome_text.setText(user_id)
-            val btn_logout = findViewById<Button>(R.id.btn_logout)
-            val btnb_navigate_apartment = findViewById<Button>(R.id.btn_navigate_appointment)
-            btn_logout.setOnClickListener {
+            homeBinding.txtViewUsername.setText(name)
+            homeBinding.btnLogout.setOnClickListener {
                 auth.signOut();
-                val intent = Intent(this, Login::class.java)
-                startActivity(intent)
+                findNavController().navigate(R.id.action_home2_to_login)
             }
-            btnb_navigate_apartment.setOnClickListener {
-                val intent = Intent(this, AdvertisementActivity::class.java)
-                startActivity(intent)
+            homeBinding.btnNavigateAppointment.setOnClickListener {
+                //  val intent = Intent(this, AdvertisementActivity::class.java)
+                // startActivity(intent)
+            }
+            homeBinding.btnUpdateProfile.setOnClickListener{
+                findNavController().navigate(R.id.action_home2_to_updateProfile)
+            }
+
+            homeBinding.btnNavigateAppointment.setOnClickListener{
+                findNavController().navigate(R.id.action_home2_to_appointmentHome)
             }
         }
     }
-
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _homeBinding=null;
+    }
 }

@@ -5,110 +5,95 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ProgressBar
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.apartmentbuddy.databinding.ActivityMainBinding
-import com.example.apartmentbuddy.databinding.FragmentLogin2Binding
+import com.example.apartmentbuddy.databinding.FragmentRegistration2Binding
+import com.example.apartmentbuddy.fragments.Login_frag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-class registration : AppCompatActivity() {
+class registration : Fragment() {
 
     private lateinit var auth: FirebaseAuth
-    private  lateinit var binding: ActivityMainBinding
     private lateinit var selectedRadioButton: RadioButton
     private lateinit var radioGroup: RadioGroup
     private lateinit var progressBar:ProgressBar
     private var db=Firebase.firestore
+    private  var _registrationBinding: FragmentRegistration2Binding?=null
+    private val registrationBinding get()=_registrationBinding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-     //   setContentView(R.layout.fragment_registration2)
-        val new_user:Button=findViewById(R.id.btn_register)
-        val email_address: EditText =findViewById(R.id.txt_email)
-        val login_button_click:Button=findViewById(R.id.btn_login_app)
-        new_user.setOnClickListener{
-            Toast.makeText(applicationContext, "registration button is clicked", Toast.LENGTH_SHORT).show()
-            //performSignup()
-            //getUserInformation()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        auth= Firebase.auth
+        _registrationBinding=FragmentRegistration2Binding.inflate(inflater,container,false)
+        return registrationBinding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+        super.onViewCreated(view, savedInstanceState)
+        registrationBinding.btnRegister.setOnClickListener{
+            performSignup()
         }
-
+        registrationBinding.btnAlreadyLoggedIn.setOnClickListener{
+            findNavController().navigate(R.id.action_registration_to_login)
+        }
     }
 
     private fun performSignup(){
-        val email:EditText=findViewById(R.id.txt_email)
-        val password:EditText=findViewById(R.id.txt_password)
-        val name:EditText=findViewById(R.id.txt_username)
-        val apartment_no:EditText=findViewById(R.id.txt_aprtnumber)
-        val contact_no:EditText=findViewById(R.id.txt_contact_number)
-
-        val inputEmail=email.text.toString()
-        val inputPassword=password.text.toString()
-        if(email.text.isEmpty()||password.text.isEmpty() || name.text.isEmpty()|| apartment_no.text.isEmpty() || contact_no.text.isEmpty()){
-            Toast.makeText(this,"Please fill all fields",Toast.LENGTH_SHORT).show()
+        if(registrationBinding.txtEmail.text.isEmpty()||registrationBinding.txtPassword.text.isEmpty() || registrationBinding.txtUsername.text.isEmpty()|| registrationBinding.txtAprtnumber.text.isEmpty() || registrationBinding.txtContactNumber.text.isEmpty()){
+            Toast.makeText(requireActivity(),"Please fill all fields",Toast.LENGTH_SHORT).show()
             return
         }
 
-        if(password.text.length<6){
-            Toast.makeText(this,"Password should be more than 6 characters",Toast.LENGTH_SHORT).show()
-            return
-        }
-        radioGroup=findViewById(R.id.radioGroup)
-        val selectedRadioButtonId: Int  = radioGroup.checkedRadioButtonId
-        if (selectedRadioButtonId != -1) {
-            selectedRadioButton = findViewById(selectedRadioButtonId)
-            val string: String = selectedRadioButton.text.toString()
-        } else {
-            Toast.makeText(this,"Please select a role",Toast.LENGTH_SHORT).show()
+        if(registrationBinding.txtPassword.text.length<6){
+            Toast.makeText(requireActivity(),"Password should be more than 6 characters",Toast.LENGTH_SHORT).show()
             return
         }
 
-        auth.createUserWithEmailAndPassword(inputEmail, inputPassword)
-            .addOnCompleteListener(this) { task ->
+        auth.createUserWithEmailAndPassword(registrationBinding.txtEmail.text.toString(), registrationBinding.txtPassword.text.toString())
+            .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    getUserInformation()
-                    // Sign in success, update UI with the signed-in user's information
-                    val intent=Intent(this,Login::class.java)
-                    startActivity(intent)
-                    Toast.makeText(baseContext,"Success",Toast.LENGTH_SHORT).show()
+                    saveUserInformation()
+                    findNavController().navigate(R.id.action_registration_to_login)
+                    Toast.makeText(requireActivity(),"Success",Toast.LENGTH_SHORT).show()
                 } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(baseContext,"Authentication Failed",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(),"Authentication Failed",Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener{
-                Toast.makeText(this,"Error OCcured ${it.localizedMessage}",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(),"Error OCcured ${it.localizedMessage}",Toast.LENGTH_SHORT).show()
             }
     }
-    private fun getUserInformation(){
+    private fun saveUserInformation() {
         val user = Firebase.auth.currentUser
         user?.let {
             // Name, email address, and profile photo Url
             val name = user.displayName
             val email = user.email
             val photoUrl = user.photoUrl
-
-            // Check if user's email is verified
             val emailVerified = user.isEmailVerified
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getToken() instead.
             val uid = user.uid
-
-            val name_fragment:EditText=findViewById(R.id.txt_username)
-            val apartment_no:EditText=findViewById(R.id.txt_aprtnumber)
-            val contact_no:EditText=findViewById(R.id.txt_contact_number)
-            radioGroup =findViewById(R.id.radioGroup)
-            val selectedRadioButtonId: Int  = radioGroup.checkedRadioButtonId
+            val name_fragment = registrationBinding.txtUsername
+            val apartment_no = registrationBinding.txtAprtnumber
+            val contact_no = registrationBinding.txtContactNumber
+            radioGroup = registrationBinding.radioGroup
+            val selectedRadioButtonId: Int = radioGroup.checkedRadioButtonId
 
             if (selectedRadioButtonId != -1) {
-                selectedRadioButton = findViewById(selectedRadioButtonId)
+                selectedRadioButton = view!!.findViewById(selectedRadioButtonId)
                 val role: String = selectedRadioButton.text.toString()
 
 
@@ -123,16 +108,27 @@ class registration : AppCompatActivity() {
                     "contact" to contactno_input,
                     "role" to role_input,
                     "user_id" to uid
+
                 )
                 db.collection("users").document(uid).set(userMap)
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Successfully added", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(), "Successfully added", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                    .addOnFailureListener{
-                        Toast.makeText(this,"Error OCcured ${it.localizedMessage}",Toast.LENGTH_SHORT).show()
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            requireActivity(),
+                            "Error Occured ${it.localizedMessage}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _registrationBinding=null;
     }
 }

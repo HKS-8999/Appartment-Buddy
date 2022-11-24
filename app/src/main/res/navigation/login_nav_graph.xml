@@ -7,12 +7,18 @@
 
     <fragment
         android:id="@+id/login"
-        android:name="com.example.apartmentbuddy.Login"
+        android:name="com.example.apartmentbuddy.fragments.Login_frag"
         android:label="fragment_login2"
         tools:layout="@layout/fragment_login2" >
         <action
             android:id="@+id/action_login_to_home2"
             app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_login_to_registration"
+            app:destination="@id/registration" />
+        <action
+            android:id="@+id/action_login_to_forgetPassword"
+            app:destination="@id/forgetPassword" />
     </fragment>
     <fragment
         android:id="@+id/registration"
@@ -27,5 +33,38 @@
         android:id="@+id/home2"
         android:name="com.example.apartmentbuddy.Home"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home2_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_home2_to_updateProfile"
+            app:destination="@id/updateProfile" />
+        <action
+            android:id="@+id/action_home2_to_appointmentHome"
+            app:destination="@id/appointmentHome" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPassword"
+        android:name="com.example.apartmentbuddy.forgetPassword"
+        android:label="fragment_forget_password"
+        tools:layout="@layout/fragment_forget_password" >
+        <action
+            android:id="@+id/action_forgetPassword_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProfile"
+        android:name="com.example.apartmentbuddy.UpdateProfile"
+        android:label="fragment_update_profile"
+        tools:layout="@layout/fragment_update_profile" >
+        <action
+            android:id="@+id/action_updateProfile_to_home2"
+            app:destination="@id/home2" />
+    </fragment>
+    <fragment
+        android:id="@+id/appointmentHome"
+        android:name="com.example.apartmentbuddy.fragments.AppointmentHome"
+        android:label="fragment_appointment_home"
+        tools:layout="@layout/fragment_appointment_home" />
 </navigation>
