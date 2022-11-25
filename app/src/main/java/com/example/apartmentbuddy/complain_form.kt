@@ -10,9 +10,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
 import com.example.apartmentbuddy.adapter.CarouselAdapter
 import com.example.apartmentbuddy.databinding.FragmentComplainFormBinding
 import com.example.apartmentbuddy.fragments.AdvertisementDisplayFragment
@@ -26,7 +33,7 @@ import java.util.*
 
 
 class complain_form : Fragment() {
-    private lateinit var binding: FragmentComplainFormBinding
+//    private lateinit var binding: FragmentComplainFormBinding
     private lateinit var postComplainButton: Button
     private lateinit var unitNumberEditText: EditText
     private lateinit var categoryComplainEditText: EditText
@@ -55,13 +62,29 @@ class complain_form : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentComplainFormBinding.inflate(layoutInflater)
-        binding.carouselRecyclerview.adapter = adapter
-        binding.carouselRecyclerview.apply {
-            setInfinite(true)
+        val views= inflater.inflate(R.layout.fragment_complain_form, container, false)
+        val button: Button= views.findViewById(R.id.backComplain)
+        button.setOnClickListener{
+           findNavController().navigate(complain_formDirections.actionFragmentComplainFormToFragmentComplainHome())
         }
-        return binding.root
+        val submit: Button =views.findViewById(R.id.submitComplain)
+        submit.setOnClickListener {
+            findNavController().navigate(complain_formDirections.actionFragmentComplainFormToConfirmationcomplain())
+        }
+
+
+
+//        binding = FragmentComplainFormBinding.inflate(layoutInflater)
+//        val recyclerView = views.findViewById<RecyclerView>(R.id.carouselRecyclerview)
+//        recyclerView.apply {
+//            adapter = adapter
+//            layoutManager = LinearLayoutManager(requireActivity())
+////            setInfinite(true)
+//        }
+        return views
+
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -87,8 +110,8 @@ class complain_form : Fragment() {
             val userId = "dhruv@gmail.com"
             val status ="No responded"
             val firstname ="Dhruvit"
-            println("Hello my name is $firstname")
-            println("Hell this is my status of complain $status")
+            val documentid = ""
+
 
             val complains =
                 Complain(
@@ -101,25 +124,22 @@ class complain_form : Fragment() {
                 unitnumber,
                 firstname,
                 status,
-                ticketid
+                ticketid,
+                    documentid
                 )
 
 
             complainCollection.document().set(complains).addOnSuccessListener { void: Void? ->
                 Toast.makeText(
                     activity, "Successfully posted!", Toast.LENGTH_LONG)
-//                ).show()
-//                parentFragmentManager.beginTransaction()
-//                    .replace(R.id.fragment_container, AdvertisementDisplayFragment()).commit()
+                .show()
+                findNavController().navigate(complain_formDirections.actionFragmentComplainFormToConfirmationcomplain())
+
             }.addOnFailureListener { error ->
                 Toast.makeText(
                     activity, error.message.toString(), Toast.LENGTH_LONG
                 ).show()
             }
-        }
-        binding.backComplain.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_complain_home, complain_home()).commit()
         }
 
         imageUploadButton.setOnClickListener {
@@ -161,6 +181,5 @@ class complain_form : Fragment() {
                     }
             }
         }
-
 
 }

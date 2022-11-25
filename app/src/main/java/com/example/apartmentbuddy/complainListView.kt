@@ -41,7 +41,7 @@ class complainListView : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        println("nfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffnfnfnfnfnfnfn")
+
         var views= inflater.inflate(R.layout.fragment_complain_list_view, container, false)
         recyclerView = views.findViewById(R.id.complain_list_view)
         recyclerView.layoutManager = LinearLayoutManager(this.context)

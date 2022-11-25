@@ -14,5 +14,6 @@ data class Complain(
     val unitnumber: String,
     val firstname: String,
     val status: String,
-    val ticketid:String
+    val ticketid:String,
+    val documentid:String
 )

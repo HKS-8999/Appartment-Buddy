@@ -32,7 +32,6 @@ class complain_home : Fragment() {
         }
 
 
-        val back: Button = views.findViewById(R.id.complain_back)
         val new_complain: CardView = views.findViewById(R.id.newComplain)
 
 

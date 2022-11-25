@@ -17,8 +17,6 @@ object ComplainList {
 
     // Method to fetch the data in Appointment List
     fun getAllComplains(): List<Complalistdata> {
-        println("get all complains  hdhhdhjshagugahsjg")
-        println(complainList)
         return complainList
 
     }

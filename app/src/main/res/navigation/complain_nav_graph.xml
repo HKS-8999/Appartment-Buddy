@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_fragment_complain_form_to_fragment_complain_home"
             app:destination="@id/fragment_complain_home" />
+        <action
+            android:id="@+id/action_fragment_complain_form_to_confirmationcomplain"
+            app:destination="@id/confirmationcomplain" />
     </fragment>
     <fragment
         android:id="@+id/complainListView"
@@ -33,6 +36,15 @@
         tools:layout="@layout/fragment_complain_list_view" >
         <action
             android:id="@+id/action_complainListView_to_fragment_complain_home"
+            app:destination="@id/fragment_complain_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmationcomplain"
+        android:name="com.example.apartmentbuddy.confirmationcomplain"
+        android:label="fragment_confirmation_message"
+        tools:layout="@layout/fragment_confirmation_message" >
+        <action
+            android:id="@+id/action_confirmationcomplain_to_fragment_complain_home"
             app:destination="@id/fragment_complain_home" />
     </fragment>
 </navigation>
