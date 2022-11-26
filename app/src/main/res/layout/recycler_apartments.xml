@@ -78,7 +78,6 @@
                 android:clickable="true"
                 android:outlineSpotShadowColor="@color/white"
                 android:visibility="invisible"
-                app:borderWidth="2dp"
                 app:fabSize="mini"
                 app:srcCompat="@drawable/ic_baseline_edit_24" />
 
