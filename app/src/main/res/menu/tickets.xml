@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/action_home"
-        android:icon="@drawable/ic_baseline_home_white_24"
         android:enabled="true"
         android:title="@string/go_to_home_page"
-        app:showAsAction="always">
+        app:showAsAction="always"
+        tools:ignore="AppCompatResource">
     </item>
 
     <item

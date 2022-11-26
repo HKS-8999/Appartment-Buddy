@@ -12,9 +12,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.fragments.CancelAppointmentDirections
+
 import com.example.apartmentbuddy.fragments.ShowAppointmentDirections
 import com.example.apartmentbuddy.model.AppointmentData
 import com.example.apartmentbuddy.model.PendingAppointmentList
+
+import com.example.apartmentbuddy.model.ShowAppointmentData
 
 class AppointmentRecyclerAdapter(private val appointment: List<AppointmentData>,var currentOperation : String) : RecyclerView.Adapter<AppointmentRecyclerAdapter.ViewHolder>() {
     var onItemClick: ((AppointmentData) -> Unit)? = null

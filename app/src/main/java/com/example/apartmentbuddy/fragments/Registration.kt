@@ -49,6 +49,10 @@ class Registration : Fragment() {
     }
 
     private fun performSignup(){
+        radioGroup = registrationBinding.radioGroup
+        val selectedRadioButtonId: Int = radioGroup.checkedRadioButtonId
+        selectedRadioButton = view!!.findViewById(selectedRadioButtonId)
+        val role: String = selectedRadioButton.text.toString()
         if(registrationBinding.txtEmail.text.isEmpty()||registrationBinding.txtPassword.text.isEmpty() || registrationBinding.txtUsername.text.isEmpty()|| registrationBinding.txtAprtnumber.text.isEmpty() || registrationBinding.txtContactNumber.text.isEmpty()){
             Toast.makeText(requireActivity(),"Please fill all fields",Toast.LENGTH_SHORT).show()
             return
@@ -58,20 +62,48 @@ class Registration : Fragment() {
             Toast.makeText(requireActivity(),"Password should be more than 6 characters",Toast.LENGTH_SHORT).show()
             return
         }
-
-        auth.createUserWithEmailAndPassword(registrationBinding.txtEmail.text.toString(), registrationBinding.txtPassword.text.toString())
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    saveUserInformation()
-                    findNavController().navigate(R.id.action_registration_to_login)
-                    Toast.makeText(requireActivity(),"Success",Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireActivity(),"Authentication Failed",Toast.LENGTH_SHORT).show()
+        if(role=="Tenant"){
+            var users_coll = db.collection("user_tenants")
+            users_coll.whereEqualTo("Email", registrationBinding.txtEmail.text.toString())
+                .get().addOnSuccessListener {
+                    if (it.isEmpty()) {
+                        Toast.makeText(requireActivity(), "Tenant is not registered with CAPREIT", Toast.LENGTH_SHORT)
+                            .show()
+                    } else{
+                        auth.createUserWithEmailAndPassword(registrationBinding.txtEmail.text.toString(), registrationBinding.txtPassword.text.toString())
+                            .addOnCompleteListener(requireActivity()) { task ->
+                                if (task.isSuccessful) {
+                                    saveUserInformation()
+                                    findNavController().navigate(R.id.action_registration_to_login)
+                                    Toast.makeText(requireActivity(),"Success",Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(requireActivity(),"Authentication Failed",Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            .addOnFailureListener{
+                                Toast.makeText(requireActivity(),"Error OCcured ${it.localizedMessage}",Toast.LENGTH_SHORT).show()
+                            }
+                    }
                 }
-            }
-            .addOnFailureListener{
-                Toast.makeText(requireActivity(),"Error OCcured ${it.localizedMessage}",Toast.LENGTH_SHORT).show()
-            }
+        }
+        else{
+            auth.createUserWithEmailAndPassword(registrationBinding.txtEmail.text.toString(), registrationBinding.txtPassword.text.toString())
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        saveUserInformation()
+                        findNavController().navigate(R.id.action_registration_to_login)
+                        Toast.makeText(requireActivity(),"Success",Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireActivity(),"Authentication Failed",Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener{
+                    Toast.makeText(requireActivity(),"Error OCcured ${it.localizedMessage}",Toast.LENGTH_SHORT).show()
+                }
+        }
+
+
+
     }
     private fun saveUserInformation() {
         val user = Firebase.auth.currentUser
@@ -89,7 +121,7 @@ class Registration : Fragment() {
             val selectedRadioButtonId: Int = radioGroup.checkedRadioButtonId
 
             if (selectedRadioButtonId != -1) {
-                selectedRadioButton = view!!.findViewById(selectedRadioButtonId)
+                selectedRadioButton = requireView()!!.findViewById(selectedRadioButtonId)
                 val role: String = selectedRadioButton.text.toString()
 
 
