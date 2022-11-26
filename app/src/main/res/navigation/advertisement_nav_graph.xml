@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_advertisementHomeFragment_to_postItemFragment"
             app:destination="@id/postItemFragment" />
+        <action
+            android:id="@+id/action_advertisementHomeFragment_to_home3"
+            app:destination="@id/home3" />
     </fragment>
     <fragment
         android:id="@+id/postItemFragment"
@@ -35,5 +38,10 @@
             android:id="@+id/action_postItemFragment_to_advertisementHomeFragment"
             app:destination="@id/advertisementHomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/home3"
+        android:name="com.example.apartmentbuddy.fragments.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 
 </navigation>
