@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.TicketAdapter
+import com.example.apartmentbuddy.model.Complain
 import com.example.apartmentbuddy.model.Tickets
 import com.google.firebase.firestore.*
 
 open class Ticket : Fragment() {
     lateinit var recyclerView: RecyclerView
-    lateinit var list: MutableList<Tickets>
+    lateinit var list: MutableList<Complain>
     lateinit var adapter: TicketAdapter
     private val db = FirebaseFirestore.getInstance()
-    private val ticketCollection = db.collection("tickets")
+    private val ticketCollection = db.collection("complain")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -75,10 +76,10 @@ open class Ticket : Fragment() {
                 }
                 for(dc: DocumentChange in value?.documentChanges!!) {
                     if(dc.type == DocumentChange.Type.ADDED) {
-                        val name: String? = dc.document.getString("name")
+                        val name: String? = dc.document.getString("firstname")
                         val status: String? = dc.document.getString("status")
-                        val date: String? = dc.document.getString("time")
-                        list.add(Tickets(name, status, date, dc.document.id));
+                        val date: String? = dc.document.getString("date")
+                        list.add(Complain(firstname = name, status = status, date = date, documentid = dc.document.id));
 
                     }
                     println(list)
@@ -90,12 +91,6 @@ open class Ticket : Fragment() {
 
     }
 
-    private fun loadData() {
-        list.add(Tickets("Saifali", "Not responded", "10am"))
-        list.add(Tickets("Saifali", "Open", "4pm"))
-        list.add(Tickets("Saifali", "Close", "6am"))
-
-    }
 
 
 }

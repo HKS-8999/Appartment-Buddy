@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
+import com.example.apartmentbuddy.model.Complain
 import com.example.apartmentbuddy.model.Tickets
 import com.google.firebase.firestore.FirebaseFirestore
 
 class TicketAdapter(
     private val c: Context,
-    private val userList: MutableList<Tickets>,
+    private val userList: MutableList<Complain>,
     private val statusAdapter: ArrayAdapter<String>,
 
     ) : RecyclerView.Adapter<TicketAdapter.MyViewHolder>()
@@ -27,8 +28,8 @@ class TicketAdapter(
 
     @SuppressLint("ResourceType")
     override fun onBindViewHolder(holder: TicketAdapter.MyViewHolder, position: Int) {
-        val list : Tickets = userList[position]
-        holder.firstName.text = list.name
+        val list : Complain = userList[position]
+        holder.firstName.text = list.firstname
         holder.date.text = list.date
         holder.status.text = list.status
         holder.llrow.setOnLongClickListener{
@@ -69,16 +70,16 @@ class TicketAdapter(
                         true
                     }
                     else -> {
-                        userList.set(position, Tickets(list.name,result, list.date, list.documentId))
+                        userList.set(position, Complain(firstname =  list.firstname,status = result, date = list.date, documentid = list.documentid))
                         notifyItemChanged(position)
                         val userMap = hashMapOf(
-                        "name" to list.name,
+                        "name" to list.firstname,
                         "status" to result,
                         "time" to list.date,
                         )
                         val db = FirebaseFirestore.getInstance()
                         val ticketCollection = db.collection("tickets")
-                        list.documentId?.let { it1 -> ticketCollection.document(it1).set(userMap)
+                        list.documentid?.let { it1 -> ticketCollection.document(it1).set(userMap)
                         statusAdapter.notifyDataSetChanged()}
                     }
                 }

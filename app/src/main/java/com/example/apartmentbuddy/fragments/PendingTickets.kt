@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.TicketAdapter
+import com.example.apartmentbuddy.model.Complain
 import com.example.apartmentbuddy.model.Tickets
 import com.google.firebase.firestore.*
 
 class PendingTickets : Fragment() {
     lateinit var recyclerView: RecyclerView
-    lateinit var list: MutableList<Tickets>
+    lateinit var list: MutableList<Complain>
     lateinit var adapter: TicketAdapter
     private val db = FirebaseFirestore.getInstance()
-    private val ticketCollection = db.collection("tickets")
+    private val ticketCollection = db.collection("complain")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -75,11 +76,11 @@ class PendingTickets : Fragment() {
                 }
                 for(dc: DocumentChange in value?.documentChanges!!) {
                     if(dc.type == DocumentChange.Type.ADDED) {
-                        val name: String? = dc.document.getString("name")
+                        val name: String? = dc.document.getString("firstname")
                         val status: String? = dc.document.getString("status")
-                        val date: String? = dc.document.getString("time")
+                        val date: String? = dc.document.getString("date")
                         if(status == "Not responded" || status == "Open")
-                        list.add(Tickets(name, status, date, dc.document.id));
+                        list.add(Complain(firstname = name, status = status, date = date, documentid = dc.document.id));
 
                     }
                     println(list)
@@ -91,12 +92,6 @@ class PendingTickets : Fragment() {
 
     }
 
-    private fun loadData() {
-        list.add(Tickets("Saifali", "Not responded", "10am"))
-        list.add(Tickets("Saifali", "Open", "4pm"))
-        list.add(Tickets("Saifali", "Close", "6am"))
-
-    }
 
 
 }
