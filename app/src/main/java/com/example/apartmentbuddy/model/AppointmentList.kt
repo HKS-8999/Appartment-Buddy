@@ -11,7 +11,7 @@ object AppointmentList {
         }
 
         fun remove(){
-            appointmentList.clear()
+            appointmentList.removeAll(appointmentList)
         }
 
         // Method to fetch the data in Appointment List

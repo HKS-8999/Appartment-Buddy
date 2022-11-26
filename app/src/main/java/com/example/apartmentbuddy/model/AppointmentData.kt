@@ -1,5 +1,4 @@
 package com.example.apartmentbuddy.model
-
 import android.os.Parcelable
 import androidx.versionedparcelable.ParcelField
 import com.google.firebase.firestore.DocumentId
@@ -14,4 +13,5 @@ data class AppointmentData(
     val userId: String? = null,
     var location: String? = null,
     val timestamp: String? = null,
+    val notes : String ? = null
 ) : Parcelable

@@ -1,21 +1,16 @@
-package com.example.apartmentbuddy
+package com.example.apartmentbuddy.fragments
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import com.example.apartmentbuddy.AdvertisementActivity
+import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.databinding.FragmentHomeBinding
-import com.example.apartmentbuddy.databinding.FragmentLogin2Binding
-import com.example.apartmentbuddy.fragments.Appointment
-import com.example.apartmentbuddy.fragments.Login_frag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.core.View
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -60,7 +55,12 @@ class Home : Fragment() {
             }
 
             homeBinding.btnNavigateAppointment.setOnClickListener{
-                findNavController().navigate(R.id.action_home2_to_appointmentHome)
+                findNavController().navigate(R.id.action_home2_to_navigation2)
+            }
+
+            homeBinding.btnNavigateAdvertisement.setOnClickListener{
+                val intent = Intent(activity, AdvertisementActivity::class.java)
+                startActivity(intent)
             }
         }
     }

@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.AppointmentRecyclerAdapter
 import com.example.apartmentbuddy.model.Appointment
-import com.example.apartmentbuddy.model.AppointmentList
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.example.apartmentbuddy.model.PendingAppointmentList
 
 class CancelAppointment : Fragment() {
     private val appointment  = Appointment()
-    private val user_id : String = "test@dal.ca"
+    private val user_id : String = FirebaseAuthUser.getUserEmail().toString()
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: AppointmentRecyclerAdapter
 
@@ -40,14 +40,13 @@ class CancelAppointment : Fragment() {
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         myToolbar.setNavigationOnClickListener { view ->
             view.findNavController().navigate(CancelAppointmentDirections.actionCancelAppointmentToAppointmentHome())
-//            AppointmentList.remove()
         }
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
                     // TODO: Navigate to HOME PAGE
                     view.findNavController()
-                        .navigate(ShowAppointmentDirections.actionShowAppointmentToAppointmentHome())
+                        .navigate(CancelAppointmentDirections.actionCancelAppointmentToAppointmentHome())
                     true
                 }
                 else -> false
@@ -55,16 +54,15 @@ class CancelAppointment : Fragment() {
         }
         recyclerView = view.findViewById(R.id.pending_appointment_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerAdapter = AppointmentRecyclerAdapter(PendingAppointmentList.getAllAppointment())
+        recyclerAdapter = AppointmentRecyclerAdapter(PendingAppointmentList.getAllAppointment(), "CANCEL")
         recyclerView.adapter = recyclerAdapter
-
+        appointment.pendingAppointment(user_id) { success ->
+            recyclerAdapter.notifyDataSetChanged()
+        }
         val back: Button = view.findViewById(R.id.appointment_back)
         back.setOnClickListener {
-            view.findNavController().navigate(ShowAppointmentDirections.actionShowAppointmentToAppointmentHome())
+            view.findNavController().navigate(CancelAppointmentDirections.actionCancelAppointmentToAppointmentHome())
         }
-        val appointment = Appointment()
-        appointment.isPending("test@dal.ca", this.context)
         return view
     }
-
 }

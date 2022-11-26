@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.apartmentbuddy.R
@@ -29,9 +26,9 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
     private lateinit var postItemButton: Button
     private lateinit var titleEditText: EditText
     private lateinit var descriptionEditText: EditText
-    private lateinit var conditionEditText: EditText
+    private lateinit var conditionEditText: AutoCompleteTextView
     private lateinit var priceEditText: EditText
-    private lateinit var categoryEditText: EditText
+    private lateinit var categoryEditText: AutoCompleteTextView
     private lateinit var addressEditText: EditText
     private lateinit var contactEditText: EditText
     private lateinit var imageUploadButton: ImageButton
@@ -85,9 +82,9 @@ class PostItemFragment(private val advertisementItem: Advertisement?) : Fragment
             documentId = advertisement.documentId
             titleEditText.setText(advertisement.title)
             descriptionEditText.setText(advertisement.description)
-            conditionEditText.setText(advertisement.condition)
+            conditionEditText.setText(advertisement.condition, false)
             priceEditText.setText(advertisement.price.toString())
-            categoryEditText.setText(advertisement.category)
+            categoryEditText.setText(advertisement.category, false)
             addressEditText.setText(advertisement.address)
             contactEditText.setText(advertisement.contact)
             selectedImages = advertisement.photos

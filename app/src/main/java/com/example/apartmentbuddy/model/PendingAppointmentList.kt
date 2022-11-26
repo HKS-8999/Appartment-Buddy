@@ -12,6 +12,13 @@ object PendingAppointmentList {
         }
     }
 
+    fun contains(appointmentID : String): Boolean{
+        if(pendingAppointmentList.contains(AppointmentData(appointmentID))){
+            return true
+        }
+        return false
+    }
+
     fun remove(){
         pendingAppointmentList.clear()
     }
