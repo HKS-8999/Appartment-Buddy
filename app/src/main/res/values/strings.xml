@@ -50,6 +50,7 @@
     </string-array>
     <string name="time">time</string>
     <string name="status">status</string>
+    <string name="date">Date</string>
     <string-array name="status_options">
         <item>Not responded</item>
         <item>Open</item>

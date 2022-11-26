@@ -1,5 +1,4 @@
 package com.example.apartmentbuddy.fragments
-
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toolbar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.AppointmentAdapter
@@ -32,7 +28,6 @@ class Appointment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     var nameList: MutableList<AppointmentData> = mutableListOf();
-    var ansList: MutableList<AppointmentData> = mutableListOf();
     private lateinit var sampleAdapter : AppointmentAdapter
     private val db = FirebaseFirestore.getInstance()
     private val appointmentCollection = db.collection("appointment")
