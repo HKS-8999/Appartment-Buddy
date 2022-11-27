@@ -99,14 +99,10 @@ class Appointment : Fragment() {
                         }
                     }
                     sampleAdapter.notifyDataSetChanged()
-
                 }
             }
         })
-
-
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
