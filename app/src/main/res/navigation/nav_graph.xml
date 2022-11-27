@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/appointment">
+
+    <fragment
+        android:id="@+id/appointment"
+        android:name="com.example.apartmentbuddy.fragments.Appointment"
+        android:label="fragment_appointment"
+        tools:layout="@layout/fragment_appointment" >
+        <action
+            android:id="@+id/action_appointment_to_homeAdmin2"
+            app:destination="@id/homeAdmin2" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeAdmin2"
+        android:name="com.example.apartmentbuddy.fragments.HomeAdmin"
+        android:label="fragment_home_admin"
+        tools:layout="@layout/fragment_home_admin" >
+        <action
+            android:id="@+id/action_homeAdmin2_to_appointment"
+            app:destination="@id/appointment" />
+    </fragment>
+
+</navigation>
