@@ -44,7 +44,6 @@ class PendingTickets : Fragment() {
                         .navigate(R.id.action_global_homeAdmin2)
                     true
                 }
-
                 else -> false
             }
         }
@@ -67,6 +66,7 @@ class PendingTickets : Fragment() {
 
     }
     //References : https://www.youtube.com/watch?v=Az4gXQAP-a4
+    // This method fetches all the user tickets from firestore and displays only the pending tickets
     private fun EventChangeListener() {
         ticketCollection.addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
