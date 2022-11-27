@@ -35,12 +35,7 @@ class Home : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val user = Firebase.auth.currentUser
         user?.let {
-            // Name, email address, and profile photo Url
             val name = user.displayName
-            val email = user.email
-            // Check if user's email is verified
-            val emailVerified = user.isEmailVerified
-            val user_id = user.uid
             homeBinding.txtViewUsername.setText(name)
             homeBinding.btnLogout.setOnClickListener {
                 auth.signOut();
