@@ -54,7 +54,6 @@ class AppointmentNotes : Fragment() {
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    // TODO: Navigate to HOME PAGE
                     findNavController().navigate(R.id.action_global_home22)
                     true
                 }
@@ -76,7 +75,7 @@ class AppointmentNotes : Fragment() {
 
         val back : Button = view.findViewById(R.id.notes_appointment_back)
         back.setOnClickListener {
-            view.findNavController().navigate(AppointmentNotesDirections.actionAppointmentNotesToAppointmentHome())
+            view.findNavController().navigate(AppointmentNotesDirections.actionAppointmentNotesToNewAppointment())
         }
         return view
     }

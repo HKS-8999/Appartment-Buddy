@@ -12,6 +12,7 @@ import android.widget.CalendarView.OnDateChangeListener
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Appointment
 import com.google.firebase.firestore.FirebaseFirestore
@@ -53,9 +54,7 @@ class NewAppointment : Fragment() {
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    // TODO: Navigate to HOME PAGE
-                    view.findNavController()
-                        .navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
+                    findNavController().navigate(R.id.action_global_home22)
                     true
                 }
                 else -> false
@@ -142,35 +141,12 @@ class NewAppointment : Fragment() {
                 Toast.makeText(context,"Please fill all the fields",Toast.LENGTH_LONG).show()
             }
 
+        }
 
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                val builder = AlertDialog.Builder(context)
-//                //set title for alert dialog
-//                builder.setTitle("Confirm")
-//                //set message for alert dialog
-//                builder.setMessage("Do you want proceed with this booking on $selected_date at $selected_time?")
-//
-//                //performing positive action
-//                builder.setPositiveButton("Yes"){dialogInterface, which ->
-//                    this.view?.findNavController()?.navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
-//                    appointment.addNewAppointment(selected_date, selected_time, user_id, user_name, context)
-//                }
-//                //performing cancel action
-//                builder.setNeutralButton("Cancel"){dialogInterface , which ->
-//                    Toast.makeText(context,"Appointment cancelled",Toast.LENGTH_LONG).show()
-//                    this.view?.findNavController()?.navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
-//                }
-//                //performing negative action
-//                builder.setNegativeButton("No"){dialogInterface, which ->
-//                    Toast.makeText(context,"Please select Date and Time",Toast.LENGTH_LONG).show()
-//                }
-//                // Create the AlertDialog
-//                val alertDialog: AlertDialog = builder.create()
-//                // Set other dialog properties
-//                alertDialog.setCancelable(false)
-//                alertDialog.show()
-//            }
-//            view.findNavController().navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
+        val back : Button = view.findViewById(R.id.appointment_back)
+
+        back.setOnClickListener{
+            view.findNavController().navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
         }
         return view
     }

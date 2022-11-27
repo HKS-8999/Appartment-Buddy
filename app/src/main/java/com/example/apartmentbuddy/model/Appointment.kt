@@ -68,7 +68,6 @@ class Appointment : IAppointment{
         }
         //performing negative action
         builder.setNegativeButton("No"){dialogInterface, which ->
-            Toast.makeText(context,"Please select Date and Time",Toast.LENGTH_LONG).show()
         }
         // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
@@ -223,6 +222,7 @@ class Appointment : IAppointment{
             .addOnSuccessListener{ documents ->
                 for(document in documents){
                     val username = document.data.get("name").toString()
+                    Log.e(TAG, "$username")
                     function(username)
                 }
             }

@@ -54,7 +54,7 @@ class AppointmentHome : Fragment() {
             // Accessing Save button from Fragment 2
             val back: Button = view.findViewById(R.id.appointment_back)
             back.setOnClickListener {
-//            view.findNavController().navigate(AppointmentHomeDirections.actionAppointmentHomeToShowAppointment())
+                findNavController().navigate(R.id.action_global_home22)
             }
             val new_appointment: CardView = view.findViewById(R.id.newAppointment)
             new_appointment.setOnClickListener {
