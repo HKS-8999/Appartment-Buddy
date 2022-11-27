@@ -94,7 +94,7 @@ class Appointment : Fragment() {
                             val name: String? = dc.document.getString("name")
                             val date: String? = dc.document.getString("date")
                             val time: String? = dc.document.getString("time")
-                            nameList.add(AppointmentData(name, date, time));
+                            nameList.add(AppointmentData(name = name, date = date, time = time));
                             println(nameList)
                         }
                     }
