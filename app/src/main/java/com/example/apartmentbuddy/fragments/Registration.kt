@@ -51,7 +51,7 @@ class Registration : Fragment() {
     private fun performSignup(){
         radioGroup = registrationBinding.radioGroup
         val selectedRadioButtonId: Int = radioGroup.checkedRadioButtonId
-        selectedRadioButton = view!!.findViewById(selectedRadioButtonId)
+        selectedRadioButton = requireView().findViewById(selectedRadioButtonId)
         val role: String = selectedRadioButton.text.toString()
         if(registrationBinding.txtEmail.text.isEmpty()||registrationBinding.txtPassword.text.isEmpty() || registrationBinding.txtUsername.text.isEmpty()|| registrationBinding.txtAprtnumber.text.isEmpty() || registrationBinding.txtContactNumber.text.isEmpty()){
             Toast.makeText(requireActivity(),"Please fill all fields",Toast.LENGTH_SHORT).show()

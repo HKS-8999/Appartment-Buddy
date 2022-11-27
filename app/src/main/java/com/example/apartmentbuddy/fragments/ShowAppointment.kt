@@ -36,7 +36,6 @@ class ShowAppointment : Fragment() {
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         myToolbar.setNavigationOnClickListener { view ->
             view.findNavController().navigate(ShowAppointmentDirections.actionShowAppointmentToAppointmentHome())
-//            AppointmentList.remove()
         }
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {

@@ -142,11 +142,6 @@ class UpdateProfile : Fragment() {
                     return@addOnFailureListener;
                 }
         } else {
-//            Toast.makeText(
-//                requireActivity(),
-//                "Please fill all fields,
-//                Toast.LENGTH_SHORT
-//            ).show()
             Toast.makeText(
                 requireActivity(),
                 "Please fill all fields",
