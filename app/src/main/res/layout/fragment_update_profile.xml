@@ -192,6 +192,18 @@ tools:context=".fragments.UpdateProfile"
                         android:text="role"
                         android:visibility="invisible"
                         android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btn_profile_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="@color/appThemeColor"
+                        android:fontFamily="@font/sf_pro_display_bold"
+                        android:text="@string/back_button"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
 

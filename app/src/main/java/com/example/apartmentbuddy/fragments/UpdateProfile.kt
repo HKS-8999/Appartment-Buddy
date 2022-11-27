@@ -45,6 +45,12 @@ class UpdateProfile : Fragment() {
             updateProfileBinding.btnProfileSubmit.setOnClickListener {
                 updateProfileData()
             }
+            updateProfileBinding.btnProfileBack.setOnClickListener {
+                if(user!!.email=="admin@dal.ca")
+                    findNavController().navigate(R.id.action_updateProfile_to_homeAdmin)
+                else
+                    findNavController().navigate(R.id.action_updateProfile_to_home2)
+            }
         }
     }
 
@@ -94,6 +100,7 @@ class UpdateProfile : Fragment() {
                 .addOnFailureListener {
                     Toast.makeText(
                         requireActivity(),
+
                         "Error Occured ${it.localizedMessage}",
                         Toast.LENGTH_SHORT
                     ).show()

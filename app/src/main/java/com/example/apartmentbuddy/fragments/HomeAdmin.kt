@@ -47,7 +47,7 @@ class HomeAdmin : Fragment() {
                 findNavController().navigate(R.id.action_home2_to_login)
             }
             homeBinding.btnUpdateProfile.setOnClickListener{
-                findNavController().navigate(R.id.action_home2_to_updateProfile)
+                findNavController().navigate(R.id.action_homeAdmin_to_updateProfile)
             }
 
             homeBinding.btnNavigateAdvertisement.setOnClickListener{
