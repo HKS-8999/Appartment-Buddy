@@ -1,4 +1,5 @@
 package com.example.apartmentbuddy.fragments
+
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toolbar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.AppointmentAdapter
@@ -28,7 +30,7 @@ class Appointment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     var nameList: MutableList<AppointmentData> = mutableListOf();
-    private lateinit var sampleAdapter : AppointmentAdapter
+    private lateinit var sampleAdapter: AppointmentAdapter
     private val db = FirebaseFirestore.getInstance()
     private val appointmentCollection = db.collection("appointment")
 
@@ -44,13 +46,12 @@ class Appointment : Fragment() {
         myToolbar.setTitleTextAppearance(this.context, R.style.CustomActionBarStyle)
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         myToolbar.setNavigationOnClickListener { view ->
-//            findNavController().navigate(R.id.action_appointment_to_home5)
+            findNavController().navigate(R.id.action_global_homeAdmin)
         }
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    // TODO: Navigate to HOME PAGE
-//                    findNavController().navigate(R.id.action_appointment_to_home5)
+                    findNavController().navigate(R.id.action_global_homeAdmin)
                     true
                 }
                 else -> false
@@ -74,37 +75,34 @@ class Appointment : Fragment() {
         }
 
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun EventChangeListener() {
-        appointmentCollection.addSnapshotListener(object: EventListener<QuerySnapshot>{
+        appointmentCollection.addSnapshotListener(object : EventListener<QuerySnapshot> {
             val current_date = LocalDate.now()
             val formatter_date = DateTimeFormatter.ofPattern("dd/MM/yyyy")
             val formatted_date = current_date.format(formatter_date)
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-                if(error != null) {
-                    Log.e("Firestore Error",error.message.toString())
+                if (error != null) {
+                    Log.e("Firestore Error", error.message.toString())
                     return
                 }
-                for(dc: DocumentChange in value?.documentChanges!!) {
-                    if(dc.type == DocumentChange.Type.ADDED) {
+                for (dc: DocumentChange in value?.documentChanges!!) {
+                    if (dc.type == DocumentChange.Type.ADDED) {
                         val date = dc.document.getString("date")
-                        if(date.toString() > formatted_date.toString()) {
+                        if (date.toString() > formatted_date.toString()) {
                             val name: String? = dc.document.getString("name")
                             val date: String? = dc.document.getString("date")
                             val time: String? = dc.document.getString("time")
-                            nameList.add(AppointmentData(name, date, time));
+                            nameList.add(AppointmentData(name = name, date = date, time = time));
                             println(nameList)
                         }
                     }
                     sampleAdapter.notifyDataSetChanged()
-
                 }
             }
         })
-
-
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
