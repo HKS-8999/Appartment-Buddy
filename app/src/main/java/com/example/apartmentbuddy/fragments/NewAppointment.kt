@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.*
 import android.widget.*
 import android.widget.CalendarView.OnDateChangeListener
@@ -18,14 +19,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class NewAppointment : Fragment() {
 
-    private val mYear = 0
-    private  var mMonth:Int = 0
-    private  var mDay:Int = 0
-    private  var mHour:Int = 0
-    private  var mMinute:Int = 0
+    private var mHour:Int = 0
+    private var mMinute:Int = 0
     private var selected_date : String = ""
-    private  var selected_time : String = ""
+    private var selected_time : String = ""
     private val appointment  = Appointment()
+    private val dateTime : HashMap<String, String>  = HashMap()
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -75,7 +74,6 @@ class NewAppointment : Fragment() {
             val checkCalendar = Calendar.getInstance()
             checkCalendar[year, month] = dayOfMonth
             if (checkCalendar.equals(lastSelectedCalendar)) return@OnDateChangeListener
-
                 if (checkCalendar[Calendar.DAY_OF_WEEK] === Calendar.SUNDAY || checkCalendar[Calendar.DAY_OF_WEEK] === Calendar.SATURDAY) {
                     calendarView.date =
                         lastSelectedCalendar.timeInMillis
@@ -87,13 +85,45 @@ class NewAppointment : Fragment() {
 
         btnTimePicker.setOnClickListener{
             val calendar: Calendar = Calendar.getInstance()
+            val datetime: Calendar = Calendar.getInstance()
             mHour = calendar.get(Calendar.HOUR_OF_DAY);
             mMinute = calendar.get(Calendar.MINUTE);
+//            final Calendar checkOldDate = Calendar.getInstance();
+//            if (hourOfDay >= checkOldDate.get(Calendar.HOUR_OF_DAY)) {
+//                if (hourOfDay == checkOldDate.get(Calendar.HOUR_OF_DAY) && minute <= checkOldDate.get(Calendar.MINUTE)) {
+//                    return;
+//                }
+//                //select current after
+//            } else {`enter code here`
+//                //select current before
+//            }
+
             val timePickerDialog = TimePickerDialog(view.context,
                 // Reference : https://www.geeksforgeeks.org/timepicker-in-kotlin/
                 { view, hourOfDay, minute ->
-                        selected_time = appointment.printValidTime(hourOfDay, minute)
-                        txtTime.setText(selected_time)
+
+                        if (hourOfDay >= datetime.get(Calendar.HOUR_OF_DAY) || hourOfDay >= datetime.get(Calendar.DAY_OF_WEEK)) {
+                            if (hourOfDay == datetime.get(Calendar.HOUR_OF_DAY) && minute <= datetime.get(
+                                    Calendar.MINUTE
+                                )
+                            ) {
+                                Toast.makeText(
+                                    context,
+                                    "Invalid time selection, please select future time",
+                                    Toast.LENGTH_SHORT
+                                ).show();
+                                return@TimePickerDialog;
+                            }
+                            selected_time = appointment.printValidTime(hourOfDay, minute)
+                            txtTime.setText(selected_time)
+                        }
+
+                        else {
+                            //select current before
+                            Toast.makeText(context, "Invalid", Toast.LENGTH_LONG).show()
+                        }
+
+
                 },
                 mHour,
                 mMinute,

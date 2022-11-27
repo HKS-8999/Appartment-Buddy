@@ -46,12 +46,12 @@ class Appointment : Fragment() {
         myToolbar.setTitleTextAppearance(this.context, R.style.CustomActionBarStyle)
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         myToolbar.setNavigationOnClickListener { view ->
-            findNavController().navigate(R.id.action_appointment_to_homeAdmin2)
+            findNavController().navigate(R.id.action_global_homeAdmin)
         }
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    findNavController().navigate(R.id.action_appointment_to_homeAdmin2)
+                    findNavController().navigate(R.id.action_global_homeAdmin)
                     true
                 }
                 else -> false
@@ -99,14 +99,10 @@ class Appointment : Fragment() {
                         }
                     }
                     sampleAdapter.notifyDataSetChanged()
-
                 }
             }
         })
-
-
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

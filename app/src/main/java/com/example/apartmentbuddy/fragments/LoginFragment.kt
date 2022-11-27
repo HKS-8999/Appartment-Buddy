@@ -62,12 +62,12 @@ class LoginFragment :Fragment(){
                 if (task.isSuccessful) {
                     val user = auth.currentUser
 
-                        if(user!!.email=="admin@dal.ca")
+                        if(user!!.email=="admin@dal.ca"){
                             findNavController().navigate(R.id.action_login_to_homeAdmin)
-                        else
+                        }
+                        else{
                             findNavController().navigate(R.id.action_login_to_home2)
-
-
+                        }
                     Toast.makeText(requireActivity(),"Success", Toast.LENGTH_SHORT).show()
                 } else {
                     // If sign in fails, display a message to the user.

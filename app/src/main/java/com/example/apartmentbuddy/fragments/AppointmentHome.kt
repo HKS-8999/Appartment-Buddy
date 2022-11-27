@@ -73,10 +73,7 @@ class AppointmentHome : Fragment() {
                 view.findNavController()
                     .navigate(AppointmentHomeDirections.actionAppointmentHomeToCancelAppointment())
             }
-//        }
-//        else{
-//            view?.findNavController()?.navigate(AppointmentHomeDirections.actionAppointmentHomeToLoginFragment())
-//        }
+
         return view
     }
 }
