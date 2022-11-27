@@ -1,8 +1,10 @@
 package com.example.apartmentbuddy.fragments
 
+import android.content.ContentValues.TAG
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import com.example.apartmentbuddy.R
+import com.example.apartmentbuddy.model.Appointment
 
 import com.example.apartmentbuddy.adapter.CarouselAdapter
 import com.example.apartmentbuddy.model.Complain
@@ -24,7 +27,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.*
-import com.example.apartmentbuddy.fragments.ComplainFormDirections
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 
 
 class ComplainForm : Fragment() {
@@ -35,11 +38,15 @@ class ComplainForm : Fragment() {
     private lateinit var descriptionComplainEditText: EditText
     private lateinit var imageUploadButton: ImageButton
 
+
     private val db = FirebaseFirestore.getInstance()
     private val complainCollection = db.collection("complain")
-    private val auth = Firebase.auth
+    private val userId = FirebaseAuthUser.getUserEmail().toString()
+    private val uid = FirebaseAuthUser.getUserId()
     private val selectedImages = ArrayList<Uri>()
     private val adapter = CarouselAdapter(selectedImages)
+    var appointment = Appointment()
+
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris: List<Uri> ->
@@ -59,7 +66,7 @@ class ComplainForm : Fragment() {
         val views= inflater.inflate(R.layout.fragment_complain_form, container, false)
         val button: Button= views.findViewById(R.id.backComplain)
         button.setOnClickListener{
-            findNavController().navigate(com.example.apartmentbuddy.fragments.ComplainFormDirections.actionFragmentComplainFormToFragmentComplainHome())
+            findNavController().navigate(ComplainFormDirections.actionFragmentComplainFormToFragmentComplainHome())
         }
         val submit: Button =views.findViewById(R.id.submitComplain)
         submit.setOnClickListener {
@@ -76,43 +83,40 @@ class ComplainForm : Fragment() {
             val category = categoryComplainEditText.text.toString().trim()
             val subject = subjectComplainEditText.text.toString().trim()
             val description = descriptionComplainEditText.text.toString().trim()
-            val userId = "dhruv@gmail.com"
             val status ="Not responded"
-            val firstname ="Harsh"
-            val documentid = ""
-            println("hdddddddddddddddddd")
+            appointment.getUserName(uid.toString()){
+                val firstname = it
+                Log.e(TAG, "$it")
+                val documentid = ""
 
-            val complains =
-                Complain(
-                    userId,
-                    selectedImages,
-                    description,
-                    subject,
-                    date,
-                    category,
-                    unitnumber,
-                    firstname,
-                    status,
-                    ticketid,
-                    documentid
-                )
+                val complain =
+                    Complain(
+                        userId,
+                        selectedImages,
+                        description,
+                        subject,
+                        date,
+                        category,
+                        unitnumber,
+                        firstname,
+                        status,
+                        ticketid,
+                        documentid
+                    )
 
+                db.collection("complain").add(complain).addOnSuccessListener {
+                    Toast.makeText(
+                        activity, "Successfully posted!", Toast.LENGTH_LONG)
+                        .show()
+                    findNavController().navigate(com.example.apartmentbuddy.fragments.ComplainFormDirections.actionFragmentComplainFormToConfirmationcomplain())
 
-            db.collection("complain").add(complains).addOnSuccessListener {
-                Toast.makeText(
-                    activity, "Successfully posted!", Toast.LENGTH_LONG)
-                    .show()
-                findNavController().navigate(com.example.apartmentbuddy.fragments.ComplainFormDirections.actionFragmentComplainFormToConfirmationcomplain())
-
-            }.addOnFailureListener { error ->
-                Toast.makeText(
-                    activity, error.message.toString(), Toast.LENGTH_LONG
-                ).show()
+                }.addOnFailureListener { error ->
+                    Toast.makeText(
+                        activity, error.message.toString(), Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
-
-
-
 //        binding = FragmentComplainFormBinding.inflate(layoutInflater)
 //        val recyclerView = views.findViewById<RecyclerView>(R.id.carouselRecyclerview)
 //        recyclerView.apply {
@@ -121,7 +125,6 @@ class ComplainForm : Fragment() {
 ////            setInfinite(true)
 //        }
         return views
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

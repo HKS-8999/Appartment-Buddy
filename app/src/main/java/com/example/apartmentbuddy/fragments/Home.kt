@@ -58,6 +58,10 @@ class Home : Fragment() {
                 findNavController().navigate(R.id.action_home2_to_navigation2)
             }
 
+            homeBinding.btnRaiseComplain.setOnClickListener{
+                findNavController().navigate(R.id.action_home2_to_navigation4)
+            }
+
             homeBinding.btnNavigateAdvertisement.setOnClickListener{
                 val intent = Intent(activity, AdvertisementActivity::class.java)
                 startActivity(intent)

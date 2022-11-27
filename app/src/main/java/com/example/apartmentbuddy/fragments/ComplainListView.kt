@@ -18,7 +18,7 @@ class ComplainListView : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: ComplainAdapter
     private val complains = ComplainPersistence()
-    private val user_id = "dhruv@gmail.com"
+    private val user_id = FirebaseAuthUser.getUserEmail()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
