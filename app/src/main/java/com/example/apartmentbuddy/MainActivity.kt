@@ -1,4 +1,4 @@
-package com.example.appartmentbuddy
+package com.example.apartmentbuddy
 
 
 import android.os.Bundle
