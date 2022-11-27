@@ -11,13 +11,13 @@ import android.widget.Toolbar
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.apartmentbuddy.R
-import com.example.apartmentbuddy.model.Appointment
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 
 class AppointmentHome : Fragment() {
 
-    private val appointment  = Appointment()
-    private val user_id : String = "test@dal.ca"
+    private val firebaseAuth = FirebaseAuthUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,49 +29,54 @@ class AppointmentHome : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_appointment_home, container, false)
-
-        val myToolbar: Toolbar = view.findViewById(R.id.toolbar) as Toolbar
-        myToolbar.inflateMenu(R.menu.appointment_new)
-        myToolbar.title = "Appointment Booking"
-        myToolbar.setTitleTextAppearance(this.context,R.style.CustomActionBarStyle)
-        myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
-        myToolbar.setNavigationOnClickListener { view ->
-            view.findNavController().navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
-        }
-        myToolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_home -> {
-                    // TODO: Navigate to HOME PAGE
-                    view.findNavController()
-                        .navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
-                    true
-                }
-                else -> false
+           firebaseAuth.getUserId()
+//        if(user !=null ) {
+            val view = inflater.inflate(R.layout.fragment_appointment_home, container, false)
+            val myToolbar: Toolbar = view.findViewById(R.id.toolbar) as Toolbar
+            myToolbar.inflateMenu(R.menu.appointment_new)
+            myToolbar.title = "Appointment Booking"
+            myToolbar.setTitleTextAppearance(this.context, R.style.CustomActionBarStyle)
+            myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+            myToolbar.setNavigationOnClickListener { view ->
+                findNavController().navigate(R.id.action_global_home22)
             }
-        }
+            myToolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_home -> {
+                        // TODO: Navigate to HOME PAGE
+                        findNavController().navigate(R.id.action_global_home22)
+                        true
+                    }
+                    else -> false
+                }
+            }
 
-        // Accessing Save button from Fragment 2
-        val back: Button = view.findViewById(R.id.appointment_back)
-        back.setOnClickListener {
+            // Accessing Save button from Fragment 2
+            val back: Button = view.findViewById(R.id.appointment_back)
+            back.setOnClickListener {
 //            view.findNavController().navigate(AppointmentHomeDirections.actionAppointmentHomeToShowAppointment())
-        }
-        val new_appointment : CardView = view.findViewById(R.id.newAppointment)
-        new_appointment.setOnClickListener {
-            view.findNavController().navigate(AppointmentHomeDirections.actionAppointmentHomeToNewAppointment())
-        }
+            }
+            val new_appointment: CardView = view.findViewById(R.id.newAppointment)
+            new_appointment.setOnClickListener {
+                view.findNavController()
+                    .navigate(AppointmentHomeDirections.actionAppointmentHomeToNewAppointment())
+            }
 
-        val view_appointment : CardView = view.findViewById(R.id.ViewAppointment)
-        view_appointment.setOnClickListener {
-            appointment.showAppointment(user_id)
-            view.findNavController().navigate(AppointmentHomeDirections.actionAppointmentHomeToShowAppointment())
-        }
+            val view_appointment: CardView = view.findViewById(R.id.ViewAppointment)
+            view_appointment.setOnClickListener {
+                view.findNavController()
+                    .navigate(AppointmentHomeDirections.actionAppointmentHomeToShowAppointment())
+            }
 
-        val cancel_appointment : CardView = view.findViewById(R.id.CancelAppointment)
-        cancel_appointment.setOnClickListener {
-            appointment.isPending(user_id, this.context)
-            view.findNavController().navigate(AppointmentHomeDirections.actionAppointmentHomeToCancelAppointment())
-        }
+            val cancel_appointment: CardView = view.findViewById(R.id.CancelAppointment)
+            cancel_appointment.setOnClickListener {
+                view.findNavController()
+                    .navigate(AppointmentHomeDirections.actionAppointmentHomeToCancelAppointment())
+            }
+//        }
+//        else{
+//            view?.findNavController()?.navigate(AppointmentHomeDirections.actionAppointmentHomeToLoginFragment())
+//        }
         return view
     }
 }
