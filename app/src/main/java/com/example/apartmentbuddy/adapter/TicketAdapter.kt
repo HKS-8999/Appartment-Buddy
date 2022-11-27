@@ -82,15 +82,14 @@ class TicketAdapter(
                             )
                         )
                         notifyItemChanged(position)
-                        val userMap = hashMapOf(
-                            "name" to list.firstname,
-                            "status" to result,
-                            "time" to list.date,
-                        )
                         val db = FirebaseFirestore.getInstance()
-                        val ticketCollection = db.collection("tickets")
+                        val ticketCollection = db.collection("complain")
                         list.documentid?.let { it1 ->
-                            ticketCollection.document(it1).set(userMap)
+                            ticketCollection.document(it1).update(
+                                "firstname", list.firstname,
+                                "status" , result,
+                                "date", list.date
+                            )
                             statusAdapter.notifyDataSetChanged()
                         }
                     }
