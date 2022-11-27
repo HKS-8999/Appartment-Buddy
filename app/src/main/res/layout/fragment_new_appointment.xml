@@ -15,7 +15,8 @@
         <android.widget.Toolbar  xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:id="@+id/toolbar">
+            android:id="@+id/toolbar"
+            android:background="@color/blue">
         </android.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -70,6 +71,7 @@
             android:textColor="@color/blue"
             android:fontFamily="@font/sf_pro_display_bold"
             android:maxLength="10"
+
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:layout_marginStart="15dp"/>
@@ -81,14 +83,14 @@
         android:padding="10dp"
         android:gravity="center">
         <Button
-            android:id="@+id/new_appointment_submit"
+            android:id="@+id/new_appointment_proceed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="@color/blue"
             android:fontFamily="@font/sf_pro_display_bold"
-            android:text="SUBMIT"
+            android:text="PROCEED"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="16sp" />

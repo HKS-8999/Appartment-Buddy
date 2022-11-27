@@ -1,8 +1,6 @@
 package com.example.apartmentbuddy.fragments
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +14,11 @@ import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.AppointmentRecyclerAdapter
 import com.example.apartmentbuddy.model.Appointment
 import com.example.apartmentbuddy.model.AppointmentList
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 
 class ShowAppointment : Fragment() {
     private val appointment  = Appointment()
-    private val user_id : String = "test@dal.ca"
+    private val user_id : String = FirebaseAuthUser.getUserEmail().toString()
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: AppointmentRecyclerAdapter
 
@@ -50,13 +49,14 @@ class ShowAppointment : Fragment() {
                 else -> false
             }
         }
-
         recyclerView = view.findViewById(R.id.appointment_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerAdapter = AppointmentRecyclerAdapter(AppointmentList.getAllAppointment())
+        recyclerAdapter = AppointmentRecyclerAdapter(AppointmentList.getAllAppointment(),"SHOW")
         recyclerView.adapter = recyclerAdapter
+        appointment.showAppointment(user_id) { success ->
+            recyclerAdapter.notifyDataSetChanged()
 
-
+        }
         val back: Button = view.findViewById(R.id.appointment_back)
         back.setOnClickListener {
             view.findNavController().navigate(ShowAppointmentDirections.actionShowAppointmentToAppointmentHome())

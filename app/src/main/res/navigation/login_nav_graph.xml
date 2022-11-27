@@ -44,8 +44,8 @@
             android:id="@+id/action_home2_to_updateProfile"
             app:destination="@id/updateProfile" />
         <action
-            android:id="@+id/action_home2_to_appointmentHome"
-            app:destination="@id/appointmentHome" />
+            android:id="@+id/action_home2_to_navigation2"
+            app:destination="@id/navigation2" />
     </fragment>
     <fragment
         android:id="@+id/forgetPassword"
@@ -64,17 +64,25 @@
         <action
             android:id="@+id/action_updateProfile_to_home2"
             app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_updateProfile_to_homeAdmin"
+            app:destination="@id/homeAdmin" />
     </fragment>
-    <fragment
-        android:id="@+id/appointmentHome"
-        android:name="com.example.apartmentbuddy.fragments.AppointmentHome"
-        android:label="fragment_appointment_home"
-        tools:layout="@layout/fragment_appointment_home" />
+    <navigation android:id="@+id/navigation2"
+        app:startDestination="@id/appointment_nav_graph">
+        <include app:graph="@navigation/appointment_nav_graph" />
+        <action
+            android:id="@+id/action_global_home22"
+            app:destination="@id/home2" />
+    </navigation>
+
     <fragment
         android:id="@+id/homeAdmin"
         android:name="com.example.apartmentbuddy.fragments.HomeAdmin"
         android:label="fragment_home_admin"
-        tools:layout="@layout/fragment_home_admin" />
-
-
+        tools:layout="@layout/fragment_home_admin" >
+        <action
+            android:id="@+id/action_homeAdmin_to_updateProfile"
+            app:destination="@id/updateProfile" />
+    </fragment>
 </navigation>

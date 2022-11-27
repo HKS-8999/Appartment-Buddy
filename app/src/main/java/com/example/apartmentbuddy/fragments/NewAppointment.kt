@@ -26,8 +26,6 @@ class NewAppointment : Fragment() {
     private var selected_date : String = ""
     private  var selected_time : String = ""
     private val appointment  = Appointment()
-    private var user_id : String = "test@dal.ca"
-    private var user_name : String = "Harsh"
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -66,9 +64,24 @@ class NewAppointment : Fragment() {
         }
 
         val calendarView : CalendarView = view.findViewById(R.id.appointment_date)
-        calendarView.setOnDateChangeListener( { view, year, month, dayOfMonth ->
+
+        var lastSelectedCalendar = Calendar.getInstance();
+
+        calendarView.minDate = lastSelectedCalendar.timeInMillis - 1000
+        calendarView.maxDate = System.currentTimeMillis() + 1209600000
+        calendarView.setOnDateChangeListener( CalendarView.OnDateChangeListener  { view, year, month, dayOfMonth ->
             val month = month + 1
             selected_date = "$dayOfMonth/$month/$year"
+            val checkCalendar = Calendar.getInstance()
+            checkCalendar[year, month] = dayOfMonth
+            if (checkCalendar.equals(lastSelectedCalendar)) return@OnDateChangeListener
+
+                if (checkCalendar[Calendar.DAY_OF_WEEK] === Calendar.SUNDAY || checkCalendar[Calendar.DAY_OF_WEEK] === Calendar.SATURDAY) {
+                    calendarView.date =
+                        lastSelectedCalendar.timeInMillis
+                } else {
+                    lastSelectedCalendar = checkCalendar
+                }
         })
 
 
@@ -89,17 +102,17 @@ class NewAppointment : Fragment() {
             timePickerDialog.show()
         }
 
+        val proceed : Button = view.findViewById(R.id.new_appointment_proceed)
 
-
-        val submit : Button = view.findViewById(R.id.new_appointment_submit)
-
-        submit.setOnClickListener {
-            this.view?.let { it1 ->
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    appointment.confirmAppointment(selected_date, selected_time, context,
-                            it1, user_id, user_name )
-                }
+        proceed.setOnClickListener {
+            if(selected_date.isNotEmpty() && selected_time.isNotEmpty()){
+                view.findNavController().navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentNotes(selected_date,selected_time))
             }
+            else{
+                Toast.makeText(context,"Please fill all the fields",Toast.LENGTH_LONG).show()
+            }
+
+
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //                val builder = AlertDialog.Builder(context)
 //                //set title for alert dialog
