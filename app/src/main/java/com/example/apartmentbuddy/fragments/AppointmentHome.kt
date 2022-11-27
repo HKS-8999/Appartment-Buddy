@@ -1,9 +1,7 @@
 package com.example.apartmentbuddy.fragments
 
-import android.content.ContentValues.TAG
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,16 +13,11 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.apartmentbuddy.R
-import com.example.apartmentbuddy.model.Appointment
 import com.example.apartmentbuddy.model.FirebaseAuthUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class AppointmentHome : Fragment() {
 
-
     private val firebaseAuth = FirebaseAuthUser
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

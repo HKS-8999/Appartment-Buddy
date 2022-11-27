@@ -9,22 +9,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.example.apartmentbuddy.adapter.AppointmentRecyclerAdapter
 import com.example.apartmentbuddy.fragments.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class Appointment (){
+class Appointment : IAppointment{
 
     private val db = FirebaseFirestore.getInstance()
-    private lateinit var id : String
 
     fun  printValidTime(hourOfDay: Int, minute : Int) : String {
         var hour = hourOfDay
@@ -44,7 +37,6 @@ class Appointment (){
         // display format of time
         return "$hourDay : $min $am_pm"
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     // Reference : https://www.programiz.com/kotlin-programming/examples/current-date-time
@@ -111,7 +103,7 @@ class Appointment (){
 
     // Populates the database with new appointment details
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addNewAppointment(date: String, time: String, userId: String, userName: String, context: Context?, notes : String) : Boolean{
+    override fun addNewAppointment(date: String, time: String, userId: String, userName: String, context: Context?, notes : String) : Boolean{
         val appointmentData = AppointmentData(name = userName, date = date, time = time, userId = userId, location = "Office 2", timestamp = buildTimeStamp(), notes = notes)
         db.collection("appointment").add(appointmentData)
             .addOnSuccessListener {
@@ -126,13 +118,11 @@ class Appointment (){
         return true
     }
 
-    fun showAppointment(user_id: String, function : (Boolean) -> Unit ) {
+    override fun showAppointment(user_id: String, function : (Boolean) -> Unit ) {
         db.collection("appointment").whereEqualTo("userId", user_id).get().addOnSuccessListener { documents ->
                 for (document in documents) {
                     val data = document.data.get("name")
                     Log.d(TAG, "${data}")
-//                    val appointments = document.toObject(AppointmentData::class.java)
-//                    AppointmentList.add(appointments)
                     var name : String = document.data.get("name").toString()
                     var date : String = document.data.get("date").toString()
                     var time : String = document.data.get("time").toString()
@@ -151,10 +141,8 @@ class Appointment (){
             }
     }
 
-
-
     fun getAppointment(user_id: String, date: String, time: String, function: (HashMap<String, String>) -> Unit){
-        val currentAppointment : HashMap<String,String> = HashMap<String,String>()
+        val currentAppointment : HashMap<String,String> = HashMap()
         db.collection("appointment").whereEqualTo("userId", user_id)
             .whereEqualTo("date",date).whereEqualTo("time", time)
             .get()
@@ -184,7 +172,7 @@ class Appointment (){
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun pendingAppointment(user_id : String, function: (Boolean) -> Unit) {
+    override fun pendingAppointment(user_id : String, function: (Boolean) -> Unit) {
         db.collection("appointment").whereEqualTo("userId", user_id)
             .get()
             .addOnSuccessListener { documents ->
@@ -203,50 +191,15 @@ class Appointment (){
                         Log.e(TAG, "Pending")
                         function(true)
                     }
-
-//                    else if(date.toString() == formatted_date.toString()){
-//                        val builder = AlertDialog.Builder(context)
-//                        //set title for alert dialog
-//                        builder.setTitle("Alert")
-//                        //set message for alert dialog
-//                        builder.setMessage("Please contact management to cancel today's appointment")
-//
-//                        builder.setNeutralButton("Cancel"){dialogInterface , which ->
-//                        }
-//
-//                        // Create the AlertDialog
-//                        val alertDialog: AlertDialog = builder.create()
-//                        // Set other dialog properties
-//                        alertDialog.setCancelable(false)
-//                        alertDialog.show()
-//                    }
-//                    else{
-//                        val builder = AlertDialog.Builder(context)
-//                        //set title for alert dialog
-//                        builder.setTitle("Alert")
-//                        //set message for alert dialog
-//                        builder.setMessage("No Pending Appointment")
-//                        builder.setNeutralButton("Cancel"){dialogInterface , which ->
-//                        }
-//                        // Create the AlertDialog
-//                        val alertDialog: AlertDialog = builder.create()
-//                        // Set other dialog properties
-//                        alertDialog.setCancelable(false)
-//                        alertDialog.show()
-//                    }
                 }
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
                 function(false)
             }
-
-//    fun isValidDate(date: String, context: Context?, view: View) : Boolean {
-//        if(date.isEmpty() || date < )
-//    }
     }
 
-    fun cancelAppointment(appointmentId : String){
+    override fun cancelAppointment(appointmentId : String){
         db.collection("appointment").document(appointmentId)
             .delete()
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
@@ -265,20 +218,16 @@ class Appointment (){
     }
 
     fun getUserName(uid : String, function: (String) -> Unit){
-
         db.collection("users").whereEqualTo("user_id", uid)
             .get()
-            .addOnSuccessListener(){ documents ->
+            .addOnSuccessListener{ documents ->
                 for(document in documents){
                     val username = document.data.get("name").toString()
                     function(username)
                 }
             }
-            .addOnFailureListener(){
+            .addOnFailureListener{
                     e -> Log.w(TAG, "Error fetching username", e)
             }
     }
-
-
-
 }
