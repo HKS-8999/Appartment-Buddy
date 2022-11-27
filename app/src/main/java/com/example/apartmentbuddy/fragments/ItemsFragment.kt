@@ -22,11 +22,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ItemsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ItemsFragment : Fragment(), EditClickListener {
     private lateinit var binding: FragmentItemsBinding
     private lateinit var bottomNavValue: String

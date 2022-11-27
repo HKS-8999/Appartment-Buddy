@@ -96,7 +96,6 @@ open class Ticket : Fragment() {
                                 documentid = dc.document.id
                             )
                         );
-
                     }
                     println(list)
                     adapter.notifyDataSetChanged()

@@ -17,20 +17,12 @@ import com.example.apartmentbuddy.model.FirebaseAuthUser
 
 class AppointmentHome : Fragment() {
 
-    private val firebaseAuth = FirebaseAuthUser
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-           firebaseAuth.getUserId()
-//        if(user !=null ) {
+            FirebaseAuthUser.getUserId()
             val view = inflater.inflate(R.layout.fragment_appointment_home, container, false)
             val myToolbar: Toolbar = view.findViewById(R.id.toolbar) as Toolbar
             myToolbar.inflateMenu(R.menu.appointment_new)
@@ -43,7 +35,6 @@ class AppointmentHome : Fragment() {
             myToolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_home -> {
-                        // TODO: Navigate to HOME PAGE
                         findNavController().navigate(R.id.action_global_home22)
                         true
                     }
