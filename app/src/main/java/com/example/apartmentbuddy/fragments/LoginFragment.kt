@@ -61,8 +61,7 @@ class LoginFragment :Fragment(){
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-
-                        if(user!!.email=="admin@dal.ca"){
+                    if(user!!.email=="admin@dal.ca"){
                             findNavController().navigate(R.id.action_login_to_homeAdmin)
                         }
                         else{

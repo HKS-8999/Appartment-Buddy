@@ -121,6 +121,24 @@
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/light_gray" />
+
+            <Button
+                android:id="@+id/btn_raise_complain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/appThemeColor"
+                android:fontFamily="@font/sf_pro_display_bold"
+                android:text="RAISE COMPLAIN"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
             <ProgressBar
                 android:id="@+id/progress_bar_login"
                 android:layout_width="match_parent"

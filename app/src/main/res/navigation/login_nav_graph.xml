@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_home2_to_navigation2"
             app:destination="@id/navigation2" />
+        <action
+            android:id="@+id/action_home2_to_navigation4"
+            app:destination="@id/navigation4" />
     </fragment>
     <fragment
         android:id="@+id/forgetPassword"
@@ -107,5 +110,12 @@
         <action
             android:id="@+id/action_global_homeAdmin2"
             app:destination="@id/homeAdmin" />
+    </navigation>
+    <navigation android:id="@+id/navigation4"
+        app:startDestination="@id/complain_nav_graph">
+        <include app:graph="@navigation/complain_nav_graph" />
+        <action
+            android:id="@+id/action_global_home2"
+            app:destination="@id/home2" />
     </navigation>
 </navigation>
