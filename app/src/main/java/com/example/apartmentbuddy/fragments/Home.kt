@@ -55,7 +55,7 @@ class Home : Fragment() {
             }
 
             homeBinding.btnNavigateAppointment.setOnClickListener{
-                findNavController().navigate(R.id.action_home2_to_appointmentHome)
+                findNavController().navigate(R.id.action_home2_to_navigation2)
             }
 
             homeBinding.btnNavigateAdvertisement.setOnClickListener{

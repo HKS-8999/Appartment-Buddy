@@ -10,7 +10,6 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Complain
-import com.example.apartmentbuddy.model.Tickets
 import com.google.firebase.firestore.FirebaseFirestore
 
 class TicketAdapter(
