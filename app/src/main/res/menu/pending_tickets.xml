@@ -6,7 +6,7 @@
         android:id="@+id/action_home"
         android:icon="@drawable/ic_baseline_home_white_24"
         android:enabled="true"
-        android:title="@string/go_to_home_page"
+        android:title="Home Page"
         app:showAsAction="always"
         tools:ignore="AppCompatResource">
     </item>

@@ -50,6 +50,14 @@ class HomeAdmin : Fragment() {
                 findNavController().navigate(R.id.action_home2_to_updateProfile)
             }
 
+            homeBinding.btnViewAppointment.setOnClickListener {
+                findNavController().navigate(R.id.action_homeAdmin2_to_appointment)
+            }
+
+            homeBinding.btnNavigateTicket.setOnClickListener {
+                findNavController().navigate(R.id.action_homeAdmin3_to_ticket)
+            }
+
             homeBinding.btnNavigateAdvertisement.setOnClickListener{
                 val intent = Intent(activity, AdvertisementActivity::class.java)
                 startActivity(intent)

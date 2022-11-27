@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_ticket_to_pendingTickets"
             app:destination="@id/pendingTickets" />
+        <action
+            android:id="@+id/action_ticket_to_homeAdmin3"
+            app:destination="@id/homeAdmin3" />
     </fragment>
     <fragment
         android:id="@+id/pendingTickets"
@@ -20,6 +23,18 @@
         tools:layout="@layout/fragment_pending_tickets" >
         <action
             android:id="@+id/action_pendingTickets_to_ticket"
+            app:destination="@id/ticket" />
+        <action
+            android:id="@+id/action_pendingTickets_to_homeAdmin3"
+            app:destination="@id/homeAdmin3" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeAdmin3"
+        android:name="com.example.apartmentbuddy.fragments.HomeAdmin"
+        android:label="fragment_home_admin"
+        tools:layout="@layout/fragment_home_admin" >
+        <action
+            android:id="@+id/action_homeAdmin3_to_ticket"
             app:destination="@id/ticket" />
     </fragment>
 </navigation>

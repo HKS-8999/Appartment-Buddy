@@ -75,4 +75,6 @@
         android:name="com.example.apartmentbuddy.fragments.HomeAdmin"
         android:label="fragment_home_admin"
         tools:layout="@layout/fragment_home_admin" />
+
+
 </navigation>

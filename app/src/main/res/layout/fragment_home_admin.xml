@@ -92,6 +92,43 @@
 
 
             <Button
+                android:id="@+id/btn_view_appointment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/appThemeColor"
+                android:fontFamily="@font/sf_pro_display_bold"
+                android:text="Appointment"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/light_gray" />
+
+
+            <Button
+                android:id="@+id/btn_navigate_ticket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/appThemeColor"
+                android:fontFamily="@font/sf_pro_display_bold"
+                android:text="Ticket"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/light_gray" />
+
+            <Button
                 android:id="@+id/btn_navigate_advertisement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
