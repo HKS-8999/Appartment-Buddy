@@ -3,17 +3,13 @@ package com.example.apartmentbuddy.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.fragments.CancelAppointmentDirections
-import com.example.apartmentbuddy.fragments.ShowAppointmentDirections
-import com.example.apartmentbuddy.model.AppointmentData
 import com.example.apartmentbuddy.model.ShowAppointmentData
-import com.google.firebase.firestore.QueryDocumentSnapshot
 
 class AppointmentRecyclerAdapter(private val appointment: List<ShowAppointmentData>) : RecyclerView.Adapter<AppointmentRecyclerAdapter.ViewHolder>() {
 

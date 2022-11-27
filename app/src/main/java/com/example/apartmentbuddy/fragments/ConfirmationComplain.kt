@@ -1,4 +1,4 @@
-package com.example.apartmentbuddy
+package com.example.apartmentbuddy.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import com.example.apartmentbuddy.R
 
 class ConfirmationComplain : Fragment() {
 
@@ -18,7 +19,7 @@ class ConfirmationComplain : Fragment() {
         val views = inflater.inflate(R.layout.fragment_confirmation_message, container, false)
         val buttons: Button =views.findViewById(R.id.ticket_back)
         buttons.setOnClickListener {
-            findNavController().navigate(R.id.action_fragment_complain_form_to_fragment_complain_home)
+            findNavController().navigate(R.id.action_confirmation_complain_to_fragment_complain_home)
         }
         return views
     }

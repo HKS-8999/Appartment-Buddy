@@ -1,4 +1,4 @@
-package com.example.apartmentbuddy
+package com.example.apartmentbuddy.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,10 +9,9 @@ import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.ComplainAdapter
 import com.example.apartmentbuddy.model.*
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.firestore.FirebaseFirestore
 
 class ComplainListView : Fragment() {
     private lateinit var list : MutableList<Complalistdata>

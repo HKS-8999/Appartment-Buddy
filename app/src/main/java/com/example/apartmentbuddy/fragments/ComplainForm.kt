@@ -1,4 +1,4 @@
-package com.example.apartmentbuddy
+package com.example.apartmentbuddy.fragments
 
 import android.net.Uri
 import android.os.Build
@@ -14,16 +14,17 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
+import com.example.apartmentbuddy.R
 
 import com.example.apartmentbuddy.adapter.CarouselAdapter
 import com.example.apartmentbuddy.model.Complain
-import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.*
+import com.example.apartmentbuddy.fragments.ComplainFormDirections
 
 
 class ComplainForm : Fragment() {
@@ -58,7 +59,7 @@ class ComplainForm : Fragment() {
         val views= inflater.inflate(R.layout.fragment_complain_form, container, false)
         val button: Button= views.findViewById(R.id.backComplain)
         button.setOnClickListener{
-            findNavController().navigate(ComplainFormDirections.actionFragmentComplainFormToFragmentComplainHome())
+            findNavController().navigate(com.example.apartmentbuddy.fragments.ComplainFormDirections.actionFragmentComplainFormToFragmentComplainHome())
         }
         val submit: Button =views.findViewById(R.id.submitComplain)
         submit.setOnClickListener {
@@ -101,7 +102,7 @@ class ComplainForm : Fragment() {
                 Toast.makeText(
                     activity, "Successfully posted!", Toast.LENGTH_LONG)
                     .show()
-                findNavController().navigate(ComplainFormDirections.actionFragmentComplainFormToConfirmationcomplain())
+                findNavController().navigate(com.example.apartmentbuddy.fragments.ComplainFormDirections.actionFragmentComplainFormToConfirmationcomplain())
 
             }.addOnFailureListener { error ->
                 Toast.makeText(

@@ -1,4 +1,4 @@
-package com.example.apartmentbuddy
+package com.example.apartmentbuddy.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
+import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.ComplainPersistence
 
 class ComplainHome : Fragment() {
@@ -22,13 +23,13 @@ class ComplainHome : Fragment() {
 
         val viewComplains: CardView = views.findViewById(R.id.ViewComplain)
         viewComplains.setOnClickListener{
-            viewComplains.findNavController().navigate(ComplainHomeDirections.actionFragmentComplainHomeToComplainListView())
+            viewComplains.findNavController().navigate(com.example.apartmentbuddy.fragments.ComplainHomeDirections.actionFragmentComplainHomeToComplainListView())
         }
 
         val new_complain: CardView = views.findViewById(R.id.newComplain)
 
         new_complain.setOnClickListener {
-            views.findNavController().navigate(ComplainHomeDirections.actionFragmentComplainHomeToFragmentComplainForm())
+            views.findNavController().navigate(com.example.apartmentbuddy.fragments.ComplainHomeDirections.actionFragmentComplainHomeToFragmentComplainForm())
         }
         return views
     }

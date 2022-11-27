@@ -78,7 +78,6 @@
                 android:clickable="true"
                 android:outlineSpotShadowColor="@color/white"
                 android:visibility="invisible"
-                app:borderWidth="2dp"
                 app:fabSize="mini"
                 app:srcCompat="@drawable/ic_baseline_edit_24" />
 
@@ -95,7 +94,6 @@
                     android:backgroundTint="@color/white"
                     android:clickable="true"
                     android:outlineSpotShadowColor="@color/white"
-                    app:borderWidth="2dp"
                     app:fabSize="mini"
                     app:srcCompat="@drawable/ic_outline_bookmarks_24" />
 
@@ -108,7 +106,6 @@
                     android:clickable="true"
                     android:outlineSpotShadowColor="@color/white"
                     android:visibility="invisible"
-                    app:borderWidth="2dp"
                     app:fabSize="mini"
                     app:srcCompat="@drawable/ic_baseline_delete_24" />
 
@@ -121,20 +118,18 @@
                     android:clickable="true"
                     android:outlineSpotShadowColor="@color/white"
                     android:visibility="invisible"
-                    app:borderWidth="2dp"
                     app:fabSize="mini"
                     app:srcCompat="@drawable/ic_baseline_bookmark_added_24" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/bookmark_remove"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:backgroundTint="@color/white"
                     android:clickable="true"
                     android:outlineSpotShadowColor="@color/white"
                     android:visibility="invisible"
-                    app:borderWidth="2dp"
                     app:fabSize="mini"
                     app:srcCompat="@drawable/ic_baseline_bookmark_remove_24" />
             </FrameLayout>

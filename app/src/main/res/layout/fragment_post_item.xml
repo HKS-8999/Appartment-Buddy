@@ -62,8 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:errorEnabled="true"
-            app:helperText="Required"
             app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Title">
 
@@ -79,8 +77,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:errorEnabled="true"
-            app:helperText="Required"
             app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Description">
 
@@ -102,8 +98,6 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
-                app:helperText="Required"
                 app:helperTextTextColor="@color/design_default_color_error"
                 android:layout_weight="1"
 
@@ -125,8 +119,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                app:errorEnabled="true"
-                app:helperText="Required"
                 app:helperTextTextColor="@color/design_default_color_error"
                 android:hint="Price">
 
@@ -145,8 +137,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:errorEnabled="true"
-            app:helperText="Required"
             app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Category">
 
@@ -165,8 +155,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:errorEnabled="true"
-            app:helperText="Required"
             app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Address">
 
@@ -183,8 +171,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:errorEnabled="true"
-            app:helperText="Required"
             app:helperTextTextColor="@color/design_default_color_error"
             android:hint="Contact">
 

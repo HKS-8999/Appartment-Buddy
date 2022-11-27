@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_login_to_forgetPassword"
             app:destination="@id/forgetPassword" />
+        <action
+            android:id="@+id/action_login_to_homeAdmin"
+            app:destination="@id/homeAdmin" />
     </fragment>
     <fragment
         android:id="@+id/registration"
@@ -61,10 +64,22 @@
         <action
             android:id="@+id/action_updateProfile_to_home2"
             app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_updateProfile_to_homeAdmin"
+            app:destination="@id/homeAdmin" />
     </fragment>
     <fragment
         android:id="@+id/appointmentHome"
         android:name="com.example.apartmentbuddy.fragments.AppointmentHome"
         android:label="fragment_appointment_home"
         tools:layout="@layout/fragment_appointment_home" />
+    <fragment
+        android:id="@+id/homeAdmin"
+        android:name="com.example.apartmentbuddy.fragments.HomeAdmin"
+        android:label="fragment_home_admin"
+        tools:layout="@layout/fragment_home_admin" >
+        <action
+            android:id="@+id/action_homeAdmin_to_updateProfile"
+            app:destination="@id/updateProfile" />
+    </fragment>
 </navigation>

@@ -1,5 +1,4 @@
 package com.example.apartmentbuddy.fragments
-
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,15 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toolbar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.AppointmentAdapter
 import com.example.apartmentbuddy.databinding.FragmentAppointmentBinding
 import com.example.apartmentbuddy.model.AppointmentData
 import com.google.firebase.firestore.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -30,7 +28,6 @@ class Appointment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     var nameList: MutableList<AppointmentData> = mutableListOf();
-    var ansList: MutableList<AppointmentData> = mutableListOf();
     private lateinit var sampleAdapter : AppointmentAdapter
     private val db = FirebaseFirestore.getInstance()
     private val appointmentCollection = db.collection("appointment")
@@ -63,6 +60,7 @@ class Appointment : Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         EventChangeListener()
@@ -76,9 +74,12 @@ class Appointment : Fragment() {
         }
 
     }
-
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun EventChangeListener() {
         appointmentCollection.addSnapshotListener(object: EventListener<QuerySnapshot>{
+            val current_date = LocalDate.now()
+            val formatter_date = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            val formatted_date = current_date.format(formatter_date)
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                 if(error != null) {
                     Log.e("Firestore Error",error.message.toString())
@@ -86,12 +87,14 @@ class Appointment : Fragment() {
                 }
                 for(dc: DocumentChange in value?.documentChanges!!) {
                     if(dc.type == DocumentChange.Type.ADDED) {
-                        val name: String? = dc.document.getString("name")
-                        val date: String? = dc.document.getString("date")
-                        val time: String? = dc.document.getString("time")
-                        nameList.add(AppointmentData(name,date,time));
-                        println(nameList)
-
+                        val date = dc.document.getString("date")
+                        if(date.toString() > formatted_date.toString()) {
+                            val name: String? = dc.document.getString("name")
+                            val date: String? = dc.document.getString("date")
+                            val time: String? = dc.document.getString("time")
+                            nameList.add(AppointmentData(name, date, time));
+                            println(nameList)
+                        }
                     }
                     sampleAdapter.notifyDataSetChanged()
 

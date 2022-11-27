@@ -17,6 +17,7 @@ class LoginFragment :Fragment(){
     private  var _loginBinding: FragmentLogin2Binding?=null
     private val loginBinding get()=_loginBinding!!
     private lateinit var auth: FirebaseAuth
+    private var navigate:String=""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,11 +54,20 @@ class LoginFragment :Fragment(){
         }
         val emailInput=loginBinding.txtEmail.text.toString()
         val passwordInput=loginBinding.txtPassword.text.toString()
+        navigate=emailInput;
+
 
         auth.signInWithEmailAndPassword(emailInput, passwordInput)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    findNavController().navigate(R.id.action_login_to_home2)
+                    val user = auth.currentUser
+
+                        if(user!!.email=="admin@dal.ca")
+                            findNavController().navigate(R.id.action_login_to_homeAdmin)
+                        else
+                            findNavController().navigate(R.id.action_login_to_home2)
+
+
                     Toast.makeText(requireActivity(),"Success", Toast.LENGTH_SHORT).show()
                 } else {
                     // If sign in fails, display a message to the user.
