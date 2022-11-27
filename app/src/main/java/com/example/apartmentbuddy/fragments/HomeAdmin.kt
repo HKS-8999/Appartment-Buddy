@@ -44,18 +44,18 @@ class HomeAdmin : Fragment() {
             homeBinding.txtViewUsername.setText(name)
             homeBinding.btnLogout.setOnClickListener {
                 auth.signOut();
-                findNavController().navigate(R.id.action_home2_to_login)
+                findNavController().navigate(R.id.action_homeAdmin_to_login)
             }
             homeBinding.btnUpdateProfile.setOnClickListener{
                 findNavController().navigate(R.id.action_homeAdmin_to_updateProfile)
             }
 
             homeBinding.btnViewAppointment.setOnClickListener {
-                findNavController().navigate(R.id.action_homeAdmin2_to_appointment)
+                findNavController().navigate(R.id.action_homeAdmin_to_navigation)
             }
 
             homeBinding.btnNavigateTicket.setOnClickListener {
-                findNavController().navigate(R.id.action_homeAdmin3_to_ticket)
+                findNavController().navigate(R.id.action_homeAdmin_to_ticket_nav_graph)
             }
 
             homeBinding.btnNavigateAdvertisement.setOnClickListener{

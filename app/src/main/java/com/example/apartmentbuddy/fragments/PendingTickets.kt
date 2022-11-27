@@ -41,7 +41,7 @@ class PendingTickets : Fragment() {
             when (it.itemId) {
                 R.id.action_home -> {
                     view.findNavController()
-                        .navigate(R.id.action_pendingTickets_to_homeAdmin3)
+                        .navigate(R.id.action_global_homeAdmin2)
                     true
                 }
 
@@ -90,14 +90,9 @@ class PendingTickets : Fragment() {
                             );
 
                     }
-                    println(list)
                     adapter.notifyDataSetChanged()
                 }
             }
         })
-
-
     }
-
-
 }

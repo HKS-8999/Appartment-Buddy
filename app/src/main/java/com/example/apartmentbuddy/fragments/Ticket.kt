@@ -37,7 +37,7 @@ open class Ticket : Fragment() {
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 
         myToolbar.setNavigationOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_ticket_to_homeAdmin3)
+            view.findNavController().navigate(R.id.action_global_homeAdmin2)
         }
 
         myToolbar.setOnMenuItemClickListener {
@@ -49,7 +49,7 @@ open class Ticket : Fragment() {
                 }
                 R.id.action_home -> {
                     view.findNavController()
-                        .navigate(R.id.action_ticket_to_homeAdmin3)
+                        .navigate(R.id.action_global_homeAdmin2)
                     true
 
                 }
