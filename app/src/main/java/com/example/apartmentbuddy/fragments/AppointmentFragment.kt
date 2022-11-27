@@ -75,10 +75,11 @@ class Appointment : Fragment() {
         }
 
     }
-
+    //This method retrieves the name, date,status of all user appointments from firestore database and stores it in the list
     @RequiresApi(Build.VERSION_CODES.O)
     private fun EventChangeListener() {
         appointmentCollection.addSnapshotListener(object : EventListener<QuerySnapshot> {
+            //References: https://www.programiz.com/kotlin-programming/examples/current-date-time
             val current_date = LocalDate.now()
             val formatter_date = DateTimeFormatter.ofPattern("dd/MM/yyyy")
             val formatted_date = current_date.format(formatter_date)
@@ -87,6 +88,7 @@ class Appointment : Fragment() {
                     Log.e("Firestore Error", error.message.toString())
                     return
                 }
+                //References: https://www.youtube.com/watch?v=Az4gXQAP-a4
                 for (dc: DocumentChange in value?.documentChanges!!) {
                     if (dc.type == DocumentChange.Type.ADDED) {
                         val date = dc.document.getString("date")

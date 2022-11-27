@@ -59,7 +59,7 @@ open class Ticket : Fragment() {
 
         return view
     }
-
+    //References : https://www.youtube.com/watch?v=Az4gXQAP-a4
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.rvMain)
@@ -74,7 +74,8 @@ open class Ticket : Fragment() {
 
 
     }
-
+    //References : https://www.youtube.com/watch?v=Az4gXQAP-a4
+    //This method fetches all the user tickets from firestore
     private fun EventChangeListener() {
         ticketCollection.addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {

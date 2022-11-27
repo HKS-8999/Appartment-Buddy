@@ -34,6 +34,7 @@ class TicketAdapter(
         holder.date.text = list.date
         holder.status.text = list.status
         holder.llrow.setOnLongClickListener {
+            //References: https://stackoverflow.com/questions/52076779/kotlin-custom-dialog-in-android
             val dialog = Dialog(c)
             dialog.setContentView(R.layout.update_layout)
             val status = dialog.findViewById<TextView>(R.id.updateStatus)
@@ -72,6 +73,7 @@ class TicketAdapter(
                         true
                     }
                     else -> {
+
                         userList.set(
                             position,
                             Complain(
@@ -82,8 +84,10 @@ class TicketAdapter(
                             )
                         )
                         notifyItemChanged(position)
+                        // Updates fields in the firestore database
                         val db = FirebaseFirestore.getInstance()
                         val ticketCollection = db.collection("complain")
+                        //References : https://stackoverflow.com/questions/56608046/update-a-document-in-firestore
                         list.documentid?.let { it1 ->
                             ticketCollection.document(it1).update(
                                 "firstname", list.firstname,
