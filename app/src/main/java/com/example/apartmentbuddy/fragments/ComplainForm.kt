@@ -117,13 +117,7 @@ class ComplainForm : Fragment() {
                 }
             }
         }
-//        binding = FragmentComplainFormBinding.inflate(layoutInflater)
-//        val recyclerView = views.findViewById<RecyclerView>(R.id.carouselRecyclerview)
-//        recyclerView.apply {
-//            adapter = adapter
-//            layoutManager = LinearLayoutManager(requireActivity())
-////            setInfinite(true)
-//        }
+
         return views
     }
 
