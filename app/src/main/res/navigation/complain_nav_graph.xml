@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_complain_home"
-        android:name="com.example.apartmentbuddy.complain_home"
+        android:name="com.example.apartmentbuddy.ComplainHome"
         android:label="fragment_complain_home"
         tools:layout="@layout/fragment_complain_home" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_complain_form"
-        android:name="com.example.apartmentbuddy.complain_form"
+        android:name="com.example.apartmentbuddy.ComplainForm"
         android:label="fragment_complain_form"
         tools:layout="@layout/fragment_complain_form">
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/complainListView"
-        android:name="com.example.apartmentbuddy.complainListView"
+        android:name="com.example.apartmentbuddy.ComplainListView"
         android:label="fragment_complain_list_view"
         tools:layout="@layout/fragment_complain_list_view" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/confirmationcomplain"
-        android:name="com.example.apartmentbuddy.confirmationcomplain"
+        android:name="com.example.apartmentbuddy.ConfirmationComplain"
         android:label="fragment_confirmation_message"
         tools:layout="@layout/fragment_confirmation_message" >
         <action

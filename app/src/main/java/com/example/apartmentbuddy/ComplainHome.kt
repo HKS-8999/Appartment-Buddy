@@ -5,16 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
-import com.example.apartmentbuddy.model.Appointment
-import com.example.apartmentbuddy.model.Complains
+import com.example.apartmentbuddy.model.ComplainPersistence
 
-
-class complain_home : Fragment() {
-    private val complains  = Complains()
-    private val user_id : String = "kathan@gmail.com"
+class ComplainHome : Fragment() {
+    private val complains  = ComplainPersistence()
+    private val user_id : String = "dhruv@gmail.com"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,23 +20,16 @@ class complain_home : Fragment() {
         // Inflate the layout for this fragment
         val views= inflater.inflate(R.layout.fragment_complain_home, container, false)
 
-        // Accessing Save button from Fragment 2
-
         val viewComplains: CardView = views.findViewById(R.id.ViewComplain)
         viewComplains.setOnClickListener{
-            complains.showComplain(user_id)
-            viewComplains.findNavController().navigate(complain_homeDirections.actionFragmentComplainHomeToComplainListView())
+            viewComplains.findNavController().navigate(ComplainHomeDirections.actionFragmentComplainHomeToComplainListView())
         }
-
 
         val new_complain: CardView = views.findViewById(R.id.newComplain)
 
-
         new_complain.setOnClickListener {
-            views.findNavController().navigate(complain_homeDirections.actionFragmentComplainHomeToFragmentComplainForm())
+            views.findNavController().navigate(ComplainHomeDirections.actionFragmentComplainHomeToFragmentComplainForm())
         }
         return views
     }
-
 }
-
