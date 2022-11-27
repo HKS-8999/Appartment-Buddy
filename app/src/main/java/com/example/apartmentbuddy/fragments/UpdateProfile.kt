@@ -46,7 +46,7 @@ class UpdateProfile : Fragment() {
                 updateProfileData()
             }
             updateProfileBinding.btnProfileBack.setOnClickListener {
-                if(user!!.email=="admin@dal.ca")
+                if (user!!.email == "admin@dal.ca")
                     findNavController().navigate(R.id.action_updateProfile_to_homeAdmin)
                 else
                     findNavController().navigate(R.id.action_updateProfile_to_home2)
@@ -142,11 +142,6 @@ class UpdateProfile : Fragment() {
                     return@addOnFailureListener;
                 }
         } else {
-//            Toast.makeText(
-//                requireActivity(),
-//                "Please fill all fields,
-//                Toast.LENGTH_SHORT
-//            ).show()
             Toast.makeText(
                 requireActivity(),
                 "Please fill all fields",
