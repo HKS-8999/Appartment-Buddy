@@ -19,11 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ApartmentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ApartmentFragment : Fragment(), EditClickListener {
     private lateinit var binding: FragmentApartmentBinding
     private lateinit var bottomNavValue: String

@@ -17,7 +17,6 @@ class ComplainAdapter(private val complain: List<ComplainListData>) : RecyclerVi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.ticketID.text = complain[position].ticketid
-        println(holder.ticketID.text )
         holder.status.text = complain[position].status
         holder.categorys.text = complain[position].category
         holder.subjects.text = complain[position].subject

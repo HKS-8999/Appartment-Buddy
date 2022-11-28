@@ -97,11 +97,9 @@ open class Ticket : Fragment() {
                             )
                         );
                     }
-                    println(list)
                     adapter.notifyDataSetChanged()
                 }
             }
         })
-
     }
 }

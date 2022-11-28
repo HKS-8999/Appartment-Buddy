@@ -19,9 +19,6 @@ import com.google.firebase.firestore.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class Appointment : Fragment() {
 
     private var _binding: FragmentAppointmentBinding? = null
@@ -97,7 +94,6 @@ class Appointment : Fragment() {
                             val date: String? = dc.document.getString("date")
                             val time: String? = dc.document.getString("time")
                             nameList.add(AppointmentData(name = name, date = date, time = time));
-                            println(nameList)
                         }
                     }
                     sampleAdapter.notifyDataSetChanged()

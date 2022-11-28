@@ -14,12 +14,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ForgetPassword.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ForgetPassword : Fragment() {
     private  var _forgetBinding: FragmentForgetPasswordBinding?=null
     private val forgetBinding get()=_forgetBinding!!

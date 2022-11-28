@@ -6,5 +6,4 @@ data class ComplainListData(
     val subject:String,
     val description:String,
     val status: String,
-
 )

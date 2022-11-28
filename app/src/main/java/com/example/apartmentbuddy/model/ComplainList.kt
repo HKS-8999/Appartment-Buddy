@@ -10,12 +10,6 @@ object ComplainList {
         }
     }
 
-    fun remove(){
-        ComplainList.complainList.clear()
-    }
-
-
-    // Method to fetch the data in Appointment List
     fun getAllComplains(): List<ComplainListData> {
         return complainList
 

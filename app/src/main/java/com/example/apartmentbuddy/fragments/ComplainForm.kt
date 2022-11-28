@@ -3,7 +3,6 @@ package com.example.apartmentbuddy.fragments
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +12,17 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.apartmentbuddy.R
-import com.example.apartmentbuddy.model.Appointment
-
 import com.example.apartmentbuddy.adapter.CarouselAdapter
+import com.example.apartmentbuddy.model.Appointment
 import com.example.apartmentbuddy.model.Complain
-import com.google.firebase.auth.ktx.auth
+import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 import java.util.*
-import com.example.apartmentbuddy.model.FirebaseAuthUser
 
 
 class ComplainForm : Fragment() {
@@ -38,7 +35,6 @@ class ComplainForm : Fragment() {
 
 
     private val db = FirebaseFirestore.getInstance()
-    private val complainCollection = db.collection("complain")
     private val userId = FirebaseAuthUser.getUserEmail().toString()
     private val uid = FirebaseAuthUser.getUserId()
     private val selectedImages = ArrayList<Uri>()
@@ -56,17 +52,18 @@ class ComplainForm : Fragment() {
             }
             postComplainButton.isEnabled = true
         }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val views= inflater.inflate(R.layout.fragment_complain_form, container, false)
-        val button: Button= views.findViewById(R.id.backComplain)
-        button.setOnClickListener{
+        val views = inflater.inflate(R.layout.fragment_complain_form, container, false)
+        val button: Button = views.findViewById(R.id.backComplain)
+        button.setOnClickListener {
             findNavController().navigate(ComplainFormDirections.actionFragmentComplainFormToFragmentComplainHome())
         }
-        val submit: Button =views.findViewById(R.id.submitComplain)
+        val submit: Button = views.findViewById(R.id.submitComplain)
         submit.setOnClickListener {
 
             //https://www.baeldung.com/kotlin/current-date-time
@@ -74,15 +71,15 @@ class ComplainForm : Fragment() {
             val date = simpleDate.format(Date())
 
             val calendar = Calendar.getInstance()
-            val ticketid= calendar.timeInMillis.toString()
+            val ticketid = calendar.timeInMillis.toString()
 
 
             val unitnumber = unitNumberEditText.text.toString().trim()
             val category = categoryComplainEditText.text.toString().trim()
             val subject = subjectComplainEditText.text.toString().trim()
             val description = descriptionComplainEditText.text.toString().trim()
-            val status ="Not responded"
-            appointment.getUserName(uid.toString()){
+            val status = "Not responded"
+            appointment.getUserName(uid.toString()) {
                 val firstname = it
                 val documentid = ""
 
@@ -103,9 +100,10 @@ class ComplainForm : Fragment() {
 
                 db.collection("complain").add(complain).addOnSuccessListener {
                     Toast.makeText(
-                        activity, "Successfully posted!", Toast.LENGTH_LONG)
+                        activity, "Successfully posted!", Toast.LENGTH_LONG
+                    )
                         .show()
-                    findNavController().navigate(com.example.apartmentbuddy.fragments.ComplainFormDirections.actionFragmentComplainFormToConfirmationcomplain())
+                    findNavController().navigate(ComplainFormDirections.actionFragmentComplainFormToConfirmationcomplain())
 
                 }.addOnFailureListener { error ->
                     Toast.makeText(

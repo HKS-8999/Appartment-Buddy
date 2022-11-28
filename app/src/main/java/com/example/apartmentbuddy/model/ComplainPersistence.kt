@@ -7,7 +7,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ComplainPersistence {
     private val db = FirebaseFirestore.getInstance()
 
-
     fun showComplain(user_id: String, function: (Boolean) -> Unit) {
         db.collection("complain").whereEqualTo("userId", user_id).get().addOnSuccessListener { documents ->
             for (document in documents) {

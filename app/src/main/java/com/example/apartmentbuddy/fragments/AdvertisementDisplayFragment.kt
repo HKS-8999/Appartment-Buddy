@@ -11,11 +11,6 @@ import com.example.apartmentbuddy.databinding.FragmentAdvertisementHomeBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AdvertisementDisplayFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AdvertisementDisplayFragment : Fragment() {
     private lateinit var binding: FragmentAdvertisementHomeBinding
     private val tabOptionsArray = arrayOf("Apartments", "Items")
