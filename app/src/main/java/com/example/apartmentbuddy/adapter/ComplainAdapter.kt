@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
-import com.example.apartmentbuddy.model.Complalistdata
+import com.example.apartmentbuddy.model.ComplainListData
 
-class ComplainAdapter(private val complain: List<Complalistdata>) : RecyclerView.Adapter<ComplainAdapter.ViewHolder>() {
+class ComplainAdapter(private val complain: List<ComplainListData>) : RecyclerView.Adapter<ComplainAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.complainlistview,parent,false)

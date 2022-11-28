@@ -14,12 +14,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UpdateProfile.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UpdateProfile : Fragment() {
     private var _updateProfileBinding: FragmentUpdateProfileBinding? = null
     private val updateProfileBinding get() = _updateProfileBinding!!

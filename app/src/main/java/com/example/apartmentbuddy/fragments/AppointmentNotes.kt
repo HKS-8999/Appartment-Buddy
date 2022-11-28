@@ -1,9 +1,7 @@
 package com.example.apartmentbuddy.fragments
 
-import android.content.ContentValues.TAG
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Appointment
 import com.example.apartmentbuddy.model.FirebaseAuthUser
-import com.google.android.material.textfield.TextInputLayout
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AppointmentNotes.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AppointmentNotes : Fragment() {
     private val appointment = Appointment()
     @RequiresApi(Build.VERSION_CODES.O)
@@ -42,7 +34,7 @@ class AppointmentNotes : Fragment() {
         appointment.getUserName(uid){
             user_name = it
         }
-
+        
         val myToolbar: Toolbar = view.findViewById(R.id.toolbar) as Toolbar
         myToolbar.inflateMenu(R.menu.appointment_new)
         myToolbar.title = "New Appointment"
@@ -54,7 +46,6 @@ class AppointmentNotes : Fragment() {
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    // TODO: Navigate to HOME PAGE
                     findNavController().navigate(R.id.action_global_home22)
                     true
                 }
@@ -76,7 +67,7 @@ class AppointmentNotes : Fragment() {
 
         val back : Button = view.findViewById(R.id.notes_appointment_back)
         back.setOnClickListener {
-            view.findNavController().navigate(AppointmentNotesDirections.actionAppointmentNotesToAppointmentHome())
+            view.findNavController().navigate(AppointmentNotesDirections.actionAppointmentNotesToNewAppointment())
         }
         return view
     }

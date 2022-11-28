@@ -2,16 +2,19 @@ package com.example.apartmentbuddy.fragments
 
 import android.app.AlertDialog
 import android.app.TimePickerDialog
+import android.content.ContentValues.TAG
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.*
 import android.widget.*
 import android.widget.CalendarView.OnDateChangeListener
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.model.Appointment
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,6 +24,8 @@ class NewAppointment : Fragment() {
 
     private var mHour:Int = 0
     private var mMinute:Int = 0
+    private var dayMonth : Int = 0
+    private var monthToday : Int = 0
     private var selected_date : String = ""
     private var selected_time : String = ""
     private val appointment  = Appointment()
@@ -53,9 +58,7 @@ class NewAppointment : Fragment() {
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    // TODO: Navigate to HOME PAGE
-                    view.findNavController()
-                        .navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
+                    findNavController().navigate(R.id.action_global_home22)
                     true
                 }
                 else -> false
@@ -69,17 +72,14 @@ class NewAppointment : Fragment() {
         calendarView.minDate = lastSelectedCalendar.timeInMillis - 1000
         calendarView.maxDate = System.currentTimeMillis() + 1209600000
         calendarView.setOnDateChangeListener( CalendarView.OnDateChangeListener  { view, year, month, dayOfMonth ->
-            val month = month + 1
+            monthToday = month + 1
+            dayMonth = dayOfMonth
             selected_date = "$dayOfMonth/$month/$year"
             val checkCalendar = Calendar.getInstance()
             checkCalendar[year, month] = dayOfMonth
             if (checkCalendar.equals(lastSelectedCalendar)) return@OnDateChangeListener
-                if (checkCalendar[Calendar.DAY_OF_WEEK] === Calendar.SUNDAY || checkCalendar[Calendar.DAY_OF_WEEK] === Calendar.SATURDAY) {
-                    calendarView.date =
-                        lastSelectedCalendar.timeInMillis
-                } else {
-                    lastSelectedCalendar = checkCalendar
-                }
+            lastSelectedCalendar = checkCalendar
+
         })
 
 
@@ -88,41 +88,35 @@ class NewAppointment : Fragment() {
             val datetime: Calendar = Calendar.getInstance()
             mHour = calendar.get(Calendar.HOUR_OF_DAY);
             mMinute = calendar.get(Calendar.MINUTE);
-//            final Calendar checkOldDate = Calendar.getInstance();
-//            if (hourOfDay >= checkOldDate.get(Calendar.HOUR_OF_DAY)) {
-//                if (hourOfDay == checkOldDate.get(Calendar.HOUR_OF_DAY) && minute <= checkOldDate.get(Calendar.MINUTE)) {
-//                    return;
-//                }
-//                //select current after
-//            } else {`enter code here`
-//                //select current before
-//            }
-
             val timePickerDialog = TimePickerDialog(view.context,
                 // Reference : https://www.geeksforgeeks.org/timepicker-in-kotlin/
                 { view, hourOfDay, minute ->
-
-                        if (hourOfDay >= datetime.get(Calendar.HOUR_OF_DAY) || hourOfDay >= datetime.get(Calendar.DAY_OF_WEEK)) {
-                            if (hourOfDay == datetime.get(Calendar.HOUR_OF_DAY) && minute <= datetime.get(
-                                    Calendar.MINUTE
-                                )
-                            ) {
+                    if(dayMonth > datetime.get(Calendar.DATE) || monthToday-1 > datetime.get(Calendar.MONTH)){
+                        selected_time = appointment.printValidTime(hourOfDay, minute)
+                        txtTime.setText(selected_time)
+                    }
+                    else {
+                        if (hourOfDay >= datetime.get(Calendar.HOUR_OF_DAY)) {
+                            if (hourOfDay == datetime.get(Calendar.HOUR_OF_DAY) && minute <= datetime.get(Calendar.MINUTE)) {
                                 Toast.makeText(
                                     context,
                                     "Invalid time selection, please select future time",
                                     Toast.LENGTH_SHORT
                                 ).show();
-                                return@TimePickerDialog;
+                            } else {
+                                selected_time = appointment.printValidTime(hourOfDay, minute)
+                                txtTime.setText(selected_time)
                             }
-                            selected_time = appointment.printValidTime(hourOfDay, minute)
-                            txtTime.setText(selected_time)
                         }
-
                         else {
                             //select current before
-                            Toast.makeText(context, "Invalid", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                context,
+                                "Invalid time selection, please select future time",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
-
+                    }
 
                 },
                 mHour,
@@ -142,35 +136,12 @@ class NewAppointment : Fragment() {
                 Toast.makeText(context,"Please fill all the fields",Toast.LENGTH_LONG).show()
             }
 
+        }
 
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                val builder = AlertDialog.Builder(context)
-//                //set title for alert dialog
-//                builder.setTitle("Confirm")
-//                //set message for alert dialog
-//                builder.setMessage("Do you want proceed with this booking on $selected_date at $selected_time?")
-//
-//                //performing positive action
-//                builder.setPositiveButton("Yes"){dialogInterface, which ->
-//                    this.view?.findNavController()?.navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
-//                    appointment.addNewAppointment(selected_date, selected_time, user_id, user_name, context)
-//                }
-//                //performing cancel action
-//                builder.setNeutralButton("Cancel"){dialogInterface , which ->
-//                    Toast.makeText(context,"Appointment cancelled",Toast.LENGTH_LONG).show()
-//                    this.view?.findNavController()?.navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
-//                }
-//                //performing negative action
-//                builder.setNegativeButton("No"){dialogInterface, which ->
-//                    Toast.makeText(context,"Please select Date and Time",Toast.LENGTH_LONG).show()
-//                }
-//                // Create the AlertDialog
-//                val alertDialog: AlertDialog = builder.create()
-//                // Set other dialog properties
-//                alertDialog.setCancelable(false)
-//                alertDialog.show()
-//            }
-//            view.findNavController().navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
+        val back : Button = view.findViewById(R.id.appointment_back)
+
+        back.setOnClickListener{
+            view.findNavController().navigate(NewAppointmentDirections.actionNewAppointmentToAppointmentHome())
         }
         return view
     }

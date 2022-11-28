@@ -8,7 +8,6 @@ object FirebaseAuthUser {
     private lateinit var auth: FirebaseAuth
     private var userId: String? = null
     private var userEmail : String? = null
-    private var userName : String? = null
 
     /**
      * This method returns the userId of the logged in user
@@ -26,5 +25,4 @@ object FirebaseAuthUser {
         userEmail = Firebase.auth.currentUser?.email.toString()
         return  userEmail
     }
-
 }

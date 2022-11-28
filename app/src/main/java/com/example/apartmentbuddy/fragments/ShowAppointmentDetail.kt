@@ -16,7 +16,6 @@ import com.example.apartmentbuddy.model.Appointment
 
 class ShowAppointmentDetail : Fragment() {
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,14 +23,16 @@ class ShowAppointmentDetail : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_show_appointment_detail, container, false)
+
         val appointmentId : String = ShowAppointmentDetailArgs.fromBundle(requireArguments()).appointmentId
         val appointmentName : String = ShowAppointmentDetailArgs.fromBundle(requireArguments()).appointmentName
-        val appointmentUserId : String = ShowAppointmentDetailArgs.fromBundle(requireArguments()).appointmentUserId
         val appointmentDate : String = ShowAppointmentDetailArgs.fromBundle(requireArguments()).appointmentDate
         val appointmentTime : String = ShowAppointmentDetailArgs.fromBundle(requireArguments()).appointmentTime
         val appointmentLocation : String = ShowAppointmentDetailArgs.fromBundle(requireArguments()).appointmentLocation
         val previousOperation : String = ShowAppointmentDetailArgs.fromBundle(requireArguments()).previousOperation
+
         val appointment = Appointment()
+
         val back : Button = view.findViewById(R.id.appointment_back)
         val cancel : Button = view.findViewById(R.id.appointment_cancel)
         val showAppointmentId : TextView = view.findViewById(R.id.appointment_id)
@@ -39,6 +40,7 @@ class ShowAppointmentDetail : Fragment() {
         val showAppointmentDate : TextView = view.findViewById(R.id.appointment_date)
         val showAppointmentTime : TextView = view.findViewById(R.id.appointment_time)
         val showAppointmentLocation : TextView = view.findViewById(R.id.appointment_location)
+
         if(previousOperation.equals("SHOW")){
             showAppointmentId.text = appointmentId
             showAppointmentName.text = appointmentName

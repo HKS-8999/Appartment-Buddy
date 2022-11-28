@@ -1,6 +1,6 @@
 package com.example.apartmentbuddy.model
 
-data class Complalistdata(
+data class ComplainListData(
     val ticketid:String,
     val category:String,
     val subject:String,

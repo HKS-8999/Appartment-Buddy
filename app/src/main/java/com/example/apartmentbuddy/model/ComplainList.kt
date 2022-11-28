@@ -2,9 +2,9 @@ package com.example.apartmentbuddy.model
 
 object ComplainList {
 
-    private val complainList = mutableListOf<Complalistdata>()
+    private val complainList = mutableListOf<ComplainListData>()
 
-    fun add(complain: Complalistdata) {
+    fun add(complain: ComplainListData) {
         if(!complainList.contains(complain)){
             complainList.add(complain)
         }
@@ -16,7 +16,7 @@ object ComplainList {
 
 
     // Method to fetch the data in Appointment List
-    fun getAllComplains(): List<Complalistdata> {
+    fun getAllComplains(): List<ComplainListData> {
         return complainList
 
     }

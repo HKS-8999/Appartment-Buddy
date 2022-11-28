@@ -14,7 +14,7 @@ import com.example.apartmentbuddy.adapter.ComplainAdapter
 import com.example.apartmentbuddy.model.*
 
 class ComplainListView : Fragment() {
-    private lateinit var list : MutableList<Complalistdata>
+    private lateinit var list : MutableList<ComplainListData>
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: ComplainAdapter
     private val complains = ComplainPersistence()

@@ -1,12 +1,12 @@
-package com.example.apartmentbuddy.controller
+package com.example.apartmentbuddy.fragments
 
 import android.util.Log
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
-class ApartmentController {
+class ItemController {
     private val db = FirebaseFirestore.getInstance()
-    private val apartmentCollection = db.collection("apartments")
+    private val apartmentCollection = db.collection("items")
 
     fun addUserToBookmarkList(documentId: String, userId: String) {
         apartmentCollection.document(documentId).update(
@@ -18,7 +18,7 @@ class ApartmentController {
         }
     }
 
-    fun removeUserToBookmarkList(documentId: String, userId: String) {
+    fun removeUserFromBookmarkList(documentId: String, userId: String) {
         apartmentCollection.document(documentId).update(
             "bookmarkUserList", FieldValue.arrayRemove(userId)
         ).addOnCompleteListener { removeBookmark ->
