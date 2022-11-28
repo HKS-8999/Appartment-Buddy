@@ -27,3 +27,7 @@ with new date,”  _Stack Overflow_. [Online]. Available: https://stackoverflow.
 [5]	“Delete data from cloud firestore,”  _Firebase_. [Online]. Available: https://firebase.google.com/docs/firestore/manage-data/delete-data. [Accessed: 27-Nov-2022].
 
 [6]	A. Chugh, “Android Alert Dialog using Kotlin,”  _Digitalocean.com_, 03-Aug-2022. [Online]. Available: https://www.digitalocean.com/community/tutorials/android-alert-dialog-using-kotlin. [Accessed: 27-Nov-2022].
+
+[7] “Get Started with Firebase Authentication on Android,” Firebase, 2022. [Online]. Available: https://firebase.google.com/docs/auth/android/start#kotlin+ktx_1. [Accessed: 27-Nov-2022].
+‌
+‌
