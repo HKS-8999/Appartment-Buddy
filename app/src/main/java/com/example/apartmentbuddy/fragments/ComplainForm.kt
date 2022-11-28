@@ -1,10 +1,8 @@
 package com.example.apartmentbuddy.fragments
 
-import android.content.ContentValues.TAG
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -86,7 +84,6 @@ class ComplainForm : Fragment() {
             val status ="Not responded"
             appointment.getUserName(uid.toString()){
                 val firstname = it
-                Log.e(TAG, "$it")
                 val documentid = ""
 
                 val complain =

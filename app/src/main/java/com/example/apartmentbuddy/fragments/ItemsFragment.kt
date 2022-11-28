@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.ListItemAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentItemsBinding
-import com.example.apartmentbuddy.interfaces.EditClickListener
+import com.example.apartmentbuddy.model.EditClickListener
 import com.example.apartmentbuddy.model.Advertisement
 import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.example.apartmentbuddy.model.Item

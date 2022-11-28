@@ -40,7 +40,7 @@ class UpdateProfile : Fragment() {
                 updateProfileData()
             }
             updateProfileBinding.btnProfileBack.setOnClickListener {
-                if(user!!.email=="admin@dal.ca")
+                if (user!!.email == "admin@dal.ca")
                     findNavController().navigate(R.id.action_updateProfile_to_homeAdmin)
                 else
                     findNavController().navigate(R.id.action_updateProfile_to_home2)

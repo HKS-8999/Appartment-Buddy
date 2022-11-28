@@ -118,7 +118,6 @@ class Appointment : IAppointment{
         db.collection("appointment").whereEqualTo("userId", user_id).get().addOnSuccessListener { documents ->
                 for (document in documents) {
                     val data = document.data.get("name")
-                    Log.d(TAG, "${data}")
                     var name : String = document.data.get("name").toString()
                     var date : String = document.data.get("date").toString()
                     var time : String = document.data.get("time").toString()
@@ -151,11 +150,9 @@ class Appointment : IAppointment{
                     var notes : String = document.data.get("notes").toString()
 
                     currentAppointment.put("appointmentId", appointmentId)
-                    Log.e(TAG, "$appointmentId")
                     currentAppointment.put("location", location)
                     currentAppointment.put("name", name)
                     currentAppointment.put("notes", notes)
-                    Log.e(TAG, "$notes")
                     function(currentAppointment)
                 }
             }
@@ -172,7 +169,6 @@ class Appointment : IAppointment{
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val date = document.data.get("date")
-                    Log.e(TAG, "$date")
                     if(isPending(date.toString())){
                         var name : String = document.data.get("name").toString()
                         var date : String = document.data.get("date").toString()
@@ -182,7 +178,6 @@ class Appointment : IAppointment{
                         var timestamp : String = document.data.get("timestamp").toString()
                         var appointment_id : String = document.id
                         PendingAppointmentList.add(AppointmentData(appointment_id, name, date, time, user_id, location, timestamp))
-                        Log.e(TAG, "Pending")
                         function(true)
                     }
                 }
@@ -221,7 +216,6 @@ class Appointment : IAppointment{
             .addOnSuccessListener{ documents ->
                 for(document in documents){
                     val username = document.data.get("name").toString()
-                    Log.e(TAG, "$username")
                     function(username)
                 }
             }

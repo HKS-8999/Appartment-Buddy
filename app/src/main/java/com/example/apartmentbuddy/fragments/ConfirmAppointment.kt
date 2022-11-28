@@ -1,8 +1,6 @@
 package com.example.apartmentbuddy.fragments
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -60,7 +58,6 @@ class ConfirmAppointment : Fragment() {
         val showAppointmentLocation : TextView = view.findViewById(R.id.confirm_appointment_location)
         appointment.getAppointment(userId, selected_date, selected_time){
             location = it.get("location").toString()
-            Log.e(TAG, "$location")
             appointmentName = it.get("name").toString()
             appointmentId = it.get("appointmentId").toString()
             showAppointmentId.text = appointmentId.toString()
