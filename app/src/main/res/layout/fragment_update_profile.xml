@@ -172,16 +172,6 @@ tools:context=".fragments.UpdateProfile"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/btn_profile_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/appThemeColor"
-                        android:fontFamily="@font/sf_pro_display_bold"
-                        android:text="delete account"
-                        android:textSize="14sp" />
-                    <TextView
                         android:id="@+id/txt_hidden_role"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

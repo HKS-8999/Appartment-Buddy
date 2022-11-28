@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_home2_to_navigation2"
             app:destination="@id/navigation2" />
+        <action
+            android:id="@+id/action_home2_to_navigation4"
+            app:destination="@id/navigation4" />
     </fragment>
     <fragment
         android:id="@+id/forgetPassword"
@@ -84,5 +87,35 @@
         <action
             android:id="@+id/action_homeAdmin_to_updateProfile"
             app:destination="@id/updateProfile" />
+        <action
+            android:id="@+id/action_homeAdmin_to_navigation"
+            app:destination="@id/navigation" />
+        <action
+            android:id="@+id/action_homeAdmin_to_ticket_nav_graph"
+            app:destination="@id/navigation3" />
+        <action
+            android:id="@+id/action_homeAdmin_to_login"
+            app:destination="@id/login" />
     </fragment>
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/nav_graph">
+        <include app:graph="@navigation/nav_graph" />
+        <action
+            android:id="@+id/action_global_homeAdmin"
+            app:destination="@id/homeAdmin" />
+    </navigation>
+    <navigation android:id="@+id/navigation3"
+        app:startDestination="@id/ticket_nav_graph">
+        <include app:graph="@navigation/ticket_nav_graph" />
+        <action
+            android:id="@+id/action_global_homeAdmin2"
+            app:destination="@id/homeAdmin" />
+    </navigation>
+    <navigation android:id="@+id/navigation4"
+        app:startDestination="@id/complain_nav_graph">
+        <include app:graph="@navigation/complain_nav_graph" />
+        <action
+            android:id="@+id/action_global_home2"
+            app:destination="@id/home2" />
+    </navigation>
 </navigation>

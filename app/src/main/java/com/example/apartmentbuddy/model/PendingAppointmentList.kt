@@ -1,7 +1,5 @@
 package com.example.apartmentbuddy.model
 
-import com.example.apartmentbuddy.fragments.ShowAppointment
-
 object PendingAppointmentList {
     private val pendingAppointmentList = mutableListOf<AppointmentData>()
 
@@ -17,10 +15,6 @@ object PendingAppointmentList {
             return true
         }
         return false
-    }
-
-    fun remove(){
-        pendingAppointmentList.clear()
     }
 
     // Method to fetch the data in Appointment List

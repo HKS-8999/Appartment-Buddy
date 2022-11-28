@@ -17,20 +17,12 @@ import com.example.apartmentbuddy.model.FirebaseAuthUser
 
 class AppointmentHome : Fragment() {
 
-    private val firebaseAuth = FirebaseAuthUser
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-           firebaseAuth.getUserId()
-//        if(user !=null ) {
+            FirebaseAuthUser.getUserId()
             val view = inflater.inflate(R.layout.fragment_appointment_home, container, false)
             val myToolbar: Toolbar = view.findViewById(R.id.toolbar) as Toolbar
             myToolbar.inflateMenu(R.menu.appointment_new)
@@ -43,7 +35,6 @@ class AppointmentHome : Fragment() {
             myToolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_home -> {
-                        // TODO: Navigate to HOME PAGE
                         findNavController().navigate(R.id.action_global_home22)
                         true
                     }
@@ -54,7 +45,7 @@ class AppointmentHome : Fragment() {
             // Accessing Save button from Fragment 2
             val back: Button = view.findViewById(R.id.appointment_back)
             back.setOnClickListener {
-//            view.findNavController().navigate(AppointmentHomeDirections.actionAppointmentHomeToShowAppointment())
+                findNavController().navigate(R.id.action_global_home22)
             }
             val new_appointment: CardView = view.findViewById(R.id.newAppointment)
             new_appointment.setOnClickListener {
@@ -73,10 +64,7 @@ class AppointmentHome : Fragment() {
                 view.findNavController()
                     .navigate(AppointmentHomeDirections.actionAppointmentHomeToCancelAppointment())
             }
-//        }
-//        else{
-//            view?.findNavController()?.navigate(AppointmentHomeDirections.actionAppointmentHomeToLoginFragment())
-//        }
+
         return view
     }
 }

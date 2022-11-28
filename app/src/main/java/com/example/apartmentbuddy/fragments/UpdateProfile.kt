@@ -14,12 +14,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UpdateProfile.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UpdateProfile : Fragment() {
     private var _updateProfileBinding: FragmentUpdateProfileBinding? = null
     private val updateProfileBinding get() = _updateProfileBinding!!
@@ -46,7 +40,7 @@ class UpdateProfile : Fragment() {
                 updateProfileData()
             }
             updateProfileBinding.btnProfileBack.setOnClickListener {
-                if(user!!.email=="admin@dal.ca")
+                if (user!!.email == "admin@dal.ca")
                     findNavController().navigate(R.id.action_updateProfile_to_homeAdmin)
                 else
                     findNavController().navigate(R.id.action_updateProfile_to_home2)
@@ -142,11 +136,6 @@ class UpdateProfile : Fragment() {
                     return@addOnFailureListener;
                 }
         } else {
-//            Toast.makeText(
-//                requireActivity(),
-//                "Please fill all fields,
-//                Toast.LENGTH_SHORT
-//            ).show()
             Toast.makeText(
                 requireActivity(),
                 "Please fill all fields",

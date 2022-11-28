@@ -98,7 +98,7 @@
                 android:fontFamily="@font/sf_pro_display_light"
                 android:padding="5dp"
                 android:textColor="@color/blue"
-                android:textSize="13sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

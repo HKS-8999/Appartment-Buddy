@@ -1,13 +1,10 @@
 package com.example.apartmentbuddy.adapter
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
@@ -15,12 +12,9 @@ import com.example.apartmentbuddy.fragments.CancelAppointmentDirections
 
 import com.example.apartmentbuddy.fragments.ShowAppointmentDirections
 import com.example.apartmentbuddy.model.AppointmentData
-import com.example.apartmentbuddy.model.PendingAppointmentList
 
-import com.example.apartmentbuddy.model.ShowAppointmentData
 
 class AppointmentRecyclerAdapter(private val appointment: List<AppointmentData>,var currentOperation : String) : RecyclerView.Adapter<AppointmentRecyclerAdapter.ViewHolder>() {
-    var onItemClick: ((AppointmentData) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_view_each_appointment, parent, false)

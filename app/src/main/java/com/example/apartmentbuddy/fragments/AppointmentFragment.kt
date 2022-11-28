@@ -19,9 +19,6 @@ import com.google.firebase.firestore.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class Appointment : Fragment() {
 
     private var _binding: FragmentAppointmentBinding? = null
@@ -46,12 +43,12 @@ class Appointment : Fragment() {
         myToolbar.setTitleTextAppearance(this.context, R.style.CustomActionBarStyle)
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         myToolbar.setNavigationOnClickListener { view ->
-            findNavController().navigate(R.id.action_appointment_to_homeAdmin2)
+            findNavController().navigate(R.id.action_global_homeAdmin)
         }
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    findNavController().navigate(R.id.action_appointment_to_homeAdmin2)
+                    findNavController().navigate(R.id.action_global_homeAdmin)
                     true
                 }
                 else -> false
@@ -75,10 +72,11 @@ class Appointment : Fragment() {
         }
 
     }
-
+    //This method retrieves the name, date,status of all user appointments from firestore database and stores it in the list
     @RequiresApi(Build.VERSION_CODES.O)
     private fun EventChangeListener() {
         appointmentCollection.addSnapshotListener(object : EventListener<QuerySnapshot> {
+            //References: https://www.programiz.com/kotlin-programming/examples/current-date-time
             val current_date = LocalDate.now()
             val formatter_date = DateTimeFormatter.ofPattern("dd/MM/yyyy")
             val formatted_date = current_date.format(formatter_date)
@@ -87,6 +85,7 @@ class Appointment : Fragment() {
                     Log.e("Firestore Error", error.message.toString())
                     return
                 }
+                //References: https://www.youtube.com/watch?v=Az4gXQAP-a4
                 for (dc: DocumentChange in value?.documentChanges!!) {
                     if (dc.type == DocumentChange.Type.ADDED) {
                         val date = dc.document.getString("date")
@@ -94,19 +93,14 @@ class Appointment : Fragment() {
                             val name: String? = dc.document.getString("name")
                             val date: String? = dc.document.getString("date")
                             val time: String? = dc.document.getString("time")
-                            nameList.add(AppointmentData(name, date, time));
-                            println(nameList)
+                            nameList.add(AppointmentData(name = name, date = date, time = time));
                         }
                     }
                     sampleAdapter.notifyDataSetChanged()
-
                 }
             }
         })
-
-
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

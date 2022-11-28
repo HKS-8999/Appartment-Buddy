@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.apartmentbuddy.R
-import com.example.apartmentbuddy.controller.ApartmentController
-import com.example.apartmentbuddy.interfaces.EditClickListener
+import com.example.apartmentbuddy.fragments.ApartmentController
+import com.example.apartmentbuddy.model.EditClickListener
 import com.example.apartmentbuddy.model.Apartment
 import com.example.apartmentbuddy.model.FirebaseAuthUser
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

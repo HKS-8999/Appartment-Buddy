@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toolbar
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apartmentbuddy.R
@@ -36,14 +37,11 @@ class ShowAppointment : Fragment() {
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         myToolbar.setNavigationOnClickListener { view ->
             view.findNavController().navigate(ShowAppointmentDirections.actionShowAppointmentToAppointmentHome())
-//            AppointmentList.remove()
         }
         myToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    // TODO: Navigate to HOME PAGE
-                    view.findNavController()
-                        .navigate(ShowAppointmentDirections.actionShowAppointmentToAppointmentHome())
+                    findNavController().navigate(R.id.action_global_home22)
                     true
                 }
                 else -> false

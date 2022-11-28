@@ -15,14 +15,22 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * Model Class of Appointment which is implement IAppointment interface,
+ * where all the business logic, helping function and database interaction rests.
+ */
 class Appointment : IAppointment{
-
+    // Initializing the instance of database
     private val db = FirebaseFirestore.getInstance()
 
+    // Prints the time user selected from the Time picker
     fun  printValidTime(hourOfDay: Int, minute : Int) : String {
         var hour = hourOfDay
         var am_pm = ""
         // AM_PM decider logic
+        /*
+        Reference : https://www.geeksforgeeks.org/timepicker-in-kotlin/
+         */
         when { hour == 0 -> { hour += 12
             am_pm = "AM"
         }
@@ -40,7 +48,7 @@ class Appointment : IAppointment{
 
     @RequiresApi(Build.VERSION_CODES.O)
     // Reference : https://www.programiz.com/kotlin-programming/examples/current-date-time
-    // Format the current Date and time in "yyyy-MM-dd HH:mm:ss"
+    // Formats the current Date and time in "yyyy-MM-dd HH:mm:ss"
     fun buildTimeStamp() : String? {
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
@@ -51,57 +59,44 @@ class Appointment : IAppointment{
     @RequiresApi(Build.VERSION_CODES.O)
     fun confirmAppointment(date: String, time: String, context: Context?, view: View, user_id: String, user_name: String, notes : String){
         val builder = AlertDialog.Builder(context)
-        //set title for alert dialog
         builder.setTitle("Confirm")
-        //set message for alert dialog
         builder.setMessage("Do you want proceed with this appointment on $date at $time?")
 
-        //performing positive action
         builder.setPositiveButton("Yes"){dialogInterface, which ->
             view.findNavController().navigate(AppointmentNotesDirections.actionAppointmentNotesToConfirmAppointment(date,time,user_id,notes))
             addNewAppointment(date, time, user_id, user_name, context, notes)
         }
-        //performing cancel action
         builder.setNeutralButton("Cancel"){dialogInterface , which ->
             Toast.makeText(context,"Appointment cancelled",Toast.LENGTH_LONG).show()
             view.findNavController().navigate(AppointmentNotesDirections.actionAppointmentNotesToAppointmentHome())
         }
-        //performing negative action
         builder.setNegativeButton("No"){dialogInterface, which ->
-            Toast.makeText(context,"Please select Date and Time",Toast.LENGTH_LONG).show()
         }
-        // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
-        // Set other dialog properties
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
 
     fun confirmToCancelAppointment(appointmentId: String,date: String, time: String, context: Context?, view: View){
         val builder = AlertDialog.Builder(context)
-        //set title for alert dialog
         builder.setTitle("Cancel Appointment")
-        //set message for alert dialog
         builder.setMessage("Do you want cancel this appointment on $date at $time?")
 
-        //performing positive action
         builder.setPositiveButton("Yes"){dialogInterface, which ->
             cancelAppointment(appointmentId)
             AppointmentList.remove()
             Toast.makeText(context,"Appointment Cancelled",Toast.LENGTH_LONG).show()
             view.findNavController().navigate(ShowAppointmentDetailDirections.actionShowAppointmentDetailToAppointmentHome())
         }
-        //performing negative action
         builder.setNegativeButton("No"){dialogInterface, which ->
         }
-        // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
-        // Set other dialog properties
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
 
     // Populates the database with new appointment details
+    // Reference : https://firebase.google.com/docs/firestore/manage-data/add-data
     @RequiresApi(Build.VERSION_CODES.O)
     override fun addNewAppointment(date: String, time: String, userId: String, userName: String, context: Context?, notes : String) : Boolean{
         val appointmentData = AppointmentData(name = userName, date = date, time = time, userId = userId, location = "Office 2", timestamp = buildTimeStamp(), notes = notes)
@@ -118,11 +113,11 @@ class Appointment : IAppointment{
         return true
     }
 
+    // Fetches the database using User Email
     override fun showAppointment(user_id: String, function : (Boolean) -> Unit ) {
         db.collection("appointment").whereEqualTo("userId", user_id).get().addOnSuccessListener { documents ->
                 for (document in documents) {
                     val data = document.data.get("name")
-                    Log.d(TAG, "${data}")
                     var name : String = document.data.get("name").toString()
                     var date : String = document.data.get("date").toString()
                     var time : String = document.data.get("time").toString()
@@ -141,6 +136,7 @@ class Appointment : IAppointment{
             }
     }
 
+    // Fetches specific appointment
     fun getAppointment(user_id: String, date: String, time: String, function: (HashMap<String, String>) -> Unit){
         val currentAppointment : HashMap<String,String> = HashMap()
         db.collection("appointment").whereEqualTo("userId", user_id)
@@ -149,20 +145,14 @@ class Appointment : IAppointment{
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     var name : String = document.data.get("name").toString()
-                    var date : String = document.data.get("date").toString()
-                    var time : String = document.data.get("time").toString()
-                    var user_id : String = document.data.get("user_id").toString()
                     var location : String = document.data.get("location").toString()
-                    var timeStamp : String = document.data.get("timestamp").toString()
                     var appointmentId : String = document.id.toString()
                     var notes : String = document.data.get("notes").toString()
 
                     currentAppointment.put("appointmentId", appointmentId)
-                    Log.e(TAG, "$appointmentId")
                     currentAppointment.put("location", location)
                     currentAppointment.put("name", name)
                     currentAppointment.put("notes", notes)
-                    Log.e(TAG, "$notes")
                     function(currentAppointment)
                 }
             }
@@ -171,6 +161,7 @@ class Appointment : IAppointment{
             }
     }
 
+    // Fetches all the pending appointment using userId from the database
     @RequiresApi(Build.VERSION_CODES.O)
     override fun pendingAppointment(user_id : String, function: (Boolean) -> Unit) {
         db.collection("appointment").whereEqualTo("userId", user_id)
@@ -178,7 +169,6 @@ class Appointment : IAppointment{
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val date = document.data.get("date")
-                    Log.e(TAG, "$date")
                     if(isPending(date.toString())){
                         var name : String = document.data.get("name").toString()
                         var date : String = document.data.get("date").toString()
@@ -188,7 +178,6 @@ class Appointment : IAppointment{
                         var timestamp : String = document.data.get("timestamp").toString()
                         var appointment_id : String = document.id
                         PendingAppointmentList.add(AppointmentData(appointment_id, name, date, time, user_id, location, timestamp))
-                        Log.e(TAG, "Pending")
                         function(true)
                     }
                 }
@@ -199,6 +188,8 @@ class Appointment : IAppointment{
             }
     }
 
+    // Deletes the appointment from the database
+    // Reference : https://firebase.google.com/docs/firestore/manage-data/delete-data
     override fun cancelAppointment(appointmentId : String){
         db.collection("appointment").document(appointmentId)
             .delete()
@@ -206,17 +197,19 @@ class Appointment : IAppointment{
             .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
     }
 
+    // Logic to check if particular appointment is pending or not
     @RequiresApi(Build.VERSION_CODES.O)
     fun isPending(selectedDate : String) : Boolean{
         val currentDate = LocalDate.now()
         val formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val formattedDate = currentDate.format(formatterDate)
-        if(selectedDate.toString() > formattedDate.toString()){
+        if(selectedDate > formattedDate.toString()){
             return true
         }
         return false
     }
 
+    // Fetches the username of the user from his unique ID
     fun getUserName(uid : String, function: (String) -> Unit){
         db.collection("users").whereEqualTo("user_id", uid)
             .get()

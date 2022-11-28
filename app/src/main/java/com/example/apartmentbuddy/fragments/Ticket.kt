@@ -37,7 +37,7 @@ open class Ticket : Fragment() {
         myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 
         myToolbar.setNavigationOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_ticket_to_homeAdmin3)
+            view.findNavController().navigate(R.id.action_global_homeAdmin2)
         }
 
         myToolbar.setOnMenuItemClickListener {
@@ -49,7 +49,7 @@ open class Ticket : Fragment() {
                 }
                 R.id.action_home -> {
                     view.findNavController()
-                        .navigate(R.id.action_ticket_to_homeAdmin3)
+                        .navigate(R.id.action_global_homeAdmin2)
                     true
 
                 }
@@ -59,7 +59,7 @@ open class Ticket : Fragment() {
 
         return view
     }
-
+    //References : https://www.youtube.com/watch?v=Az4gXQAP-a4
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.rvMain)
@@ -74,7 +74,8 @@ open class Ticket : Fragment() {
 
 
     }
-
+    //References : https://www.youtube.com/watch?v=Az4gXQAP-a4
+    //This method fetches all the user tickets from firestore
     private fun EventChangeListener() {
         ticketCollection.addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
@@ -95,13 +96,10 @@ open class Ticket : Fragment() {
                                 documentid = dc.document.id
                             )
                         );
-
                     }
-                    println(list)
                     adapter.notifyDataSetChanged()
                 }
             }
         })
-
     }
 }

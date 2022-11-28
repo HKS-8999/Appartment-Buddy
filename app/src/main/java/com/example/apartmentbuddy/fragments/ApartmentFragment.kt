@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apartmentbuddy.R
 import com.example.apartmentbuddy.adapter.ListApartmentAdvRecyclerViewAdapter
 import com.example.apartmentbuddy.databinding.FragmentApartmentBinding
-import com.example.apartmentbuddy.interfaces.EditClickListener
+import com.example.apartmentbuddy.model.EditClickListener
 import com.example.apartmentbuddy.model.Advertisement
 import com.example.apartmentbuddy.model.Apartment
 import com.example.apartmentbuddy.model.FirebaseAuthUser
@@ -19,11 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ApartmentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ApartmentFragment : Fragment(), EditClickListener {
     private lateinit var binding: FragmentApartmentBinding
     private lateinit var bottomNavValue: String

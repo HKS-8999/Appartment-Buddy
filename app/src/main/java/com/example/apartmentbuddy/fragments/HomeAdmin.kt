@@ -35,27 +35,23 @@ class HomeAdmin : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val user = Firebase.auth.currentUser
         user?.let {
-            // Name, email address, and profile photo Url
             val name = user.displayName
-            val email = user.email
-            // Check if user's email is verified
-            val emailVerified = user.isEmailVerified
-            val user_id = user.uid
+
             homeBinding.txtViewUsername.setText(name)
             homeBinding.btnLogout.setOnClickListener {
                 auth.signOut();
-                findNavController().navigate(R.id.action_home2_to_login)
+                findNavController().navigate(R.id.action_homeAdmin_to_login)
             }
             homeBinding.btnUpdateProfile.setOnClickListener{
                 findNavController().navigate(R.id.action_homeAdmin_to_updateProfile)
             }
 
             homeBinding.btnViewAppointment.setOnClickListener {
-                findNavController().navigate(R.id.action_homeAdmin2_to_appointment)
+                findNavController().navigate(R.id.action_homeAdmin_to_navigation)
             }
 
             homeBinding.btnNavigateTicket.setOnClickListener {
-                findNavController().navigate(R.id.action_homeAdmin3_to_ticket)
+                findNavController().navigate(R.id.action_homeAdmin_to_ticket_nav_graph)
             }
 
             homeBinding.btnNavigateAdvertisement.setOnClickListener{
