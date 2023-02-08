@@ -1,6 +1,3 @@
-# macs-14
-
-
 ## Project-Apartment Buddy
 
 ## Project Members
